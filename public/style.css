@@ -399,3 +399,52 @@ footer .contact-info a:hover {
   .sponsor-logos img:hover {
     transform: scale(1.1); /* Slightly enlarges the image on hover */
   }
+
+/* Dropdown Container */
+.dropdown {
+    position: relative;
+}
+
+/* Dropdown Link */
+.dropdown-link {
+    cursor: pointer;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    color: white;
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+    top: 100%; /* Position below the dropdown link */
+    left: 0;
+    min-width: 150px; /* Set a minimum width */
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* Dropdown Menu Links */
+.dropdown-menu li {
+    margin: 0;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #008080; /* Highlight on hover */
+}
+
+/* Show the menu when hovering over the parent */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
