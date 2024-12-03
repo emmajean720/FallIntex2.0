@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+      <!-- Include Header -->
+      <%- include("partials/navbar") %>
+    <div class="login-container" id="login-form">
+        <h1>Login</h1>
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="form-btn">Login</button>
+        </form>
+        <p>Don't have an account?
+            <button class="link" id="show-create-account-btn">Create one here</button>
+        </p>
+    </div>
+    <div class="create-account-container" id="create-account-form" style="display: none;">
+        <h1>Create Account</h1>
+        <form action="/create-account" method="POST">
+            <div class="form-group">
+                <label for="firstname">First Name</label>
+                <input type="text" id="firstname" name="firstname" required>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Last Name</label>
+                <input type="text" id="lastname" name="lastname" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city">
+            </div>
+            <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state">
+            </div>
+            <div class="form-group">
+                <label for="phonenumber">Phone Number</label>
+                <input type="text" id="phonenumber" name="phonenumber">
+            </div>
+            <button type="submit" class="form-btn">Create Account</button>
+        </form>
+        <p>Already have an account?
+            <button class="link" id="show-login-btn">Login here</button>
+        </p>
+    </div>
+    <script>
+        // Toggle forms visibility
+        const loginForm = document.getElementById('login-form');
+        const createAccountForm = document.getElementById('create-account-form');
+        const showCreateAccountBtn = document.getElementById('show-create-account-btn');
+        const showLoginBtn = document.getElementById('show-login-btn');
+        showCreateAccountBtn.addEventListener('click', () => {
+            loginForm.style.display = 'none';
+            createAccountForm.style.display = 'block';
+        });
+        showLoginBtn.addEventListener('click', () => {
+            createAccountForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

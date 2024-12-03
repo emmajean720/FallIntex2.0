@@ -1,0 +1,401 @@
+body {
+    font-family: 'Lora', serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
+    background-color: #F4F4F9; /* Light background for better contrast */
+}
+.main-content
+{
+    padding-top: 80px; /* Adjust for a taller header on smaller screens */
+}
+/* ===== HEADER (Navigation Bar) ===== */
+header {
+    background-color: #222; /* Dark header for better contrast */
+    color: white;
+    width: 100%; /* Full width */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Sticky header */
+    top: 0;
+    z-index: 1000;
+    height: 80px; /* Fixed height */
+}
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    max-width: 1200px; /* Limits width for readability */
+    margin: 0 auto;
+}
+/* Logo and Title Styles */
+.logo {
+    display: flex;
+    align-items: center; /* Aligns the logo and title vertically */
+    gap: 10px; /* Space between logo and title */
+}
+.logo-image {
+    width: 50px; /* Logo size */
+    height: auto; /* Maintains aspect ratio */
+    border-radius: 5px; /* Optional rounded corners */
+}
+header .logo h1 {
+    font-size: 1.8rem;
+    margin: 0;
+    font-weight: bold;
+    color: white;
+}
+.logo-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer; /* Makes it clear it's clickable */
+    text-decoration: none; /* Removes any underline */
+}
+.logo-title:visited,
+.logo-title:hover {
+    color: white; /* Ensures color remains the same */
+    text-decoration: none; /* Prevents underline */
+}
+/* Navigation Links */
+header nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 20px; /* Space between links */
+}
+header nav ul li a {
+    text-decoration: none;
+    color: white; /* White links */
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease;
+}
+header nav ul li a:hover {
+    background-color: #008080; /* Highlight on hover */
+    border-radius: 5px; /* Rounded hover effect */
+}
+/* ===== HERO SECTION ===== */
+.hero {
+    position: relative;
+    height: 80vh;
+    background: url('/images/Homepage.jpg') no-repeat center center/cover; /* Background image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+}
+.hero-overlay {
+    background: rgba(0, 0, 0, 0.7); /* 70% transparent dark overlay */
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 800px;
+}
+.hero h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+}
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+/* Button Style (Global) */
+.btn {
+    background-color: #008080;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+}
+.btn:hover {
+    background-color: #005F5F; /* Darker teal */
+}
+/* ===== STORY SECTION ===== */
+.story {
+    text-align: center; /* Centers all content */
+    padding: 3rem 1rem;
+    background-color: #F9F9F9; /* Light background for contrast */
+}
+.story h2 {
+    font-size: 2rem; /* Larger heading */
+    margin-bottom: 1.5rem;
+    color: #333; /* Darker text */
+}
+.story-image {
+    max-width: 80%; /* Restricts image size */
+    height: 200px; /* Fixed height */
+    object-fit: cover; /* Crop excess content */
+    border-radius: 10px; /* Optional rounded corners */
+    margin: 0 auto 1.5rem;
+    display: block; /* Centers image */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+.story-text {
+    max-width: 800px; /* Restrict width */
+    margin: 0 auto; /* Center text */
+    text-align: justify; /* Justify text for clean look */
+    line-height: 1.8;
+    color: #555; /* Softer text color */
+}
+.story-text p {
+    margin-bottom: 1.5rem;
+}
+/* ===== ABOUT AND ACTIONS SECTIONS ===== */
+.about, .actions {
+    text-align: center;
+    padding: 3rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.about .content p {
+    max-width: 800px;
+    margin: 0 auto 1rem;
+}
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background: #F9F9F9;
+    padding: 2rem;
+    gap: 20px;
+}
+.action-item {
+    flex: 1 1 calc(30% - 20px); /* Flexible and responsive */
+    text-align: center;
+    margin: 10px;
+}
+.action-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #222;
+}
+.link {
+    color: #008080;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+.link:hover {
+    color: #005F5F;
+    text-decoration: underline;
+}
+/* ===== FOOTER ===== */
+footer {
+    background-color: #222; /* Dark background */
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    width: 100%;
+}
+footer .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 10px 0;
+}
+footer .social-icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #444;
+    color: white;
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+footer .social-icon:hover {
+    background-color: #008080;
+    transform: scale(1.1); /* Zoom effect */
+}
+footer .contact-info {
+    color: #bbb;
+    font-size: 0.9rem;
+}
+footer .contact-info a {
+    color: #bbb;
+    text-decoration: none;
+}
+footer .contact-info a:hover {
+    color: white;
+    text-decoration: underline;
+}
+/* ===== CARDS ===== */
+.card {
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.card-header {
+    padding: 15px;
+    background: #007BFF;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.card-header:hover {
+    background: #0056B3;
+}
+.card-content {
+    display: none;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+.open .card-content {
+    display: block;
+}
+.card-content img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+/* Form Containers */
+.login-container, .create-account-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #F9F9F9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.login-container h1, .create-account-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+/* Form Styling */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+/* Buttons for Forms */
+.form-btn {
+    background-color: #008080;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+}
+.form-btn:hover {
+    background-color: #005F5F;
+}
+/* Links for Forms */
+.link {
+    color: #008080;
+    text-decoration: none;
+}
+.link:hover {
+    text-decoration: underline;
+}
+/* ===== Statistics Section ===== */
+.stats {
+    text-align: center;
+    padding: 4rem 1rem;
+    /* background: url('/images/GandiQuote.jpg') no-repeat center center/cover; */
+    color: #333;
+}
+.stats-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #333;
+}
+.stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem; /* Adds spacing below the stat boxes */
+}
+.stat-box {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    min-width: 200px;
+    flex: 1;
+    max-width: 300px;
+}
+.stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #4A4A8A; /* Customize to match your theme */
+    margin-bottom: 1rem;
+}
+.stat-box p {
+    font-size: 1.2rem;
+    color: #666;
+}
+/* Learn More Button Below Stats */
+.stats-btn-container {
+    text-align: center;
+    margin-top: 2rem; /* Adjust margin to move the button further down */
+}
+.stats-btn {
+    display: inline-block;
+    background-color: #008080;
+    color: white;
+    padding: 0.7rem 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.stats-btn:hover {
+    background-color: #005F5F;
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+.sponsor-logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Adds spacing between images */
+    justify-content: center; /* Centers the images */
+  }
+  .sponsor-logos img {
+    width: 150px; /* Set the width for all images */
+    height: auto; /* Maintains the aspect ratio */
+    object-fit: contain; /* Ensures images fit nicely within the size constraints */
+    border: 1px solid #ddd; /* Optional: Add a border for styling */
+    border-radius: 5px; /* Optional: Round the corners */
+    transition: transform 0.3s ease; /* Smooth scaling effect on hover */
+  }
+  .sponsor-logos img:hover {
+    transform: scale(1.1); /* Slightly enlarges the image on hover */
+  }

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title || "Turtle Shelter Project" %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <!-- Nav Bar -->
+    <%- include("partials/navbar") %>
+    <section class="hero" style="background-image: url('/images/Homepage.jpg'); background-size: cover; background-position: center;">
+        <div class="hero-overlay">
+            <h2>Every Life Has Value. Every Person Can Serve.</h2>
+            <h1>IT STARTS WITH YOU</h1>
+        </div>
+    </section>
+    <section id="stats" class="stats">
+        <h2 class="stats-title">Our Impact</h2>
+        <div class="stats-container">
+            <div class="stat-box">
+                <h3 class="stat-number" data-target="5900">0</h3>
+                <p>Vests Made</p>
+            </div>
+            <div class="stat-box">
+                <h3 class="stat-number" data-target="1562">0</h3>
+                <p>Volunteer Hours</p>
+            </div>
+            <div class="stat-box">
+                <h3 class="stat-number" data-target="749">0</h3>
+                <p>Volunteers</p>
+            </div>
+        </div>
+        <!-- Learn More Button -->
+        <div class="stats-btn-container">
+            <a href="/about" class="btn stats-btn">Learn More</a>
+        </div>
+    </section>
+    <main>
+        <!-- Jen's Story Section -->
+        <section id="story" class="story">
+            <div class="content">
+                <h2>Jen's Story</h2>
+                <img src="/images/Jen.png" alt="Jen" class="story-image">
+                <div class="story-text">
+                    <p>My addiction led me to being homeless on several occasions throughout my life, and during that time I personally knew seven people who froze to death. When I first learned about this lifesaving technology, my mind flooded with ideas on how many people's lives this could save. I'd recently been homeless during an extreme winter. It had been one of the coldest winters Utah had suffered in a long time, so the misery of surviving the bitter cold was still very fresh in my mind.</p>
+                    <p>While I was homeless, I remember feeling the chill all the way to my bones. I couldn't even think or function. It completely zapped me of my energy so much that I was losing my will to live. Everything felt beyond overwhelming. Simple tasks, like finding a bathroom, seemed to feel like huge obstacles. The crazy thing about it was: I had a car I was living in; I had a storage unit I could hang out in during the day and at night; and I had an income that was sufficient for my needs. But being homeless completely broke me - even with all of the resources I had available to me.</p>
+                    <p>I began thinking that if homelessness crushed me, even with all that I had, then what would it do to someone who had much less, or even nothing? I wanted to do something to help people with this burden. When I learned about foam clothing, I knew without a doubt that God was telling me - "THIS IS HOW YOU CAN HELP!"</p>
+                    <p>...We want these vests to go to people living outdoors or who don't have access to shelters, because they are the ones who need this technology the most. The vests are called "Turtle Shelters" because they are a portable shelter - just like a turtle taking its shelter with it.</p>
+                    <p>
+                    <a href="/help" class="btn">Learn How You Can Help</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <%- include("partials/footer") %>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const stats = document.querySelectorAll('.stat-number');
+            const statsSection = document.querySelector('#stats');
+            let statsAnimated = false;
+            const animateStats = () => {
+                stats.forEach(stat => {
+                    const updateCount = () => {
+                        const target = +stat.getAttribute('data-target');
+                        const count = +stat.innerText;
+                        const increment = Math.ceil(target / 100);
+                        if (count < target) {
+                            stat.innerText = count + increment;
+                            setTimeout(updateCount, 20); // Speed of increment
+                        } else {
+                            stat.innerText = target;
+                        }
+                    };
+                    updateCount();
+                });
+            };
+            const handleScroll = () => {
+                const statsPosition = statsSection.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                if (statsPosition < screenPosition && !statsAnimated) {
+                    statsAnimated = true;
+                    animateStats();
+                }
+            };
+            window.addEventListener('scroll', handleScroll);
+        });
+    </script>
+</body>
+</html>

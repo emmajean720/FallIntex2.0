@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volunteer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    function toggleSewingQuestions(value) {
+        const sewingQuestions = document.querySelector('.sewing-questions');
+        if (value === "sewing") {
+            sewingQuestions.style.display = 'block';
+        } else {
+            sewingQuestions.style.display = 'none';
+        }
+    }
+</script>
+</head>
+<body>
+        <!-- Nav Bar -->
+        <%- include("partials/navbar") %>
+<!-- Main Content -->
+<div class="main-content">
+<!-- Card 1 -->
+  <div class="card">
+    <div class="card-header">Become a Partner or Sponsor</div>
+    <div class="card-content">
+      <p>Would you like to be a partner?
+        Would your business, company, organization or church like to become a sponsor?
+        We would love to learn what you do and hear your ideas!  Let us know how we might work together.</p>
+        <p>Please fill out the form below</p>
+        <form action="/submit" method="POST">
+            <label for="first-name">First Name:</label>
+            <input type="text" id="first-name" name="firstName" required>
+            <br>
+            <label for="last-name">Last Name:</label>
+            <input type="text" id="last-name" name="lastName" required>
+            <br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <label for="phone-number">Organization Name:</label>
+            <input type="tel" id="phone-number" name="phoneNumber" required>
+            <br>
+            <label for="organization">Organization:</label>
+            <input type="text" id="organization" name="organization">
+            <br>
+            <button type="submit" style="margin-top: 20px;">Submit</button>
+        </form>
+    </div>
+  </div>
+  <!-- Card 2 -->
+  <div class="card">
+    <div class="card-header">Donate</div>
+    <div class="card-content">
+      <p>Each $30 tax-deductible donation to the Turtle Shelter Project will provide a high tech
+        foam vest for a youth or adult experiencing homelessness.
+        You can tell us where you would like the vest or vests sent to,
+        or we will send them to where there is the greatest need.</p>
+       <p>The Turtle Shelter Project is a <a href="https://static1.squarespace.com/static/5b5a266fcef372310148d6d6/t/5b8ed16603ce64b166f94ba9/1536086378062/501c3+p1.jpeg"
+       target="_blank">501 (c)(3) non-profit, EIN 82-1035303</a>.</p>
+    <p style="font-weight: bold;">You can mail a check to:</p>
+        <p >Turtle Shelter Project
+        <p>PO Box 382</p>
+        <p>Kaysville, Utah 84037</p>
+        <p style="font-weight: bold;">Or donate securely online:</p>
+        <a href="https://turtleshelterproject.org/checkout/donate?donatePageId=5b6a44c588251b72932df5a0" target="_blank">
+            <button type="button" style="margin-top: 20px;">Donate</button>
+          </a>
+      </form>
+    </div>
+    </div>
+<!-- Sponsor Logo and Links -->
+ <!-- Sponsor Logo and Links -->
+  <div class="sponsor-logos">
+    <a href="https://designsourceslc.com/" target="_blank">
+      <img src="/images/DesignSourceLogo.png" alt="Design Source Logo">
+    </a>
+    <a href="https://www.cheneybrothersconstruction.com/" target="_blank">
+      <img src="/images/cheneybrothersconstructionlogo.png" alt="Cheney Brothers Construction Logo">
+    </a>
+    <a href="https://www.goodshepherdogden.org/" target="_blank">
+      <img src="/images/EpiscopalChurchLogo.png" alt="Episcopal Church Logo">
+    </a>
+    <a href="https://www.futurefoam.com/" target="_blank">
+      <img src="/images/FutureFoamLogo.png" alt="Future Foam Logo">
+    </a>
+    <a href="http://www.givemeachanceutah.org/" target="_blank">
+      <img src="/images/GMACLogo.png" alt="GMAC Logo">
+    </a>
+    <a href="https://www.softminkyblankets.com/" target="_blank">
+      <img src="/images/MinkyLogo.jpeg" alt="Minky Logo">
+    </a>
+    <a href="https://www.owfinc.com/" target="_blank">
+      <img src="/images/OutdoorWildernessFabricsLogo.png" alt="Outdoor Wilderness Fabrics Logo">
+    </a>
+  </div>
+</div>
+      <!-- Footer -->
+      <%- include("partials/footer") %>
+  <script>
+    document.querySelectorAll('.card-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const card = header.parentElement;
+        card.classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>
