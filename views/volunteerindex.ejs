@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volunteer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    function toggleSewingQuestions(value) {
+        const sewingQuestions = document.querySelector('.sewing-questions');
+        if (value === "sewing") {
+            sewingQuestions.style.display = 'block';
+        } else {
+            sewingQuestions.style.display = 'none';
+        }
+    }
+</script>
+</head>
+<body>
+        <!-- Nav Bar -->
+        <%- include("partials/navbar") %>
+        <!-- Main Content -->
+         <br><br><br><br><br>
+<div class="main-content">
+    <p>volunteer logged in page</p>
+  <div class="card">
+    <div class="card-header">Already a Long-Term Volunteer?</div>
+    <div class="card-content">
+        <p>Sign in here to view scheduled events, hours, and more!</p>
+        <form action="/vlogin" method="POST">
+            <label for="VLogin">Username:</label>
+            <input type="text" id="VLogin" name="VLogin" required>
+            <br>
+            <label for="VPassword">Password:</label>
+            <input type="password" id="VPassword" name="VPassword" required>
+            <br>
+            <button type="submit" style="margin-top: 20px;">Login</button>
+        </form>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Become a Long-Term Volunteer</div>
+    <div class="card-content">
+      <p>Info about what long-term volunteers do</p>
+      <form action="/submit" method="POST">
+        <!-- First Name -->
+        <label for="first-name">First Name:</label>
+        <input type="text" id="first-name" name="VFirstName" required>
+        <br>
+        <!-- Last Name -->
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" name="VLastName" required>
+        <br>
+        <!-- Email -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="VEmail" required>
+        <br>
+        <!-- Phone Number -->
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="VPhone" required>
+        <br>
+        <!-- City -->
+        <label for="city">City:</label>
+        <input type="text" id="city" name="VCity" required>
+        <br>
+        <!-- State -->
+        <label for="state">State:</label>
+        <input type="text" id="state" name="VState" required>
+        <br>
+        <!-- How they discovered the organization -->
+        <label for="discovered">How did you hear about us?</label>
+        <select id="discovered" name="VDiscovered" required>
+          <option value="Facebook">Our Facebook</option>
+          <option value="Website">Our Website</option>
+          <option value="SocialMedia">Social Media</option>
+          <option value="PastVolunteers">Past Volunteers</option>
+          <option value="Other">Other</option>
+        </select>
+        <br>
+        <!-- Sewing Skill Level -->
+        <label for="sewing-skill">Sewing Skill Level:</label>
+        <select id="sewing-skill" name="SewingSkill" required>
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Experienced">Experienced</option>
+        </select>
+        <br>
+        <!-- Commitment Hours -->
+        <label for="commit-hours">Hours you can commit per month:</label>
+        <select id="commit-hours" name="CommitHours" required>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+          <option value="30">30</option>
+          <option value="35">35</option>
+          <option value="40">40</option>
+          <option value="45">45</option>
+          <option value="50">50</option>
+        </select>
+        <br>
+        <!-- Newsletter Subscription -->
+        <label for="newsletter">
+          <input type="checkbox" id="newsletter" name="VNewsletter">
+          I want to receive the monthly newsletter.
+        </label>
+        <br>
+        <!-- Username/Login -->
+        <label for="login">Username:</label>
+        <input type="text" id="login" name="VLogin" required>
+        <br>
+        <!-- Password -->
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="VPassword" required>
+        <br>
+        <!-- Confirm Password -->
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="VConfirmPassword" required>
+        <br>
+        <button type="submit" style="margin-top: 20px;">Sign Up</button>
+      </form>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Schedule Your Own Event</div>
+    <div class="card-content">
+      <p>Turtle Shelter Project vests are the perfect service project/volunteer activity for groups of all sizes and types.
+        From an individual or family to hundreds of participants at corporate events or conferences, participants will be part of
+        making vests to help save the lives of people in need. It takes 9 volunteers hours to make a vest, so we need your help!</p>
+        <p>We can plan your event for the skill levels of your volunteers, and when we say that EVERY person can help, we mean it!
+        We will meet you and your volunteers at your level of skill, time and space.
+        We provide all of the written and video instructions and materials - you provide the space and volunteers!
+        After your group has completed their tasks, simply send the partially completed vests back to us for expert sewing,
+        and then we will send them back to you or to a location you specify.</p>
+        <p>Please fill out the form below and tell us about your event idea so that we can provide options for you and your group.</p>
+        <form action="/submit" method="POST">
+            <label for="first-name">First Name:</label>
+            <input type="text" id="first-name" name="firstName" required>
+            <br>
+            <label for="last-name">Last Name:</label>
+            <input type="text" id="last-name" name="lastName" required>
+            <br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <label for="phone-number">Phone Number:</label>
+            <input type="tel" id="phone-number" name="phoneNumber" required>
+            <br>
+            <label for="organization">Organization:</label>
+            <input type="text" id="organization" name="organization">
+            <br>
+            <label for="event-date">Date of Event:</label>
+            <input type="date" id="event-date" name="eventDate" required>
+            <br>
+            <label for="event-location">Location of Event:</label>
+            <input type="text" id="street-address" name="streetAddress" placeholder="Street Address" required>
+            <input type="text" id="city" name="city" placeholder="City" required>
+            <input type="text" id="state" name="state" placeholder="State" required>
+            <br>
+            <label for="expected-people">How many people do you expect to show up?</label>
+            <input type="number" id="expected-people" name="expectedPeople" min="1" required>
+            <br>
+            <label for="project-type">Sewing or Non-Sewing Project:</label>
+            <select id="project-type" name="projectType" onchange="toggleSewingQuestions(this.value)" required>
+                <option value="">-- Select --</option>
+                <option value="sewing">Sewing</option>
+                <option value="non-sewing">Non-Sewing</option>
+                <option value="both">Both</option>
+            </select>
+            <div class="sewing-questions">
+                <h3>Sewing Project Details</h3>
+                <label for="basic-sewing-skills">How many of said people have basic sewing skills?</label>
+                <input type="number" id="basic-sewing-skills" name="basicSewingSkills" min="0">
+                <label for="advanced-sewing-skills">How many of said people have advanced sewing skills?</label>
+                <input type="number" id="advanced-sewing-skills" name="advancedSewingSkills" min="0">
+                <label for="sewing-machines">How many sewing machines can you bring?</label>
+                <input type="number" id="sewing-machines" name="sewingMachines" min="0">
+                <label for="sergers">How many sergers can you bring?</label>
+                <input type="number" id="sergers" name="sergers" min="0">
+            </div>
+            <button type="submit" style="margin-top: 20px;">Submit</button>
+        </form>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Volunteer From Home</div>
+    <div class="card-content">
+      <p>You can do some of the sewing or other steps of the production process at home!
+        Indicate in the form below what you would like to do. Please include your sewing skill level:</p>
+        <p>No sewing: can cut, pin and mark vest components</p>
+        <p>Beginning sewing: just learning to use a sewing machine</p>
+        <p>Basic sewing: can sew a straight stitch</p>
+        <p>Advanced sewing: can handle challenging sewing tasks.</p>
+        <form action="/submit" method="POST">
+          <label for="first-name">First Name:</label>
+          <input type="text" id="first-name" name="firstName" required>
+          <br>
+          <label for="last-name">Last Name:</label>
+          <input type="text" id="last-name" name="lastName" required>
+          <br>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+          <br>
+          <label for="phone-number">Phone Number:</label>
+          <input type="tel" id="phone-number" name="phoneNumber" required>
+          <br>
+          <label for="home-address">Home Address:</label>
+          <input type="text" id="street-address" name="streetAddress" placeholder="Street Address" required>
+          <input type="text" id="city" name="city" placeholder="City" required>
+          <input type="text" id="state" name="state" placeholder="State" required>
+          <br>
+          <label for="sewing-skill-level">Sewing Skill Level:</label>
+          <select id="sewing-skill-level" name="sewingSkillLevel" required>
+              <option value="">-- Select --</option>
+              <option value="no-sewing">No Sewing</option>
+              <option value="beginning-sewing">Beginning Sewing</option>
+              <option value="basic-sewing">Basic Sewing</option>
+              <option value="advanced-sewing">Advanced Sewing</option>
+          </select>
+          <button type="submit" style="margin-top: 20px;">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+  <script>
+    document.querySelectorAll('.card-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const card = header.parentElement;
+        card.classList.toggle('open');
+      });
+    });
+    document.querySelector('form').addEventListener('submit', function(e) {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      if (password !== confirmPassword) {
+        e.preventDefault(); // Prevent form submission
+        alert('Passwords do not match!');
+      }
+    });
+  </script>
+      <!-- Footer -->
+      <%- include("partials/footer") %>
+</body>
+</html>
