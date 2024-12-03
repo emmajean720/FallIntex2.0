@@ -17,16 +17,102 @@
         }
     }
 </script>
+<style>
+  /* Style for the table element */
+  table {
+    width: 80%; /* Table takes up 80% of the page width */
+    margin: 20px auto; /* Center the table horizontally */
+    border-collapse: collapse; /* Collapse table borders for a cleaner look */
+    font-size: 10px; /* Reduce the font size of the table */
+  }
+  /* Style for table header (th) and data cells (td) */
+  th, td {
+    border: 1px solid #ddd; /* Light gray border around each cell */
+    padding: 5px; /* Reduce the padding to decrease row height */
+    text-align: center; /* Center the text in the cells */
+    line-height: 1.2; /* Adjust line height for smaller rows */
+  }
+  /* Style for table header (th) */
+  th {
+    background-color: #F2F2F2; /* Light gray background color for headers */
+    font-weight: bold; /* Make header text bold */
+  }
+  /* Style for buttons */
+  button {
+    padding: 4px 8px; /* Adjust button size */
+    margin: 2px; /* Small margin between buttons */
+    font-size: 12px; /* Adjust button font size */
+    cursor: pointer; /* Change cursor to pointer on hover */
+  }
+</style>
 </head>
 <body>
-        <!-- Nav Bar -->
-        <%- include("partials/navbar") %>
-        <!-- Main Content -->
-         <br><br><br><br><br>
+<!-- Nav Bar -->
+<%- include("partials/navbar") %>
+<!-- Main Content -->
 <div class="main-content">
-    <p>volunteer logged in page</p>
   <div class="card">
-    <div class="card-header">Already a Long-Term Volunteer?</div>
+    <div class="card-header">New Upcoming Events</div>
+    <div class="card-content">
+        <p>New Upcoming events</p>
+        <table>
+          <thead>
+            <tr>
+              <!-- Table headers for each column -->
+              <th>Organization</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>City</th>
+              <th>Volunteers Needed</th>
+              <th>Sign up</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Check if there are any event records -->
+            <% if (event.length > 0) { %>
+              <!-- Loop through each event record and display in a table row -->
+              <% event.forEach(row => { %>
+                <tr>
+                  <!-- Hidden input fields for eventcode -->
+                  <input type="hidden" value="event.eventcode">
+
+                  <!-- Display event information-->
+                  <td><%= row.organization %></td>
+                  <td><%= row.eventstarttime %></td>
+                  <td><%= row.eventstoptime %></td>
+                  <td><%= row.eventcity %></td>
+                  <td><%= row.statecode %></td>
+                  <td><%= row.expectedparticipants%></td>
+                  
+                  <!-- Actions column with button to sign up -->
+                  <td>
+                    <!-- Edit button to edit Character details -->
+                    <form action="/signupevent/<%= row.eventcode %>" method="GET" style="display:inline;">
+                      <button type="submit">Sign-up</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } else { %>
+              <!-- If no character records, show a message indicating no data is available -->
+              <tr>
+                <td colspan="7">No data available</td> <!-- Span across all 7 columns -->
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+        
+        <!-- Button to add a new Pokémon record -->
+        <form action="/addChar" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
+          <button type="submit">Add Character</button> <!-- Submit button to go to the Add Character  page -->
+        </form>
+        <form action="/maintain" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
+          <button type="submit">Maintain Planets</button> <!-- Submit button to go to the Add Character  page -->
+        </form>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Your Events</div>
     <div class="card-content">
         <p>Sign in here to view scheduled events, hours, and more!</p>
         <form action="/vlogin" method="POST">
@@ -41,186 +127,18 @@
     </div>
   </div>
   <div class="card">
-    <div class="card-header">Become a Long-Term Volunteer</div>
+    <div class="card-header">Your Past Events</div>
     <div class="card-content">
-      <p>Info about what long-term volunteers do</p>
-      <form action="/submit" method="POST">
-        <!-- First Name -->
-        <label for="first-name">First Name:</label>
-        <input type="text" id="first-name" name="VFirstName" required>
-        <br>
-        <!-- Last Name -->
-        <label for="last-name">Last Name:</label>
-        <input type="text" id="last-name" name="VLastName" required>
-        <br>
-        <!-- Email -->
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="VEmail" required>
-        <br>
-        <!-- Phone Number -->
-        <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="VPhone" required>
-        <br>
-        <!-- City -->
-        <label for="city">City:</label>
-        <input type="text" id="city" name="VCity" required>
-        <br>
-        <!-- State -->
-        <label for="state">State:</label>
-        <input type="text" id="state" name="VState" required>
-        <br>
-        <!-- How they discovered the organization -->
-        <label for="discovered">How did you hear about us?</label>
-        <select id="discovered" name="VDiscovered" required>
-          <option value="Facebook">Our Facebook</option>
-          <option value="Website">Our Website</option>
-          <option value="SocialMedia">Social Media</option>
-          <option value="PastVolunteers">Past Volunteers</option>
-          <option value="Other">Other</option>
-        </select>
-        <br>
-        <!-- Sewing Skill Level -->
-        <label for="sewing-skill">Sewing Skill Level:</label>
-        <select id="sewing-skill" name="SewingSkill" required>
-          <option value="Beginner">Beginner</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Experienced">Experienced</option>
-        </select>
-        <br>
-        <!-- Commitment Hours -->
-        <label for="commit-hours">Hours you can commit per month:</label>
-        <select id="commit-hours" name="CommitHours" required>
-          <option value="10">10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-          <option value="25">25</option>
-          <option value="30">30</option>
-          <option value="35">35</option>
-          <option value="40">40</option>
-          <option value="45">45</option>
-          <option value="50">50</option>
-        </select>
-        <br>
-        <!-- Newsletter Subscription -->
-        <label for="newsletter">
-          <input type="checkbox" id="newsletter" name="VNewsletter">
-          I want to receive the monthly newsletter.
-        </label>
-        <br>
-        <!-- Username/Login -->
-        <label for="login">Username:</label>
-        <input type="text" id="login" name="VLogin" required>
-        <br>
-        <!-- Password -->
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="VPassword" required>
-        <br>
-        <!-- Confirm Password -->
-        <label for="confirm-password">Confirm Password:</label>
-        <input type="password" id="confirm-password" name="VConfirmPassword" required>
-        <br>
-        <button type="submit" style="margin-top: 20px;">Sign Up</button>
-      </form>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header">Schedule Your Own Event</div>
-    <div class="card-content">
-      <p>Turtle Shelter Project vests are the perfect service project/volunteer activity for groups of all sizes and types.
-        From an individual or family to hundreds of participants at corporate events or conferences, participants will be part of
-        making vests to help save the lives of people in need. It takes 9 volunteers hours to make a vest, so we need your help!</p>
-        <p>We can plan your event for the skill levels of your volunteers, and when we say that EVERY person can help, we mean it!
-        We will meet you and your volunteers at your level of skill, time and space.
-        We provide all of the written and video instructions and materials - you provide the space and volunteers!
-        After your group has completed their tasks, simply send the partially completed vests back to us for expert sewing,
-        and then we will send them back to you or to a location you specify.</p>
-        <p>Please fill out the form below and tell us about your event idea so that we can provide options for you and your group.</p>
-        <form action="/submit" method="POST">
-            <label for="first-name">First Name:</label>
-            <input type="text" id="first-name" name="firstName" required>
+        <p>Sign in here to view scheduled events, hours, and more!</p>
+        <form action="/vlogin" method="POST">
+            <label for="VLogin">Username:</label>
+            <input type="text" id="VLogin" name="VLogin" required>
             <br>
-            <label for="last-name">Last Name:</label>
-            <input type="text" id="last-name" name="lastName" required>
+            <label for="VPassword">Password:</label>
+            <input type="password" id="VPassword" name="VPassword" required>
             <br>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <br>
-            <label for="phone-number">Phone Number:</label>
-            <input type="tel" id="phone-number" name="phoneNumber" required>
-            <br>
-            <label for="organization">Organization:</label>
-            <input type="text" id="organization" name="organization">
-            <br>
-            <label for="event-date">Date of Event:</label>
-            <input type="date" id="event-date" name="eventDate" required>
-            <br>
-            <label for="event-location">Location of Event:</label>
-            <input type="text" id="street-address" name="streetAddress" placeholder="Street Address" required>
-            <input type="text" id="city" name="city" placeholder="City" required>
-            <input type="text" id="state" name="state" placeholder="State" required>
-            <br>
-            <label for="expected-people">How many people do you expect to show up?</label>
-            <input type="number" id="expected-people" name="expectedPeople" min="1" required>
-            <br>
-            <label for="project-type">Sewing or Non-Sewing Project:</label>
-            <select id="project-type" name="projectType" onchange="toggleSewingQuestions(this.value)" required>
-                <option value="">-- Select --</option>
-                <option value="sewing">Sewing</option>
-                <option value="non-sewing">Non-Sewing</option>
-                <option value="both">Both</option>
-            </select>
-            <div class="sewing-questions">
-                <h3>Sewing Project Details</h3>
-                <label for="basic-sewing-skills">How many of said people have basic sewing skills?</label>
-                <input type="number" id="basic-sewing-skills" name="basicSewingSkills" min="0">
-                <label for="advanced-sewing-skills">How many of said people have advanced sewing skills?</label>
-                <input type="number" id="advanced-sewing-skills" name="advancedSewingSkills" min="0">
-                <label for="sewing-machines">How many sewing machines can you bring?</label>
-                <input type="number" id="sewing-machines" name="sewingMachines" min="0">
-                <label for="sergers">How many sergers can you bring?</label>
-                <input type="number" id="sergers" name="sergers" min="0">
-            </div>
-            <button type="submit" style="margin-top: 20px;">Submit</button>
+            <button type="submit" style="margin-top: 20px;">Login</button>
         </form>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header">Volunteer From Home</div>
-    <div class="card-content">
-      <p>You can do some of the sewing or other steps of the production process at home!
-        Indicate in the form below what you would like to do. Please include your sewing skill level:</p>
-        <p>No sewing: can cut, pin and mark vest components</p>
-        <p>Beginning sewing: just learning to use a sewing machine</p>
-        <p>Basic sewing: can sew a straight stitch</p>
-        <p>Advanced sewing: can handle challenging sewing tasks.</p>
-        <form action="/submit" method="POST">
-          <label for="first-name">First Name:</label>
-          <input type="text" id="first-name" name="firstName" required>
-          <br>
-          <label for="last-name">Last Name:</label>
-          <input type="text" id="last-name" name="lastName" required>
-          <br>
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required>
-          <br>
-          <label for="phone-number">Phone Number:</label>
-          <input type="tel" id="phone-number" name="phoneNumber" required>
-          <br>
-          <label for="home-address">Home Address:</label>
-          <input type="text" id="street-address" name="streetAddress" placeholder="Street Address" required>
-          <input type="text" id="city" name="city" placeholder="City" required>
-          <input type="text" id="state" name="state" placeholder="State" required>
-          <br>
-          <label for="sewing-skill-level">Sewing Skill Level:</label>
-          <select id="sewing-skill-level" name="sewingSkillLevel" required>
-              <option value="">-- Select --</option>
-              <option value="no-sewing">No Sewing</option>
-              <option value="beginning-sewing">Beginning Sewing</option>
-              <option value="basic-sewing">Basic Sewing</option>
-              <option value="advanced-sewing">Advanced Sewing</option>
-          </select>
-          <button type="submit" style="margin-top: 20px;">Submit</button>
-      </form>
     </div>
   </div>
 </div>
