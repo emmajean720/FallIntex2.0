@@ -113,6 +113,48 @@ app.post('/create-account', (req, res) => {
     res.send('Account created successfully!');
 });
 
+// Direct to volunteer landing page
+app.get('/volunteerhome', (req, res) => {
+    const error = null;
+    const title = "Volunteer Home - Turtle Shelter Project"; // Define title for Volunteer Landing Page
+    res.render("volunteerhome", { error, title });
+});
+
+// Direct to admin landing page
+app.get('/admin', (req, res) => {
+    const error = null;
+    const title = "Admin Home - Turtle Shelter Project"; // Define title for Admin Landing Page
+    res.render("admin", { error, title });
+});
+
+// Direct to admin manage page
+app.get('/adminmanage', (req, res) => {
+    const error = null;
+    const title = "Admin Management - Turtle Shelter Project"; // Define title for Admin Management Page
+    res.render("adminmanage", { error, title });
+});
+
+// Direct to admin manage page
+app.get('/volunteermanage', (req, res) => {
+    const error = null;
+    const title = "Volunteer Management - Turtle Shelter Project"; // Define title for Volunteer Management Page
+    res.render("volunteermanage", { error, title });
+});
+
+// Direct to Event Management page
+app.get('/eventmanage', (req, res) => {
+    const error = null;
+    const title = "Event Management - Turtle Shelter Project"; // Define title for  Event Management Page
+    res.render("eventmanage", { error, title });
+});
+
+// Direct to Admin Calendar page
+app.get('/admincalendar', (req, res) => {
+    const error = null;
+    const title = "Calendar - Turtle Shelter Project"; // Define title for  Admin Calendar Page
+    res.render("admincalendar", { error, title });
+});
+
 // Database connection using Knex
 const knex = require("knex")({
     client: "pg",
