@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <!-- Include Header -->
-    <%- include("partials/navbar") %>
-
+      <!-- Include Header -->
+      <%- include("partials/navbar") %>
     <div class="login-container" id="login-form">
         <h1>Login</h1>
         <form action="/login" method="POST">
@@ -27,102 +26,172 @@
             <button class="link" id="show-create-account-btn">Create one here</button>
         </p>
     </div>
-
     <div class="create-account-container" id="create-account-form" style="display: none;">
         <h1>Create Account</h1>
         <form action="/create-account" method="POST">
             <div class="form-group">
+                <!-- First Name -->
                 <label for="firstname">First Name:</label>
                 <input type="text" id="firstname" name="firstname" required>
             </div>
-
+            <!-- Last Name -->
             <div class="form-group">
                 <label for="lastname">Last Name:</label>
                 <input type="text" id="lastname" name="lastname" required>
             </div>
-
+            <!-- Email -->
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
-
+            <!-- Phone Number -->
             <div class="form-group">
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone">
+                <label for="phonenumber">Phone Number:</label>
+                <input type="tel" id="phonenumber" name="phonenumber">
             </div>
-
+            <!-- City -->
             <div class="form-group">
                 <label for="city">Home City:</label>
                 <input type="text" id="city" name="city">
             </div>
-
+            <!-- State -->
             <div class="form-group">
                 <label for="statecode">Home State:</label>
                 <select id="statecode" name="statecode" required>
                     <option value="" disabled selected>-- Select State --</option>
-                    <!-- State options remain the same -->
+                    <option value="1">Alabama</option>
+                    <option value="2">Alaska</option>
+                    <option value="3">Arizona</option>
+                    <option value="4">Arkansas</option>
+                    <option value="5">California</option>
+                    <option value="6">Colorado</option>
+                    <option value="7">Connecticut</option>
+                    <option value="8">Delaware</option>
+                    <option value="9">Florida</option>
+                    <option value="10">Georgia</option>
+                    <option value="11">Hawaii</option>
+                    <option value="12">Idaho</option>
+                    <option value="13">Illinois</option>
+                    <option value="14">Indiana</option>
+                    <option value="15">Iowa</option>
+                    <option value="16">Kansas</option>
+                    <option value="17">Kentucky</option>
+                    <option value="18">Louisiana</option>
+                    <option value="19">Maine</option>
+                    <option value="20">Maryland</option>
+                    <option value="21">Massachusetts</option>
+                    <option value="22">Michigan</option>
+                    <option value="23">Minnesota</option>
+                    <option value="24">Mississippi</option>
+                    <option value="25">Missouri</option>
+                    <option value="26">Montana</option>
+                    <option value="27">Nebraska</option>
+                    <option value="28">Nevada</option>
+                    <option value="29">New Hampshire</option>
+                    <option value="30">New Jersey</option>
+                    <option value="31">New Mexico</option>
+                    <option value="32">New York</option>
+                    <option value="33">North Carolina</option>
+                    <option value="34">North Dakota</option>
+                    <option value="35">Ohio</option>
+                    <option value="36">Oklahoma</option>
+                    <option value="37">Oregon</option>
+                    <option value="38">Pennsylvania</option>
+                    <option value="39">Rhode Island</option>
+                    <option value="40">South Carolina</option>
+                    <option value="41">South Dakota</option>
+                    <option value="42">Tennessee</option>
+                    <option value="43">Texas</option>
+                    <option value="44">Utah</option>
+                    <option value="45">Vermont</option>
+                    <option value="46">Virginia</option>
+                    <option value="47">Washington</option>
+                    <option value="48">West Virginia</option>
+                    <option value="49">Wisconsin</option>
+                    <option value="50">Wyoming</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label for="discoveredcode">How did you find out about us?</label>
                 <select id="discoveredcode" name="discoveredcode" required>
                     <option value="" disabled selected>-- Select --</option>
-                    <!-- Discovered options remain the same -->
+                    <option value="7">Other</option>
+                    <option value="1">Our Facebook</option>
+                    <option value="2">Podcasts</option>
+                    <option value="3">Events</option>
+                    <option value="4">Word of Mouth</option>
+                    <option value="5">Our Website</option>
+                    <option value="6">Other Social Media</option>
                 </select>
             </div>
-
+            <!-- Skill Level -->
             <div class="form-group">
                 <label for="skilllevelcode">How skilled are you at sewing?</label>
                 <select id="skilllevelcode" name="skilllevelcode" required>
                     <option value="" disabled selected>-- Select --</option>
-                    <!-- Skill level options remain the same -->
+                    <option value="1">Basic</option>
+                    <option value="2">Intermediate</option>
+                    <option value="3">Advanced</option>
                 </select>
             </div>
-
+            <!-- Hours They can Committ -->
             <div class="form-group">
                 <label for="commithours">Estimated hours you are able to volunteer per month:</label>
                 <select id="commithours" name="commithours" required>
-                    <!-- Hours options remain the same -->
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                  <option value="30">30</option>
+                  <option value="35">35</option>
+                  <option value="40">40</option>
+                  <option value="45">45</option>
+                  <option value="50">50+</option>
                 </select>
             </div>
-
+            <!-- Distance they can travel -->
             <div class="form-group">
                 <label for="traveldistance">How far are you willing to travel for events? (miles)</label>
                 <select id="traveldistance" name="traveldistance" required>
-                    <!-- Distance options remain the same -->
+                  <option value="1">1</option>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50+</option>
                 </select>
             </div>
-
+            <!-- Can they lead an event -->
             <div class="form-group">
                 <input type="hidden" name="leading" value="false">
                 <label for="leading">Would you be comfortable leading an event?
-                    <input type="checkbox" id="leading" name="leading" value="true">
+                <input type="checkbox" id="leading" name="leading" value="true">
                 </label>
+                <br>
             </div>
-
+            <!-- Newsletter Sign Up -->
             <div class="form-group">
                 <input type="hidden" name="newsletter" value="false">
-                <label for="newsletter">Do you want to receive monthly newsletters with Turtle Shelter Project updates?
-                    <input type="checkbox" id="newsletter" name="newsletter" value="true">
+                <label for="newsletter">Do you want receive monthly newsletters with Turtle Shelter Project updates?
+                <input type="checkbox" id="newsletter" name="newsletter" value="true">
                 </label>
+                <br>
             </div>
-
+            <!-- Username/Login -->
             <div class="form-group">
                 <label for="login">Username:</label>
                 <input type="text" id="login" name="login" required>
             </div>
-
+            <!-- Password -->
             <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-
             <div class="form-group">
+                <!-- Confirm Password -->
                 <label for="confirm-password">Confirm Password:</label>
                 <input type="password" id="confirm-password" name="confirmpassword" required>
+                <br>
             </div>
-
             <input type="hidden" id="startdate" name="startdate" value="">
             <input type="hidden" name="admin" value="false">
             <button type="submit" class="form-btn">Create Account</button>
@@ -131,29 +200,24 @@
             <button class="link" id="show-login-btn">Login here</button>
         </p>
     </div>
-    
     <script>
         // Toggle forms visibility on screen
         const loginForm = document.getElementById('login-form');
         const createAccountForm = document.getElementById('create-account-form');
         const showCreateAccountBtn = document.getElementById('show-create-account-btn');
         const showLoginBtn = document.getElementById('show-login-btn');
-        
         showCreateAccountBtn.addEventListener('click', () => {
             loginForm.style.display = 'none';
             createAccountForm.style.display = 'block';
         });
-
         showLoginBtn.addEventListener('click', () => {
             createAccountForm.style.display = 'none';
             loginForm.style.display = 'block';
         });
-
         // Toggle forms visibility based on query parameters ( from other pages)
         document.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams(window.location.search);
         const formType = params.get('form');
-
         if (formType === 'create') {
             document.getElementById('login-form').style.display = 'none';
             document.getElementById('create-account-form').style.display = 'block';
@@ -162,7 +226,6 @@
             document.getElementById('login-form').style.display = 'block';
     }
 });
-
         // Generate the inline current date
         document.addEventListener('DOMContentLoaded', () => {
             const input = document.querySelector('#startdate');
