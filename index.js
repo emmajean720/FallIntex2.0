@@ -413,6 +413,125 @@ app.post('/eventrequest', (req, res) => {
     });
 })
 
+//vest receiver form (luke)
+// Display the form for vest receivers and the current year's records
+// Display the form for vest receivers and the current year's records
+app.get('/adminvest-receiver', isAuthenticated, isAdmin, async (req, res) => {
+    const currentYear = new Date().getFullYear();
+    const { search } = req.query;
+
+    try {
+        let query = knex('receivers')
+            .select('*')
+            .whereRaw('EXTRACT(YEAR FROM date) = ?', [currentYear]);
+
+        // If search query is provided, filter by name
+        if (search) {
+            query = query.andWhere(function() {
+                this.where('recfirstname', 'ilike', `%${search}%`)
+                    .orWhere('reclastname', 'ilike', `%${search}%`);
+            });
+        }
+
+        const receivers = await query;
+
+        // Render the form and pass the records to the view
+        res.render('vestReceiverForm', { 
+            title: "Add Vest Receiver - Admin",
+            error: null,
+            success: null,
+            receivers: receivers // Pass receivers data to the template
+        });
+    } catch (error) {
+        console.error('Error fetching receivers:', error);
+        res.render('vestReceiverForm', { 
+            title: "Add Vest Receiver - Admin",
+            error: "Failed to load receivers data.",
+            success: null,
+            receivers: [] // Pass an empty array if there's an error
+        });
+    }
+});
+
+
+// Handle the form submission to add a new vest receiver
+app.post('/adminvest-receiver', isAuthenticated, isAdmin, async (req, res) => {
+    const {
+        recfirstname, 
+        reclastname, 
+        date, 
+        city, 
+        statecode, 
+        age, 
+        gender, 
+        size
+    } = req.body;
+
+    try {
+        // Check for existing record to prevent duplicates
+        const existingRecord = await knex('receivers')
+            .select('*')
+            .where({
+                recfirstname,
+                reclastname,
+                date,
+            })
+            .first();
+
+        if (existingRecord) {
+            throw new Error("Record already exists for this person and date.");
+        }
+
+        // Insert the new receiver data into the receivers table
+        await knex('receivers').insert({
+            recfirstname,
+            reclastname,
+            date,
+            city,
+            statecode,
+            age,
+            gender,
+            size
+        });
+
+        // Fetch the updated list of vest receivers for the current year
+        const currentYear = new Date().getFullYear();
+        const receivers = await knex('receivers')
+            .select('*')
+            .whereRaw('EXTRACT(YEAR FROM date) = ?', [currentYear]);
+
+        // Reload the form after successful submission and pass updated records
+        res.render('vestReceiverForm', { 
+            title: "Add Vest Receiver - Admin",
+            error: null,
+            success: "Vest receiver added successfully!",
+            receivers: receivers // Pass updated receivers to the template
+        });
+    } catch (error) {
+        console.error('Error inserting vest receiver:', error);
+        
+        // Fetch the list of vest receivers even if there is an error
+        const currentYear = new Date().getFullYear();
+        let receivers = [];
+        try {
+            receivers = await knex('receivers')
+                .select('*')
+                .whereRaw('EXTRACT(YEAR FROM date) = ?', [currentYear]);
+        } catch (fetchError) {
+            console.error('Error fetching receivers:', fetchError);
+        }
+
+        res.render('vestReceiverForm', { 
+            title: "Add Vest Receiver - Admin",
+            error: error.message || "Failed to add vest receiver. Please try again.",
+            success: null,
+            receivers: receivers // Pass receivers to the template to show in case of error
+        });
+    }
+});
+
+
+
 
 // ===== Start the Server =====
 app.listen(port, () => console.log(`Express App has started and server is listening on port ${port}!`));
