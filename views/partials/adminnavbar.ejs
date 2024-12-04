@@ -1,19 +1,29 @@
 <head>
+    <!-- Setting character encoding to UTF-8 for compatibility with most characters -->
     <meta charset="UTF-8">
+    <!-- Ensuring the page is responsive to different devices by setting the viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Linking an external CSS file to style the page -->
     <link rel="stylesheet" href="/style.css">
+    <!-- Title of the page that appears in the browser tab -->
     <title>AdminNavBar</title>
 </head>
 <body>
     <header>
         <div class="container">
+            <!-- Logo section -->
             <div class="logo">
+                <!-- Image for the Turtle Shelter logo -->
                 <img src="/images/BetterQualityLogo.png" alt="Turtle Shelter Logo" class="logo-image">
+                <!-- Title of the project which redirects to the home page when clicked -->
                 <span class="logo-title" onclick="location.href='/'">TURTLE SHELTER PROJECT</span>
             </div>
+            <!-- Navigation menu -->
             <nav>
                 <ul>
+                    <!-- Home link for the admin page -->
                     <li><a href="/admin">Home</a></li>
+                    <!-- Dropdown menu for managing various admin tasks -->
                     <li class="dropdown">
                         <a class="dropdown-link">Manage</a>
                         <ul class="dropdown-menu">
@@ -22,6 +32,7 @@
                             <li><a href="/adminvest-receiver">Received Vest Form</a></li>
                         </ul>
                     </li>
+                    <!-- Link to the calendar page -->
                     <li><a href="/admincalendar">Calendar</a></li>
                     <li><a href="/logout" class="btn login-btn">Logout</a></li>
                 </ul>
@@ -30,16 +41,20 @@
     </header>
     
     <script>
-    // dropdown.js
+    // JavaScript code for handling dropdown menu interaction
     document.addEventListener("DOMContentLoaded", () => {
+        // Selecting all dropdown links
         const dropdownLinks = document.querySelectorAll(".dropdown-link");
     
+        // Adding click event listeners to each dropdown link
         dropdownLinks.forEach(link => {
             link.addEventListener("click", function (e) {
-                e.preventDefault();
+                e.preventDefault(); // Prevent default link behavior
+                
+                // Access the dropdown menu element
                 const menu = this.nextElementSibling;
     
-                // Toggle the dropdown visibility
+                // Toggle the dropdown visibility (show or hide)
                 menu.style.display = menu.style.display === "block" ? "none" : "block";
             });
         });

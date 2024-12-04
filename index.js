@@ -140,10 +140,127 @@ app.get('/logout', (req, res) => {
 
 // === Protected Pages ===
 
-// Volunteer Landing Page
+// Volunteer Landing Page (Luke)
 app.get('/volunteerhome', isAuthenticated, (req, res) => {
-    res.render("volunteerhome", { error: null, title: "Volunteer Home - Turtle Shelter Project" });
+    const user = req.session.user;
+
+    if (!user || !user.id) {
+        return res.render('login', { error: 'Please log in to view volunteer opportunities.' });
+    }
+
+    knex('event')
+        .select('*')
+        .where('status', 'approved') // Fetch only events that volunteers can join
+        .then(events => {
+            res.render('volunteerhome', {
+                title: "Volunteer Home - Available Events",
+                events: events,
+                error: null,
+                success: null
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching events:', error);
+            res.render('volunteerhome', {
+                title: "Volunteer Home - Available Events",
+                events: [],
+                error: "Failed to load events. Please try again.",
+                success: null
+            });
+        });
 });
+
+app.post('/volunteerhome/signup', isAuthenticated, (req, res) => {
+    const user = req.session.user;
+
+    if (!user || !user.id) {
+        return res.render('login', { error: 'Please log in to sign up for events.' });
+    }
+
+    const usercode = user.id;
+    const { eventcodes } = req.body;
+
+    if (!eventcodes) {
+        return res.redirect('/volunteerhome');
+    }
+
+    // Convert eventcodes to an array if it's a single value
+    const eventsToSignUp = Array.isArray(eventcodes) ? eventcodes : [eventcodes];
+
+    // Prepare insert data for each event the volunteer signed up for
+    const insertData = eventsToSignUp.map(eventcode => ({
+        usercode: usercode,
+        eventcode: eventcode
+    }));
+
+    knex('volunteersatevents')
+        .insert(insertData)
+        .then(() => {
+            // Fetch the events again to show the updated list on the page after sign-up
+            knex('event')
+                .select('*')
+                .where('status', 'approved')
+                .then(events => {
+                    res.render('volunteerhome', {
+                        title: "Volunteer Home - Available Events",
+                        events: events,
+                        error: null,
+                        success: "You have successfully signed up for the selected events!"
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching events:', error);
+                    res.render('volunteerhome', {
+                        title: "Volunteer Home - Available Events",
+                        events: [],
+                        error: "Failed to reload events after sign-up. Please try again.",
+                        success: "You have successfully signed up for the selected events!"
+                    });
+                });
+        })
+        .catch(error => {
+            console.error('Error signing up for events:', error);
+            res.render('volunteerhome', {
+                title: "Volunteer Home - Available Events",
+                events: [],
+                error: "Failed to sign up for events. Please try again.",
+                success: null
+            });
+        });
+});
+
+//my events page(luke)
+app.get('/myevents', isAuthenticated, (req, res) => {
+    const user = req.session.user;
+
+    if (!user || !user.id) {
+        return res.render('login', { error: 'Please log in to view your events.' });
+    }
+
+    const usercode = user.id;
+
+    // Query to get the events that the user has signed up for
+    knex('volunteersatevents')
+        .join('event', 'volunteersatevents.eventcode', '=', 'event.eventcode')
+        .select('event.organization', 'event.eventstarttime', 'event.eventstoptime', 'event.status')
+        .where('volunteersatevents.usercode', usercode)
+        .then(events => {
+            res.render('myevents', {
+                title: "My Events - Turtle Shelter Project",
+                events: events,
+                error: null
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching signed up events:', error);
+            res.render('myevents', {
+                title: "My Events - Turtle Shelter Project",
+                events: [],
+                error: "Failed to load your events. Please try again."
+            });
+        });
+});
+
 
 // Admin Landing Page
 app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
@@ -199,8 +316,37 @@ app.post('/delete-user/:usercode', isAuthenticated, isAdmin, (req, res) => {
 // Event Management Page - McKenna
 app.get('/eventmanage', isAuthenticated, isAdmin, (req, res) => {
     knex('event')
-        .join('eventsummary', 'event.eventsummarycode', 'eventsummary.eventsummarycode')  // Join eventsummary table on eventcode
-        .select('event.*', 'eventsummary.*')  // Select all columns from both tables
+        .leftJoin('eventsummary', 'event.eventcode', 'eventsummary.eventcode')  // Join eventsummary table on eventcode
+        .select('event.eventcode', 
+            'event.organization', 
+            'event.eventstarttime',
+            'event.eventstoptime',
+            'event.orgfirstname',
+            'event.orglastname',
+            'event.status',
+            'eventsummary.eventsummarycode' || 0, 
+            'eventsummary.actualparticipation' || 0, 
+            'eventsummary.vestcut' || 0, 
+            'eventsummary.vestpin' || 0, 
+            'eventsummary.collarcut' || 0, 
+            'eventsummary.vestsewn' || 0, 
+            'eventsummary.collarpin' || 0, 
+            'eventsummary.collarsewn' || 0, 
+            'eventsummary.envelopecut' || 0, 
+            'eventsummary.envelopesewn' || 0, 
+            'eventsummary.envelopecut' || 0, 
+            'eventsummary.envelopepin' || 0, 
+            'eventsummary.pocketcut' || 0, 
+            'eventsummary.pocketssewn' || 0, 
+            'eventsummary.pocketpin' || 0, 
+            'eventsummary.xscompleted' || 0, 
+            'eventsummary.scompleted' || 0, 
+            'eventsummary.mcompleted' || 0, 
+            'eventsummary.lcompleted' || 0, 
+            'eventsummary.xlcompleted' || 0, 
+            'eventsummary.xxlcompleted' || 0, 
+            'eventsummary.xxxlcompleted' || 0, 
+            'eventsummary.xxxxlcompleted' || 0,)  // Select all columns from both tables
         .whereNot('event.status', 'completed')
         .then(events => {
             res.render("eventmanage", { error: null, title: "Event Management - Turtle Shelter Project", events });
@@ -240,7 +386,7 @@ app.post('/delete-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
         });
 });
 
-// Edit Event
+// Edit Event OG
 app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
     const { eventcode } = req.params;
     const { organization, eventstarttime, eventstoptime, orgfirstname, orglastname, status } = req.body;
@@ -255,41 +401,44 @@ app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
         });
 });
 
-// Add event summary details - McKenna
+
+// Add event summary details - McKenna OG
 app.post('/complete-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
+    console.log('Route reached');
+    console.log('Event Code:', req.params.eventcode);
+    console.log('Request Body:', req.body);
     const { eventcode } = req.params;
     const { actualparticipation, vestcut, vestpin, vestsewn, collarcut, collarpin, collarsewn, envelopecut, envelopepin, envelopesewn, pocketcut, pocketpin, pocketssewn, xscompleted, scompleted, mcompleted, lcompleted, xlcompleted, xxlcompleted, xxxlcompleted, xxxxlcompleted, status } = req.body;
     knex('eventsummary')
         .insert({
-            actualparticipation: parseInt(actualparticipation, 10),
-            vestcut: parseInt(vestcut, 10),
-            vestpin: parseInt(vestpin, 10),
-            vestsewn: parseInt(vestsewn, 10),
-            collarcut: parseInt(collarcut, 10),
-            collarpin: parseInt(collarpin, 10),
-            collarsewn: parseInt(collarsewn, 10),
-            envelopecut: parseInt(envelopecut, 10),
-            envelopepin: parseInt(envelopepin, 10),
-            envelopesewn: parseInt(envelopesewn, 10),
-            pocketcut: parseInt(pocketcut, 10),
-            pocketpin: parseInt(pocketpin, 10),
-            pocketssewn: parseInt(pocketssewn, 10),
-            xscompleted: parseInt(xscompleted, 10),
-            scompleted: parseInt(scompleted, 10),
-            mcompleted: parseInt(mcompleted, 10),
-            lcompleted: parseInt(lcompleted, 10),
-            xlcompleted: parseInt(xlcompleted, 10),
-            xxlcompleted: parseInt(xxlcompleted, 10),
-            xxxlcompleted: parseInt(xxxlcompleted, 10),
-            xxxxlcompleted: parseInt(xxxxlcompleted, 10)
+            actualparticipation: parseInt(actualparticipation, 10) || 0,
+            vestcut: parseInt(vestcut, 10) || 0,
+            vestpin: parseInt(vestpin, 10) || 0,
+            vestsewn: parseInt(vestsewn, 10) || 0,
+            collarcut: parseInt(collarcut, 10) || 0,
+            collarpin: parseInt(collarpin, 10) || 0,
+            collarsewn: parseInt(collarsewn, 10) || 0,
+            envelopecut: parseInt(envelopecut, 10) || 0,
+            envelopepin: parseInt(envelopepin, 10) || 0,
+            envelopesewn: parseInt(envelopesewn, 10) || 0,
+            pocketcut: parseInt(pocketcut, 10) || 0,
+            pocketpin: parseInt(pocketpin, 10) || 0,
+            pocketssewn: parseInt(pocketssewn, 10) || 0,
+            xscompleted: parseInt(xscompleted, 10) || 0,
+            scompleted: parseInt(scompleted, 10) || 0,
+            mcompleted: parseInt(mcompleted, 10) || 0,
+            lcompleted: parseInt(lcompleted, 10) || 0,
+            xlcompleted: parseInt(xlcompleted, 10) || 0,
+            xxlcompleted: parseInt(xxlcompleted, 10) || 0,
+            xxxlcompleted: parseInt(xxxlcompleted, 10) || 0,
+            xxxxlcompleted: parseInt(xxxxlcompleted, 10) || 0,
+            eventcode: eventcode
         })
-        .returning('eventsummarycode')
-        .then(([eventsummaryid]) => {
+        .then(() => {
             return knex('event')
             .where('eventcode', eventcode)  // Find the event by its eventcode
             .update({
                 status: 'completed',  // Update the status field
-                eventsummarycode: eventsummaryid
             });
             res.send('Event summary uploaded successfully!')}
         )
@@ -591,9 +740,6 @@ app.post('/adminvest-receiver', isAuthenticated, isAdmin, async (req, res) => {
         });
     }
 });
-
-
-
 
 // ===== Start the Server =====
 app.listen(port, () => console.log(`Express App has started and server is listening on port ${port}!`));

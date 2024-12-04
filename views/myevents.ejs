@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        /* Custom styles for My Events page */
+        .main-content {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #008080;
+        };
+        
+
+        .event-table-container {
+            margin-top: 30px;
+        }
+
+        .event-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .event-table th, .event-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .event-table th {
+            background-color: #008080;
+            color: white;
+            font-weight: bold;
+        }
+
+        .event-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .event-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .footer-spacing {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Nav Bar -->
+    <%- include("partials/navbar") %>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2>My Events</h2>
+        <% if (error) { %>
+            <div class="error-message"><%= error %></div>
+        <% } %>
+
+        <div class="event-table-container">
+            <h3>Your Signed Up Events</h3>
+            <table class="event-table">
+                <thead>
+                    <tr>
+                        <th>Organization</th>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>Stop Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (events.length === 0) { %>
+                        <tr>
+                            <td colspan="5">You have not signed up for any events yet.</td>
+                        </tr>
+                    <% } else { %>
+                        <% events.forEach(event => { %>
+                            <tr>
+                                <td><%= event.organization %></td>
+                                <td><%= new Date(event.eventstarttime).toLocaleDateString() %></td>
+                                <td><%= new Date(event.eventstarttime).toLocaleTimeString() %></td>
+                                <td><%= new Date(event.eventstoptime).toLocaleTimeString() %></td>
+                                <td><%= event.status %></td>
+                            </tr>
+                        <% }) %>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-spacing">
+        <%- include("partials/footer") %>
+    </div>
+</body>
+</html>
