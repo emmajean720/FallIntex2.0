@@ -238,36 +238,52 @@ footer .contact-info a:hover {
 .card {
     width: 90%;
     max-width: 500px;
-    margin: 20px auto;
+    margin: 30px auto; /* Increased margin to create better spacing between cards */
     background: white;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px; /* Slightly increased border-radius for a more modern look */
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* Smooth transition for hover effects */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.card:hover {
+    transform: translateY(-5px); /* Card moves up slightly to show interactivity */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover for better focus */
+    border-color: #008080; /* Update border color to match your brand color (teal) */
+}
+
 .card-header {
-    padding: 15px;
-    background: #007BFF;
+    padding: 20px; /* Increased padding for more spacious header */
+    background: #008080; /* Updated background color to match the theme (teal) */
     color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
 }
+
 .card-header:hover {
-    background: #0056B3;
+    background: #005F5F; /* Darker shade of teal on hover */
 }
+
 .card-content {
     display: none;
-    padding: 15px;
+    padding: 20px; /* Increased padding for better readability */
     border-top: 1px solid #ddd;
+    color: #555; /* Softer text color for better readability */
 }
+
 .open .card-content {
     display: block;
 }
+
 .card-content img {
     max-width: 100%;
-    border-radius: 5px;
+    border-radius: 8px; /* Increased border-radius to match the card's rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added slight shadow to images for depth */
 }
+
 /* Form Containers */
 .login-container, .create-account-container {
     max-width: 400px;
@@ -385,20 +401,25 @@ footer .contact-info a:hover {
 .sponsor-logos {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px; /* Adds spacing between images */
+    gap: 30px; /* Increased spacing between images for better visual separation */
     justify-content: center; /* Centers the images */
-  }
-  .sponsor-logos img {
-    width: 150px; /* Set the width for all images */
-    height: auto; /* Maintains the aspect ratio */
-    object-fit: contain; /* Ensures images fit nicely within the size constraints */
-    border: 1px solid #ddd; /* Optional: Add a border for styling */
-    border-radius: 5px; /* Optional: Round the corners */
-    transition: transform 0.3s ease; /* Smooth scaling effect on hover */
-  }
-  .sponsor-logos img:hover {
-    transform: scale(1.1); /* Slightly enlarges the image on hover */
-  }
+    padding: 2rem 0; /* Added padding to create more breathing space around the logos */
+}
+
+.sponsor-logos img {
+    width: 150px; /* Uniform width for all logos */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Fit logo within boundaries */
+    border: 1px solid #ddd; /* Subtle border to create separation */
+    border-radius: 5px; /* Rounded corners for a refined look */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add smooth scaling and shadow */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+}
+
+.sponsor-logos img:hover {
+    transform: scale(1.05); /* Slight enlargement on hover to add visual engagement */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover for emphasis */
+}
 
 /* Dropdown Container */
 .dropdown {

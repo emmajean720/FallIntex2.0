@@ -1,204 +1,3 @@
-// //3rd time
-// require('dotenv').config(); // Load environment variables from .env file
-
-// let express = require("express");
-// let app = express();
-// let path = require("path");
-// let session = require("express-session");
-
-// // Port setting from environment variables or default to 5500
-// const port = process.env.PORT || 5500;
-
-// app.set("view engine", "ejs");
-// app.set("views", path.join(__dirname, "views"));
-
-// // Serve static files from the 'public' folder
-// app.use(express.static(path.join(__dirname, 'public')));
-// app.use(express.urlencoded({ extended: true }));
-
-// // Set up session middleware
-// app.use(session({
-//     secret: process.env.SESSION_SECRET || 'your_secret_key', // Use a secure session secret from .env
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: false } // Set secure: true if using HTTPS
-// }));
-
-// // Middleware to make the user session available in all views
-// app.use((req, res, next) => {
-//     res.locals.user = req.session.user;
-//     next();
-// });
-
-// // Database connection using Knex
-// const knex = require("knex")({
-//     client: "pg",
-//     connection: {
-//         host: process.env.RDS_HOSTNAME,
-//         user: process.env.RDS_USERNAME,
-//         password: String(process.env.RDS_PASSWORD), // Ensure password is a string
-//         database: process.env.RDS_DB_NAME,
-//         port: process.env.RDS_PORT || 5432,
-//         ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false // SSL setting based on DB_SSL env variable
-//     }
-// });
-
-// // Middleware to check if the user is authenticated
-// function isAuthenticated(req, res, next) {
-//     if (req.session.user) {
-//         return next();
-//     } else {
-//         res.redirect('/login');
-//     }
-// }
-
-// // Middleware to check if the user is an admin
-// function isAdmin(req, res, next) {
-//     if (req.session.user && req.session.user.admin) {
-//         return next();
-//     } else {
-//         res.redirect('/volunteerhome'); // Redirect to a non-admin page for regular users
-//     }
-// }
-
-// // Routes to Pages
-
-// // Home
-// app.get('/', (req, res) => {
-//     const error = null;
-//     const title = "Turtle Shelter Project"; // Define title for homepage
-//     res.render('homepage', { error, title });
-// });
-
-// // About
-// app.get('/about', (req, res) => {
-//     const error = null;
-//     const title = "About Us - Turtle Shelter Project"; // Define title for about page
-//     res.render("about", { error, title });
-// });
-
-// // Volunteer
-// app.get('/volunteer', (req, res) => {
-//     const error = null;
-//     const title = "Volunteer - Turtle Shelter Project"; // Define title for volunteer page
-//     res.render("volunteer", { error, title });
-// });
-
-// // Donate
-// app.get('/donate', (req, res) => {
-//     const error = null;
-//     const title = "Donate - Turtle Shelter Project"; // Define title for donate page
-//     res.render("donate", { error, title });
-// });
-
-// // Login Page
-// app.get('/login', (req, res) => {
-//     const error = null;
-//     const title = "Login - Turtle Shelter Project"; // Define title for login page
-//     res.render("login", { error, title });
-// });
-
-// // Handle Login Form Submission
-// app.post('/login', (req, res) => {
-//     const { username, password } = req.body;
-
-//     // Query database for user with matching username and password
-//     knex('users')
-//         .where({ login: username, password: password }) // Plaintext password matching
-//         .first()
-//         .then(user => {
-//             if (user) {
-//                 // Save user info in session
-//                 req.session.user = {
-//                     id: user.usercode,
-//                     username: user.login,
-//                     admin: user.admin
-//                 };
-
-//                 // Redirect based on user role
-//                 if (user.admin === true) {
-//                     res.redirect('/admin');
-//                 } else {
-//                     res.redirect('/volunteerhome');
-//                 }
-//             } else {
-//                 // User not found or incorrect credentials
-//                 res.render("login", { error: "Invalid username or password", title: "Login - Turtle Shelter Project" });
-//             }
-//         })
-//         .catch(err => {
-//             console.error("Error during login:", err);
-//             res.render("login", { error: "An unexpected error occurred. Please try again.", title: "Login - Turtle Shelter Project" });
-//         });
-// });
-
-// // Logout Route
-// app.get('/logout', (req, res) => {
-//     req.session.destroy((err) => {
-//         if (err) {
-//             console.error("Error during logout:", err);
-//         }
-//         res.redirect('/login');
-//     });
-// });
-
-// // Handle Account Creation Form Submission
-// app.post('/create-account', (req, res) => {
-//     const { firstname, lastname, email, city, state, phonenumber, username, password, confirmPassword } = req.body;
-
-//     if (password !== confirmPassword) {
-//         return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
-//     }
-
-//     // Insert the new user into the database with admin set to false by default
-//     knex('users')
-//         .insert({
-//             firstname,
-//             lastname,
-//             email,
-//             phone: phonenumber,
-//             city,
-//             statecode: state, // Assuming 'state' is saved using statecode foreign key
-//             login: username,
-//             password, // Store plaintext password (Note: NOT SECURE)
-//             admin: false // Default role for new users
-//         })
-//         .then(() => {
-//             res.send('Account created successfully!');
-//         })
-//         .catch(err => {
-//             console.error("Error creating account:", err);
-//             res.render("login", { error: "An unexpected error occurred during account creation. Please try again.", title: "Create Account - Turtle Shelter Project" });
-//         });
-// });
-
-// // Volunteer Landing Page (protected route)
-// app.get('/volunteerhome', isAuthenticated, (req, res) => {
-//     const error = null;
-//     const title = "Volunteer Home - Turtle Shelter Project"; // Define title for Volunteer Landing Page
-//     res.render("volunteerhome", { error, title });
-// });
-
-// // Admin Landing Page (protected route)
-// app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
-//     const error = null;
-//     const title = "Admin Home - Turtle Shelter Project"; // Define title for Admin Landing Page
-//     res.render("admin", { error, title });
-// });
-
-// // Test the database connection
-// (async () => {
-//     try {
-//         const result = await knex.raw('SELECT 1+1 AS result'); // Simple query to test connection
-//         console.log("Database connected successfully:", result.rows);
-//     } catch (error) {
-//         console.error("Database connection failed:", error.message);
-//     }
-// })();
-
-// // Start server
-// app.listen(port, () => console.log("Express App has started and server is listening!"));
-
 //3rd time
 require('dotenv').config(); // Load environment variables from .env file
 
@@ -363,17 +162,36 @@ app.post('/create-account', (req, res) => {
 });
 
 // Admin Management Page (Protected Route)
+// State abbreviations mapping
+const stateAbbreviations = {
+    1: 'AL', 2: 'AK', 3: 'AZ', 4: 'AR', 5: 'CA', 6: 'CO', 7: 'CT', 8: 'DE', 9: 'FL', 10: 'GA',
+    11: 'HI', 12: 'ID', 13: 'IL', 14: 'IN', 15: 'IA', 16: 'KS', 17: 'KY', 18: 'LA', 19: 'ME', 20: 'MD',
+    21: 'MA', 22: 'MI', 23: 'MN', 24: 'MS', 25: 'MO', 26: 'MT', 27: 'NE', 28: 'NV', 29: 'NH', 30: 'NJ',
+    31: 'NM', 32: 'NY', 33: 'NC', 34: 'ND', 35: 'OH', 36: 'OK', 37: 'OR', 38: 'PA', 39: 'RI', 40: 'SC',
+    41: 'SD', 42: 'TN', 43: 'TX', 44: 'UT', 45: 'VT', 46: 'VA', 47: 'WA', 48: 'WV', 49: 'WI', 50: 'WY'
+};
+
+// Admin Management Page (protected route)
 app.get('/adminmanage', isAuthenticated, isAdmin, (req, res) => {
     knex('users')
         .select('*')
         .then(users => {
-            res.render("adminmanage", { error: null, title: "Admin Management - Turtle Shelter Project", users });
+            // Add state abbreviation to each user
+            users = users.map(user => ({
+                ...user,
+                state_abbr: stateAbbreviations[user.statecode] || 'N/A'
+            }));
+
+            const error = null;
+            const title = "Admin Management - Turtle Shelter Project";
+            res.render("adminmanage", { error, title, users });
         })
         .catch(err => {
             console.error("Error fetching users:", err);
             res.render("adminmanage", { error: "An error occurred fetching users", title: "Admin Management - Turtle Shelter Project", users: [] });
         });
 });
+
 
 // Handle Update Admin Status
 app.post('/update-admin-status/:usercode', isAuthenticated, isAdmin, (req, res) => {
