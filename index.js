@@ -324,7 +324,7 @@ app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
     }
 })();
 
-// Handle Account Creation Form Submission - McKenna
+// Handle Account Creation Form Submission - Kylee
 app.post('/create-account', (req, res) => {
     const firstname = req.body.firstname || ' ';
     const lastname = req.body.lastname || ' '; 
@@ -367,7 +367,7 @@ app.post('/create-account', (req, res) => {
             is_admin: admin // Default role for new users
         })
         .then(() => {
-            res.send('Account created successfully!');
+            res.redirect("/admin");
         })
         .catch(err => {
             console.error("Error creating account:", err);
