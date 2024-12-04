@@ -45,7 +45,10 @@
                 <h2>Jen's Story</h2>
                 <img src="/images/Jen.png" alt="Jen" class="story-image">
                 <div class="story-text">
-                    <p>My addiction led me to being homeless on several occasions throughout my life, and during that time I personally knew seven people who froze to death. When I first learned about this lifesaving technology, my mind flooded with ideas on how many people's lives this could save. I'd recently been homeless during an extreme winter. It had been one of the coldest winters Utah had suffered in a long time, so the misery of surviving the bitter cold was still very fresh in my mind.</p>
+                    <p>My addiction led me to being homeless on several occasions throughout my life, and during that time I personally knew seven people who froze to death. 
+                        
+                        
+                        When I first learned about this lifesaving technology, my mind flooded with ideas on how many people's lives this could save. I'd recently been homeless during an extreme winter. It had been one of the coldest winters Utah had suffered in a long time, so the misery of surviving the bitter cold was still very fresh in my mind.</p>
                     <p>While I was homeless, I remember feeling the chill all the way to my bones. I couldn't even think or function. It completely zapped me of my energy so much that I was losing my will to live. Everything felt beyond overwhelming. Simple tasks, like finding a bathroom, seemed to feel like huge obstacles. The crazy thing about it was: I had a car I was living in; I had a storage unit I could hang out in during the day and at night; and I had an income that was sufficient for my needs. But being homeless completely broke me - even with all of the resources I had available to me.</p>
                     <p>I began thinking that if homelessness crushed me, even with all that I had, then what would it do to someone who had much less, or even nothing? I wanted to do something to help people with this burden. When I learned about foam clothing, I knew without a doubt that God was telling me - "THIS IS HOW YOU CAN HELP!"</p>
                     <p>...We want these vests to go to people living outdoors or who don't have access to shelters, because they are the ones who need this technology the most. The vests are called "Turtle Shelters" because they are a portable shelter - just like a turtle taking its shelter with it.</p>
@@ -55,6 +58,37 @@
                 </div>
             </div>
         </section>
+<!-- Jen's Story Section -->
+                            <section id="story" class="story">
+                                <div class="content" style="display: flex; align-items: flex-start;">
+                                    <!-- Image to the left -->
+                                    <img src="/images/Jen.png" alt="Jen" class="story-image" style="max-width: 40%; margin-right: 20px;">
+
+                                    <!-- Text with collapsible functionality -->
+                                    <div class="story-text">
+                                        <h2>Jen's Story</h2>
+                                        <p>My addiction led me to being homeless on several occasions throughout my life, and during that time <em style="font-weight: bold; font-style: italic; font-size: 1.2em">I personally knew seven people who froze to death.</em>
+                                        </b> </p>
+                                        <!-- Collapsible text -->
+                                        <div id="collapsible-text">
+                                            <div id="extra-text" style="display: none;">
+                                                <p>When I first learned about this lifesaving technology, my mind flooded with ideas on how many people's lives this could save. I'd recently been homeless during an extreme winter. It had been one of the coldest winters Utah had suffered in a long time, so the misery of surviving the bitter cold was still very fresh in my mind.</p>
+                                                <p>While I was homeless, I remember feeling the chill all the way to my bones. I couldn't even think or function. It completely zapped me of my energy so much that I was losing my will to live. Everything felt beyond overwhelming. Simple tasks, like finding a bathroom, seemed to feel like huge obstacles. The crazy thing about it was: I had a car I was living in; I had a storage unit I could hang out in during the day and at night; and I had an income that was sufficient for my needs. But being homeless completely broke me - even with all of the resources I had available to me.</p>
+                                                <p>I began thinking that if homelessness crushed me, even with all that I had, then what would it do to someone who had much less, or even nothing? I wanted to do something to help people with this burden. When I learned about foam clothing, I knew without a doubt that God was telling me - "THIS IS HOW YOU CAN HELP!"</p>
+                                                <p>...We want these vests to go to people living outdoors or who don't have access to shelters, because they are the ones who need this technology the most. The vests are called "Turtle Shelters" because they are a portable shelter - just like a turtle taking its shelter with it.</p>
+                                                </p>
+                                            </div>
+                                            <p>
+                                                <a href="javascript:void(0);" id="toggle-link" onclick="toggleText()">Keep Reading</a>
+                                            </p>
+                                        </div>
+
+                                        <p>
+                                            <a href="/help" class="btn">Learn How You Can Help</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </section>
     </main>
     <!-- Footer -->
     <%- include("partials/footer") %>
@@ -89,6 +123,21 @@
             };
             window.addEventListener('scroll', handleScroll);
         });
+
+        //allows jen's story to be collapsible
+        function toggleText() {
+        var extraText = document.getElementById("extra-text");
+        var toggleLink = document.getElementById("toggle-link");
+        
+        // Toggle visibility of the extra text
+        if (extraText.style.display === "none") {
+            extraText.style.display = "block";
+            toggleLink.innerHTML = "Show Less"; // Change text to "Show Less"
+        } else {
+            extraText.style.display = "none";
+            toggleLink.innerHTML = "Read More"; // Change text to "Read More"
+        }
+    }
     </script>
 </body>
 </html>
