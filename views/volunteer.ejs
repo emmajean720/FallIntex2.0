@@ -135,53 +135,138 @@
         and then we will send them back to you or to a location you specify.</p>
         <p>Please fill out the form below and tell us about your event idea so that we can provide options for you and your group.</p>
         <form action="/submit" method="POST">
-            <label for="first-name">First Name:</label>
-            <input type="text" id="first-name" name="firstName" required>
+            <label for="organization">Organization/Group Name:</label>
+            <input type="text" id="organization" name="organization" required>
             <br>
-            <label for="last-name">Last Name:</label>
-            <input type="text" id="last-name" name="lastName" required>
+            <label for="orgfirstname">Organizer First Name:</label>
+            <input type="text" id="orgfirstname" name="orgfirstname" required>
             <br>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="orglastname">Organizer Last Name:</label>
+            <input type="text" id="orglastname" name="orglastname" required>
             <br>
-            <label for="phone-number">Phone Number:</label>
-            <input type="tel" id="phone-number" name="phoneNumber" required>
+            <label for="orgemail">Organizer Email:</label>
+            <input type="email" id="orgemail" name="orgemail" required>
             <br>
-            <label for="organization">Organization:</label>
-            <input type="text" id="organization" name="organization">
+            <label for="orgphone">Organizer Phone Number:</label>
+            <input type="tel" id="orgphone" name="orgphone" required>
             <br>
-            <label for="event-date">Date of Event:</label>
-            <input type="date" id="event-date" name="eventDate" required>
+            <label for="eventstarttime">Event Start Time:</label>
+            <input type="datetime-local" id="eventstarttime" name="eventstarttime" required>
             <br>
-            <label for="event-location">Location of Event:</label>
-            <input type="text" id="street-address" name="streetAddress" placeholder="Street Address" required>
-            <input type="text" id="city" name="city" placeholder="City" required>
-            <input type="text" id="state" name="state" placeholder="State" required>
+            <label for="eventstoptime">Event Stop Time:</label>
+            <input type="datetime-local" id="email" name="email" required>
             <br>
-            <label for="expected-people">How many people do you expect to show up?</label>
-            <input type="number" id="expected-people" name="expectedPeople" min="1" required>
-            <br>
-            <label for="project-type">Sewing or Non-Sewing Project:</label>
-            <select id="project-type" name="projectType" onchange="toggleSewingQuestions(this.value)" required>
-                <option value="">-- Select --</option>
-                <option value="sewing">Sewing</option>
-                <option value="non-sewing">Non-Sewing</option>
-                <option value="both">Both</option>
+            <label>Location of Event:</label>
+            <input type="text" id="eventaddress" name="eventaddress" placeholder="Street Address" required>
+            <input type="text" id="eventcity" name="eventcity" placeholder="City" required>
+            <label for="statecode">Select your state:</label>
+            <select id="statecode" name="statecode" required>
+                <option value="" disabled selected>-- Select State --</option>
+                <option value="1">Alabama</option>
+                <option value="2">Alaska</option>
+                <option value="3">Arizona</option>
+                <option value="4">Arkansas</option>
+                <option value="5">California</option>
+                <option value="6">Colorado</option>
+                <option value="7">Connecticut</option>
+                <option value="8">Delaware</option>
+                <option value="9">Florida</option>
+                <option value="10">Georgia</option>
+                <option value="11">Hawaii</option>
+                <option value="12">Idaho</option>
+                <option value="13">Illinois</option>
+                <option value="14">Indiana</option>
+                <option value="15">Iowa</option>
+                <option value="16">Kansas</option>
+                <option value="17">Kentucky</option>
+                <option value="18">Louisiana</option>
+                <option value="19">Maine</option>
+                <option value="20">Maryland</option>
+                <option value="21">Massachusetts</option>
+                <option value="22">Michigan</option>
+                <option value="23">Minnesota</option>
+                <option value="24">Mississippi</option>
+                <option value="25">Missouri</option>
+                <option value="26">Montana</option>
+                <option value="27">Nebraska</option>
+                <option value="28">Nevada</option>
+                <option value="29">New Hampshire</option>
+                <option value="30">New Jersey</option>
+                <option value="31">New Mexico</option>
+                <option value="32">New York</option>
+                <option value="33">North Carolina</option>
+                <option value="34">North Dakota</option>
+                <option value="35">Ohio</option>
+                <option value="36">Oklahoma</option>
+                <option value="37">Oregon</option>
+                <option value="38">Pennsylvania</option>
+                <option value="39">Rhode Island</option>
+                <option value="40">South Carolina</option>
+                <option value="41">South Dakota</option>
+                <option value="42">Tennessee</option>
+                <option value="43">Texas</option>
+                <option value="44">Utah</option>
+                <option value="45">Vermont</option>
+                <option value="46">Virginia</option>
+                <option value="47">Washington</option>
+                <option value="48">West Virginia</option>
+                <option value="49">Wisconsin</option>
+                <option value="50">Wyoming</option>
             </select>
+            <br>
+            <label for="discoveredcode">How did you find out about us?</label>
+            <select id="discoveredcode" name="discoveredcode" required>
+                <option value="" disabled selected>-- Select --</option>
+                <option value="7">Other</option>
+                <option value="1">Our Facebook</option>
+                <option value="2">Podcasts</option>
+                <option value="3">Events</option>
+                <option value="4">Word of Mouth</option>
+                <option value="5">Our Website</option>
+                <option value="6">Other Social Media</option>
+            </select>
+            <br>
+            <label for="expectedparticipants">How many people do you expect to participate?</label>
+            <input type="number" id="expectedparticipants" name="expectedparticipants" min="1" required>
+            <br>
+            <label for="servicetypecode">What kind of service would you like to do?</label>
+            <select id="servicetypecode" name="servicetypecode" onchange="toggleSewingQuestions(this.value)" required>
+                <option value="" disabled selected>-- Select --</option>
+                <option value="1">Sewing</option>
+                <option value="2">Non-Sewing</option>
+                <option value="3">Both</option>
+            </select>
+            <br>
             <div class="sewing-questions">
-                <h3>Sewing Project Details</h3>
-                <label for="basic-sewing-skills">How many of said people have basic sewing skills?</label>
-                <input type="number" id="basic-sewing-skills" name="basicSewingSkills" min="0">
-                <label for="advanced-sewing-skills">How many of said people have advanced sewing skills?</label>
-                <input type="number" id="advanced-sewing-skills" name="advancedSewingSkills" min="0">
-                <label for="sewing-machines">How many sewing machines can you bring?</label>
-                <input type="number" id="sewing-machines" name="sewingMachines" min="0">
-                <label for="sergers">How many sergers can you bring?</label>
-                <input type="number" id="sergers" name="sergers" min="0">
+              <h3>Sewing Project Details</h3>
+              <label for="basicskills">How many participants have basic sewing skills?</label>
+              <input type="number" id="basicskills" name="basicskills" min="0">
+              <label for="advanced">How many participants have advanced sewing skills?</label>
+              <input type="number" id="advanced" name="advanced" min="0">
+              <label for="sewingmachines">How many sewing machines can you bring?</label>
+              <input type="number" id="sewingmachines" name="sewingmachines" min="0">
+              <label for="sergers">How many sergers can you bring?</label>
+              <input type="number" id="sergers" name="sergers" min="0">
             </div>
+            <input type="hidden" name="payfor" value="false">
+            <label for="payfor">Would you be interested in helping support the material costs for this event?</label>
+            <input type="checkbox" id="payfor" name="payfor" value="true">
+            <br>
+            <input type="hidden" name="storyshared" value="false">
+            <label for="storyshared">Do you want Jen to share her story with your group?</label>
+            <input type="checkbox" id="storyshared" name="storyshared" value="true">
+            <br>
+            <input type="hidden" name="newsletter" value="false">
+            <label for="newsletter">Do you want receive monthly newsletters with Turtle Shelter Project updates?</label>
+            <input type="checkbox" id="newsletter" name="newsletter" value="true">
+            <br>
+            <label for="comments">Extra comments:</label>
+            <input type="text" id="comments" name="comments" placeholder="comments">
+            <br>
+            <input type="hidden" id="status" name="status" value="Pending">
             <button type="submit" style="margin-top: 20px;">Submit</button>
         </form>
-    </div>
+      </div>
   </div>
   <div class="card">
     <div class="card-header">Volunteer From Home</div>
