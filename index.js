@@ -137,41 +137,6 @@ app.get('/logout', (req, res) => {
     });
 });
 
-
-// Handle Account Creation Form Submission
-app.post('/create-account', (req, res) => {
-    const { firstname, lastname, email, phone, city, state, discoveredcode, skilllevelcode, commithours, traveldistance, leading, newsletter, login, password, confirmpassword } = req.body;
-
-    if (password !== confirmpassword) {
-        return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
-    }
-
-    knex('users')
-        .insert({
-            firstname: firstname.toLowerCase(),
-            lastname: lastname.toLowerCase(),
-            email,
-            phone: phone,
-            city,
-            statecode: parseInt(state, 10),
-            discoveredcode: parseInt(discoveredcode, 10),
-            skilllevelcode: parseInt(skilllevelcode, 10),
-            commithours: parseInt(commithours, 10),
-            traveldistance: parseInt(traveldistance, 10),
-            is_leading: leading === 'true',
-            newsletter: newsletter === 'true',
-            login,
-            password,
-            is_admin: false
-        })
-        .then(() => res.send('Account created successfully!'))
-        .catch(err => {
-            console.error("Error creating account:", err);
-            res.render("login", { error: "An unexpected error occurred during account creation. Please try again.", title: "Create Account - Turtle Shelter Project" });
-        });
-});
-
-
 // === Protected Pages ===
 
 // Volunteer Landing Page
@@ -303,7 +268,7 @@ app.post('/create-account', (req, res) => {
     const firstname = req.body.firstname || ' ';
     const lastname = req.body.lastname || ' '; 
     const email = req.body.email || ' '; 
-    const phone = req.body.phone || ' '; 
+    const phone = req.body.phone; 
     const city = req.body.city;
     const startdate = req.body.startdate || new Date().toISOString().split('T')[0];
     const statecode = parseInt(req.body.statecode, 10); 
