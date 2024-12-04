@@ -448,3 +448,185 @@ footer .contact-info a:hover {
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+
+
+/* Admin Table Styling */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    text-align: left;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.admin-table th, .admin-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.admin-table th {
+    background-color: #008080;
+    color: white;
+}
+
+.admin-table tr:nth-child(even) {
+    background-color: #f4f4f9;
+}
+
+.admin-table tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Admin Table Select Input for Admin Status */
+.admin-table select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Delete Button Styling */
+.delete-btn {
+    background-color: #FF4C4C;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.delete-btn:hover {
+    background-color: #FF1C1C;
+}
+
+/* Error Message Styling */
+.error-message {
+    background-color: #FFDDDD;
+    color: #FF0000;
+    padding: 10px;
+    border: 1px solid #FF4C4C;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+/* Header Styling for Admin Management */
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin: 20px 0;
+}
+
+/* Table Container Styling */
+.table-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Edit Event Form Styling */
+.edit-event-form {
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+.edit-event-form label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+.edit-event-form input,
+.edit-event-form select {
+    width: calc(100% - 20px);
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.edit-event-form button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-event-form button:hover {
+    background-color: #0056B3;
+}
+
+/* Table Styles for Events Management */
+.event-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.event-table th, .event-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.event-table th {
+    background-color: #007BFF;
+    color: white;
+}
+
+.event-table tr:nth-child(even) {
+    background-color: #f4f4f9;
+}
+
+.event-table select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.delete-btn {
+    background-color: #FF4B4B;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.delete-btn:hover {
+    background-color: #d13838;
+}
+
+.edit-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-btn:hover {
+    background-color: #218838;
+}

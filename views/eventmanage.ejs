@@ -10,12 +10,89 @@
 <body>
     <!-- Nav Bar -->
     <%- include("partials/adminnavbar") %>
-<div class="main-content">
 
+    <div class="main-content">
+        <div class="table-container">
+            <h1>Manage Events</h1>
 
-</div>
+            <% if (error) { %>
+                <div class="error-message"><%= error %></div>
+            <% } %>
+
+            <table class="event-table">
+                <thead>
+                    <tr>
+                        <th>Event Code</th>
+                        <th>Organization</th>
+                        <th>Start Time</th>
+                        <th>Stop Time</th>
+                        <th>Contact Name</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% events.forEach(event => { %>
+                        <% if (event.status !== 'completed') { %> <!-- Hide events that are marked as completed -->
+                            <tr>
+                                <td><%= event.eventcode %></td>
+                                <td><%= event.organization %></td>
+                                <td><%= event.eventstarttime %></td>
+                                <td><%= event.eventstoptime %></td>
+                                <td><%= event.orgfirstname %> <%= event.orglastname %></td>
+                                <td>
+                                    <form action="/update-event-status/<%= event.eventcode %>" method="POST">
+                                        <select name="status" onchange="this.form.submit()">
+                                            <option value="pending" <%= event.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                                            <option value="in-progress" <%= event.status === 'in-progress' ? 'selected' : '' %>>In Progress</option>
+                                            <option value="completed" <%= event.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                                        </select>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="/delete-event/<%= event.eventcode %>" method="POST" style="display:inline;">
+                                        <button type="submit" class="delete-btn">Delete</button>
+                                    </form>
+                                    <button class="edit-btn" onclick="toggleEditForm('<%= event.eventcode %>')">Edit</button>
+                                </td>
+                            </tr>
+                            <tr id="edit-form-<%= event.eventcode %>" style="display:none;">
+                                <td colspan="7">
+                                    <form action="/edit-event/<%= event.eventcode %>" method="POST" class="edit-event-form">
+                                        <label>Organization Name:</label>
+                                        <input type="text" name="organization" value="<%= event.organization %>">
+                                        <label>Start Time:</label>
+                                        <input type="datetime-local" name="eventstarttime" value="<%= new Date(event.eventstarttime).toISOString().slice(0,16) %>">
+                                        <label>Stop Time:</label>
+                                        <input type="datetime-local" name="eventstoptime" value="<%= new Date(event.eventstoptime).toISOString().slice(0,16) %>">
+                                        <label>Contact Name:</label>
+                                        <input type="text" name="orgfirstname" value="<%= event.orgfirstname %>">
+                                        <input type="text" name="orglastname" value="<%= event.orglastname %>">
+                                        <label>Status:</label>
+                                        <select name="status">
+                                            <option value="pending" <%= event.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                                            <option value="in-progress" <%= event.status === 'in-progress' ? 'selected' : '' %>>In Progress</option>
+                                            <option value="completed" <%= event.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                                        </select>
+                                        <button type="submit">Save Changes</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% } %>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <!-- Footer -->
     <%- include("partials/footer") %>
+
+    <script>
+        function toggleEditForm(eventCode) {
+            const formRow = document.getElementById(`edit-form-${eventCode}`);
+            formRow.style.display = formRow.style.display === 'none' ? '' : 'none';
+        }
+    </script>
 </body>
 </html>
