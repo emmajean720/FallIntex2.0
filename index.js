@@ -199,8 +199,37 @@ app.post('/delete-user/:usercode', isAuthenticated, isAdmin, (req, res) => {
 // Event Management Page - McKenna
 app.get('/eventmanage', isAuthenticated, isAdmin, (req, res) => {
     knex('event')
-        .join('eventsummary', 'event.eventsummarycode', 'eventsummary.eventsummarycode')  // Join eventsummary table on eventcode
-        .select('event.*', 'eventsummary.*')  // Select all columns from both tables
+        .leftJoin('eventsummary', 'event.eventcode', 'eventsummary.eventcode')  // Join eventsummary table on eventcode
+        .select('event.eventcode', 
+            'event.organization', 
+            'event.eventstarttime',
+            'event.eventstoptime',
+            'event.orgfirstname',
+            'event.orglastname',
+            'event.status',
+            'eventsummary.eventsummarycode' || 0, 
+            'eventsummary.actualparticipation' || 0, 
+            'eventsummary.vestcut' || 0, 
+            'eventsummary.vestpin' || 0, 
+            'eventsummary.collarcut' || 0, 
+            'eventsummary.vestsewn' || 0, 
+            'eventsummary.collarpin' || 0, 
+            'eventsummary.collarsewn' || 0, 
+            'eventsummary.envelopecut' || 0, 
+            'eventsummary.envelopesewn' || 0, 
+            'eventsummary.envelopecut' || 0, 
+            'eventsummary.envelopepin' || 0, 
+            'eventsummary.pocketcut' || 0, 
+            'eventsummary.pocketssewn' || 0, 
+            'eventsummary.pocketpin' || 0, 
+            'eventsummary.xscompleted' || 0, 
+            'eventsummary.scompleted' || 0, 
+            'eventsummary.mcompleted' || 0, 
+            'eventsummary.lcompleted' || 0, 
+            'eventsummary.xlcompleted' || 0, 
+            'eventsummary.xxlcompleted' || 0, 
+            'eventsummary.xxxlcompleted' || 0, 
+            'eventsummary.xxxxlcompleted' || 0,)  // Select all columns from both tables
         .whereNot('event.status', 'completed')
         .then(events => {
             res.render("eventmanage", { error: null, title: "Event Management - Turtle Shelter Project", events });
@@ -240,7 +269,7 @@ app.post('/delete-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
         });
 });
 
-// Edit Event
+// Edit Event OG
 app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
     const { eventcode } = req.params;
     const { organization, eventstarttime, eventstoptime, orgfirstname, orglastname, status } = req.body;
@@ -255,41 +284,44 @@ app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
         });
 });
 
-// Add event summary details - McKenna
+
+// Add event summary details - McKenna OG
 app.post('/complete-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
+    console.log('Route reached');
+    console.log('Event Code:', req.params.eventcode);
+    console.log('Request Body:', req.body);
     const { eventcode } = req.params;
     const { actualparticipation, vestcut, vestpin, vestsewn, collarcut, collarpin, collarsewn, envelopecut, envelopepin, envelopesewn, pocketcut, pocketpin, pocketssewn, xscompleted, scompleted, mcompleted, lcompleted, xlcompleted, xxlcompleted, xxxlcompleted, xxxxlcompleted, status } = req.body;
     knex('eventsummary')
         .insert({
-            actualparticipation: parseInt(actualparticipation, 10),
-            vestcut: parseInt(vestcut, 10),
-            vestpin: parseInt(vestpin, 10),
-            vestsewn: parseInt(vestsewn, 10),
-            collarcut: parseInt(collarcut, 10),
-            collarpin: parseInt(collarpin, 10),
-            collarsewn: parseInt(collarsewn, 10),
-            envelopecut: parseInt(envelopecut, 10),
-            envelopepin: parseInt(envelopepin, 10),
-            envelopesewn: parseInt(envelopesewn, 10),
-            pocketcut: parseInt(pocketcut, 10),
-            pocketpin: parseInt(pocketpin, 10),
-            pocketssewn: parseInt(pocketssewn, 10),
-            xscompleted: parseInt(xscompleted, 10),
-            scompleted: parseInt(scompleted, 10),
-            mcompleted: parseInt(mcompleted, 10),
-            lcompleted: parseInt(lcompleted, 10),
-            xlcompleted: parseInt(xlcompleted, 10),
-            xxlcompleted: parseInt(xxlcompleted, 10),
-            xxxlcompleted: parseInt(xxxlcompleted, 10),
-            xxxxlcompleted: parseInt(xxxxlcompleted, 10)
+            actualparticipation: parseInt(actualparticipation, 10) || 0,
+            vestcut: parseInt(vestcut, 10) || 0,
+            vestpin: parseInt(vestpin, 10) || 0,
+            vestsewn: parseInt(vestsewn, 10) || 0,
+            collarcut: parseInt(collarcut, 10) || 0,
+            collarpin: parseInt(collarpin, 10) || 0,
+            collarsewn: parseInt(collarsewn, 10) || 0,
+            envelopecut: parseInt(envelopecut, 10) || 0,
+            envelopepin: parseInt(envelopepin, 10) || 0,
+            envelopesewn: parseInt(envelopesewn, 10) || 0,
+            pocketcut: parseInt(pocketcut, 10) || 0,
+            pocketpin: parseInt(pocketpin, 10) || 0,
+            pocketssewn: parseInt(pocketssewn, 10) || 0,
+            xscompleted: parseInt(xscompleted, 10) || 0,
+            scompleted: parseInt(scompleted, 10) || 0,
+            mcompleted: parseInt(mcompleted, 10) || 0,
+            lcompleted: parseInt(lcompleted, 10) || 0,
+            xlcompleted: parseInt(xlcompleted, 10) || 0,
+            xxlcompleted: parseInt(xxlcompleted, 10) || 0,
+            xxxlcompleted: parseInt(xxxlcompleted, 10) || 0,
+            xxxxlcompleted: parseInt(xxxxlcompleted, 10) || 0,
+            eventcode: eventcode
         })
-        .returning('eventsummarycode')
-        .then(([eventsummaryid]) => {
+        .then(() => {
             return knex('event')
             .where('eventcode', eventcode)  // Find the event by its eventcode
             .update({
                 status: 'completed',  // Update the status field
-                eventsummarycode: eventsummaryid
             });
             res.send('Event summary uploaded successfully!')}
         )
