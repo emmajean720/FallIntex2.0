@@ -311,6 +311,7 @@ app.post('/complete-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
 
 // Handle Account Creation Form Submission - Kylee
 app.post('/create-account', (req, res) => {
+    let dayofWeek = ["m", "t","w", "th", "f", "s"];
     const firstname = req.body.firstname || ' ';
     const lastname = req.body.lastname || ' '; 
     const email = req.body.email || ' '; 
@@ -328,6 +329,22 @@ app.post('/create-account', (req, res) => {
     const password = req.body.password;
     const confirmpassword = req.body.confirmpassword;
     const admin = req.body.admin;
+    let iCount = 0
+
+// make the codes work
+    for (let i = 0; iCount < dayofWeek.length; i++) {
+    console.log(`Day: ${daysOfWeek[i]}, iCount: ${iCount}`);
+
+    // Loop through timesOfDay for each day (optional)
+    for (let j = 0; j < timesOfDay.length; j++) {
+        console.log(`  Time: ${timesOfDay[j]}`);
+    }
+
+    // Increment iCount by 8
+    iCount += 8;
+}
+            
+
     if (password !== confirmpassword) {
         return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
     }

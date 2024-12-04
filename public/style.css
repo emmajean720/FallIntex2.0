@@ -666,3 +666,12 @@ h1 {
     text-align: left;
 }
 
+.day-label {
+    font-weight: bold;
+    text-align: left;
+}
+
+.day-checkbox {
+    text-align: left;
+    font-weight: normal;
+}
