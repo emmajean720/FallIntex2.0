@@ -38,16 +38,17 @@
                                 <td><%= event.eventstoptime %></td>
                                 <td><%= event.orgfirstname %> <%= event.orglastname %></td>
                                 <td>
-                                    <form action="/update-event-status/<%= event.eventcode %>" method="POST">
+                                    <form action="/update-event-status/<%= event.eventcode%>" method="POST">
                                         <select name="status" onchange="this.form.submit()">
                                             <option value="pending" <%= event.status === 'pending' ? 'selected' : '' %>>Pending</option>
                                             <option value="approved" <%= event.status === 'approved' ? 'selected' : '' %>>Approved</option>
                                             <option value="declined" <%= event.status === 'declined' ? 'selected' : '' %>>Declined</option>
+                                            <option value="completed" <%= event.status === 'completed' ? 'selected' : '' %>>Completed</option>
                                         </select>
                                     </form>
                                 </td>
                                 <td>
-                                    <button class="complete-btn" onclick="toggleCompleteForm('<%= event.eventsummarycode %>')">Mark as Completed</button>
+                                    <button class="complete-btn" onclick="toggleCompleteForm('<%= event.eventcode %>')">Mark as Completed</button>
                                     <form action="/delete-event/<%= event.eventcode %>" method="POST" style="display:inline;">
                                         <button type="submit" class="delete-btn">Delete</button>
                                     </form>
@@ -69,67 +70,70 @@
                                         <label>Status:</label>
                                         <select name="status">
                                             <option value="pending" <%= event.status === 'pending' ? 'selected' : '' %>>Pending</option>
-                                            <option value="in-progress" <%= event.status === 'in-progress' ? 'selected' : '' %>>In Progress</option>
+                                            <option value="approved" <%= event.status === 'approved' ? 'selected' : '' %>>Approved</option>
+                                            <option value="declined" <%= event.status === 'declined' ? 'selected' : '' %>>Declined</option>
                                             <option value="completed" <%= event.status === 'completed' ? 'selected' : '' %>>Completed</option>
                                         </select>
                                         <button type="submit">Save Changes</button>
                                     </form>
                                 </td>
                             </tr>
-                            <tr id="complete-form-<%= event.eventsummarycode %>" style="display:none;">
+
+                            <tr id="complete-form-<%= event.eventcode %>" style="display:none;">
                                 <td colspan="7">
-                                    <form action="/complete-event/<%= event.eventsummarycode %>" method="POST" class="edit-event-form">
+                                    <form action="/complete-event/<%= event.eventcode %>" method="POST" class="edit-event-form">
                                         <label>Actual number of participants:</label>
-                                        <input type="number" name="actualparticipation" value="<%= event.actualparticipation %>">
-                                        <p>Ves
+                                        <input type="number" name="actualparticipation" value="<%= event.actualparticipation %>" placeholder="0">
+                                        <p>Vests:
                                             <label>Cut:</label>
-                                            <input type="number" name="vestcut" value="<%= event.vestcut %>">
+                                            <input type="number" name="vestcut" value="<%= event.vestcut %>" placeholder="0">
                                             <label>Pinned:</label>
-                                            <input type="number" name="vestpin" value="<%= event.vestpin %>">
+                                            <input type="number" name="vestpin" value="<%= event.vestpin %>" placeholder="0">
                                             <label>Sewn:</label>
-                                            <input type="number" name="vestsewn" value="<%= event.vestsewn %>">
+                                            <input type="number" name="vestsewn" value="<%= event.vestsewn %>" placeholder="0">
                                         <p>Collars:</p>
                                             <label>Cut:</label>
-                                            <input type="number" name="collarcut" value="<%= event.collarcut %>">
+                                            <input type="number" name="collarcut" value="<%= event.collarcut %>" placeholder="0">
                                             <label>Pinned:</label>
-                                            <input type="number" name="collarpin" value="<%= event.collarpin %>">
+                                            <input type="number" name="collarpin" value="<%= event.collarpin %>" placeholder="0">
                                             <label>Sewn:</label>
-                                            <input type="number" name="collarsewn" value="<%= event.collarsewn %>">
+                                            <input type="number" name="collarsewn" value="<%= event.collarsewn %>" placeholder="0">
                                         <p>Envelopes:</p>
                                             <label>Cut:</label>
-                                            <input type="number" name="envelopecut" value="<%= event.envelopecut %>">
+                                            <input type="number" name="envelopecut" value="<%= event.envelopecut %>" placeholder="0">
                                             <label>Pinned:</label>
-                                            <input type="number" name="envelopepin" value="<%= event.envelopepin %>">
+                                            <input type="number" name="envelopepin" value="<%= event.envelopepin %>" placeholder="0">
                                             <label>Sewn:</label>
-                                            <input type="number" name="envelopesewn" value="<%= event.envelopesewn %>">
+                                            <input type="number" name="envelopesewn" value="<%= event.envelopesewn %>" placeholder="0">
                                         <p>Pockets:</p>
                                             <label>Cut:</label>
-                                            <input type="number" name="pocketcut" value="<%= event.pocketcut %>">
+                                            <input type="number" name="pocketcut" value="<%= event.pocketcut %>" placeholder="0">
                                             <label>Pinned:</label>
-                                            <input type="number" name="pocketpin" value="<%= event.pocketpin %>">
+                                            <input type="number" name="pocketpin" value="<%= event.pocketpin %>" placeholder="0">
                                             <label>Sewn:</label>
-                                            <input type="number" name="pocketssewn" value="<%= event.pocketssewn %>">
+                                            <input type="number" name="pocketssewn" value="<%= event.pocketssewn %>" placeholder="0">
                                         <p>Completed Vests:</p>
                                             <label>X-Small:</label>
-                                            <input type="number" name="xscompleted" value="<%= event.xscompleted %>">
+                                            <input type="number" name="xscompleted" value="<%= event.xscompleted %>" placeholder="0">
                                             <label>Small:</label>
-                                            <input type="number" name="scompleted" value="<%= event.scompleted %>">
+                                            <input type="number" name="scompleted" value="<%= event.scompleted %>" placeholder="0">
                                             <label>Medium:</label>
-                                            <input type="number" name="mcompleted" value="<%= event.mcompleted %>">
+                                            <input type="number" name="mcompleted" value="<%= event.mcompleted %>" placeholder="0">
                                             <label>Large:</label>
-                                            <input type="number" name="lcompleted" value="<%= event.lcompleted %>">
+                                            <input type="number" name="lcompleted" value="<%= event.lcompleted %>" placeholder="0">
                                             <label>X-Large:</label>
-                                            <input type="number" name="xlcompleted" value="<%= event.xlcompleted %>">
+                                            <input type="number" name="xlcompleted" value="<%= event.xlcompleted %>" placeholder="0">
                                             <label>XX-Large:</label>
-                                            <input type="number" name="xxlcompleted" value="<%= event.xxlcompleted %>">
+                                            <input type="number" name="xxlcompleted" value="<%= event.xxlcompleted %>" placeholder="0">
                                             <label>XXX-Large:</label>
-                                            <input type="number" name="xxxlcompleted" value="<%= event.xxxlcompleted %>">
+                                            <input type="number" name="xxxlcompleted" value="<%= event.xxxlcompleted  %>" placeholder="0">
                                             <label>XXX-Large:</label>
-                                            <input type="number" name="xxxxlcompleted" value="<%= event.xxxxlcompleted %>">
+                                            <input type="number" name="xxxxlcompleted" value="<%= event.xxxxlcompleted %>" placeholder="0">
                                         <button type="submit">Save Changes</button>
                                     </form>
                                 </td>
                             </tr>
+
                         <% } %>
                     <% }) %>
                 </tbody>
