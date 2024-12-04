@@ -8,14 +8,15 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
   <script>
-    function toggleSewingQuestions(value) {
-        const sewingQuestions = document.querySelector('.sewing-questions');
-        if (value === "sewing") {
-            sewingQuestions.style.display = 'block';
-        } else {
-            sewingQuestions.style.display = 'none';
-        }
+function toggleSewingQuestions(value) {
+    const sewingQuestions = document.querySelector('.sewing-questions');
+    // Check if the selected value is either "Sewing" (1) or "Both" (3)
+    if (value === "1" || value === "3") {
+        sewingQuestions.style.display = 'block'; // Show the sewing questions
+    } else {
+        sewingQuestions.style.display = 'none'; // Hide the sewing questions
     }
+}
 </script>
 </head>
 <body>
@@ -163,13 +164,14 @@
 
             <label for="servicetypecode">What kind of service would you like to do?</label>
             <select id="servicetypecode" name="servicetypecode" onchange="toggleSewingQuestions(this.value)" required>
-                <option value="" disabled selected>-- Select --</option>
-                <option value="1">Sewing</option>
-                <option value="2">Non-Sewing</option>
-                <option value="3">Both</option>
-            </select>
+              <option value="" disabled selected>-- Select --</option>
+              <option value="1">Sewing</option>
+              <option value="2">Non-Sewing</option>
+              <option value="3">Both</option>
+          </select>
             <br>
 
+            <!-- Sewing Questions after drop down -->
             <div class="sewing-questions">
               <h3>Sewing Project Details</h3>
               <label for="basicskills">How many participants have basic sewing skills?</label>
@@ -185,22 +187,30 @@
               <input type="number" id="sergers" name="sergers" min="0">
 
             </div>
-            <input type="hidden" name="payfor" value="false">
-            <label for="payfor">Would you like to help support the material costs for this event?</label>
-            <input type="checkbox" id="payfor" name="payfor" value="true">
+            <label>Would you like to help support the material costs for this event?</label>
+            <label>
+            <input type="radio" name="payfor" value="true"> Yes
+            </label>
+            <label>
+            <input type="radio" name="payfor" value="false"> No
+            </label>
             <br>
 
-            <input type="hidden" name="storyshared" value="false">
-            <label for="storyshared">Do you want Jen to share her story with your group?</label>
-            <input type="checkbox" id="storyshared" name="storyshared" value="true">
+            <label>Do you want Jen to share her story with your group?</label>
+            <label>
+            <input type="radio" name="storyshared" value="true"> Yes
+            </label>
+            <label>
+            <input type="radio" name="storyshared" value="false"> No
+            </label>
             <br>
 
             <label>Do you want to receive monthly newsletters with updates about the Turtle Shelter Project?</label>
             <label>
-            <input type="radio" name="newsletter" value="true" <%= pokemon.gender === 'M' ? 'checked' : '' %>> Yes
+            <input type="radio" name="newsletter" value="true"> Yes
             </label>
             <label>
-            <input type="radio" name="newsletter" value="false" <%= pokemon.gender === 'F' ? 'checked' : '' %>> No
+            <input type="radio" name="newsletter" value="false"> No
             </label>
             <br>
 
@@ -208,7 +218,7 @@
             <input type="text" id="comments" name="comments" placeholder="comments">
             <br>
             
-            <input type="hidden" id="status" name="status" value="Pending">
+            <input type="hidden" id="status" name="status" value="pending">
             <button type="submit" style="margin-top: 20px;">Submit</button>
         </form>
       </div>
