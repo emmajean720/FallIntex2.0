@@ -133,7 +133,7 @@
     </div>
 
     <script>
-        // Toggle forms visibility
+        // Toggle forms visibility on screen
         const loginForm = document.getElementById('login-form');
         const createAccountForm = document.getElementById('create-account-form');
         const showCreateAccountBtn = document.getElementById('show-create-account-btn');
@@ -148,6 +148,20 @@
             createAccountForm.style.display = 'none';
             loginForm.style.display = 'block';
         });
+
+        // Toggle forms visibility based on query parameters ( from other pages)
+        document.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const formType = params.get('form');
+
+        if (formType === 'create') {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('create-account-form').style.display = 'block';
+        } else if (formType === 'login') {
+            document.getElementById('create-account-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+    }
+});
 
         // Generate the inline current date
         document.addEventListener('DOMContentLoaded', () => {

@@ -137,6 +137,7 @@ app.get('/logout', (req, res) => {
     });
 });
 
+
 // Handle Account Creation Form Submission
 app.post('/create-account', (req, res) => {
     const { firstname, lastname, email, phone, city, state, discoveredcode, skilllevelcode, commithours, traveldistance, leading, newsletter, login, password, confirmpassword } = req.body;
@@ -169,6 +170,7 @@ app.post('/create-account', (req, res) => {
             res.render("login", { error: "An unexpected error occurred during account creation. Please try again.", title: "Create Account - Turtle Shelter Project" });
         });
 });
+
 
 // === Protected Pages ===
 
