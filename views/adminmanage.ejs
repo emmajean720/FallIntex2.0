@@ -43,7 +43,7 @@
                             <td><%= user.email %></td>
                             <td><%= user.phone %></td>
                             <td><%= user.city %></td>
-                            <td><%= user.statecode %></td>
+                            <td><%= user.state_abbr %></td> <!-- Updated to use state_abbr -->
                             <td>
                                 <form action="/update-admin-status/<%= user.usercode %>" method="POST">
                                     <select name="is_admin" onchange="this.form.submit()">
