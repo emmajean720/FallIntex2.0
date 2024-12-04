@@ -132,34 +132,34 @@ app.get('/logout', (req, res) => {
     });
 });
 
-// Handle Account Creation Form Submission
-app.post('/create-account', (req, res) => {
-    const { firstname, lastname, email, city, state, phonenumber, username, password, confirmPassword } = req.body;
+// // Handle Account Creation Form Submission
+// app.post('/create-account', (req, res) => {
+//     const { firstname, lastname, email, city, state, phonenumber, username, password, confirmPassword } = req.body;
 
-    if (password !== confirmPassword) {
-        return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
-    }
+//     if (password !== confirmPassword) {
+//         return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
+//     }
 
-    knex('users')
-        .insert({
-            firstname,
-            lastname,
-            email,
-            phone: phonenumber,
-            city,
-            statecode: state,
-            login: username,
-            password, // Store plaintext password (Note: NOT SECURE)
-            is_admin: false // Default role for new users
-        })
-        .then(() => {
-            res.send('Account created successfully!');
-        })
-        .catch(err => {
-            console.error("Error creating account:", err);
-            res.render("login", { error: "An unexpected error occurred during account creation. Please try again.", title: "Create Account - Turtle Shelter Project" });
-        });
-});
+//     knex('users')
+//         .insert({
+//             firstname,
+//             lastname,
+//             email,
+//             phone: phonenumber,
+//             city,
+//             statecode: state,
+//             login: username,
+//             password, // Store plaintext password (Note: NOT SECURE)
+//             is_admin: false // Default role for new users
+//         })
+//         .then(() => {
+//             res.send('Account created successfully!');
+//         })
+//         .catch(err => {
+//             console.error("Error creating account:", err);
+//             res.render("login", { error: "An unexpected error occurred during account creation. Please try again.", title: "Create Account - Turtle Shelter Project" });
+//         });
+// });
 
 // Admin Management Page (Protected Route)
 // State abbreviations mapping
