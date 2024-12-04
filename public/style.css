@@ -660,3 +660,9 @@ h1 {
 .edit-btn:hover {
     background-color: #008080;
 }
+
+.radio-button-form {
+    font-weight: bold;
+    text-align: left;
+}
+
