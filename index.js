@@ -322,12 +322,12 @@ app.post('/create-account', (req, res) => {
     const skilllevelcode = parseInt(req.body.skilllevelcode, 10);
     const commithours = parseInt(req.body.commithours, 10);
     const traveldistance = parseInt(req.body.traveldistance, 10);
-    const is_leading = req.body.leading === 'true';
-    const newsletter = req.body.newsletter === 'true';
+    const is_leading = req.body.leading;
+    const newsletter = req.body.newsletter;
     const login = req.body.login;
     const password = req.body.password;
     const confirmpassword = req.body.confirmpassword;
-    const admin = req.body.admin === 'false'
+    const admin = req.body.admin;
     if (password !== confirmpassword) {
         return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
     }
