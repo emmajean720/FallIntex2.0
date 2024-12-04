@@ -1,19 +1,95 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar</title>
+    <title>Admin Calendar</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
+    <style>
+        .calendar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+
+        .calendar-header {
+            background-color: #008080;
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .event-list {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .event-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .calendar-embed {
+            width: 100%;
+            height: 800px;
+            border: none;
+        }
+    </style>
 </head>
 <body>
     <!-- Nav Bar -->
     <%- include("partials/adminnavbar") %>
-<div class="main-content">
 
-
-</div>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="calendar-container">
+            <div class="calendar-header">Admin Event Calendar</div>
+            
+            <!-- Display Events List -->
+            <% if (events && events.length > 0) { %>
+                <div class="event-list">
+                    <h3>Events for the Next Week:</h3>
+                    <% events.forEach(function(event) { %>
+                        <div class="event-item">
+                            <strong>Organization:</strong> <%= event.organization %><br>
+                            <strong>Event Date:</strong> <%= new Date(event.eventstarttime).toLocaleDateString() %><br>
+                            <strong>Event Time:</strong> <%= new Date(event.eventstarttime).toLocaleTimeString() %> - <%= new Date(event.eventstoptime).toLocaleTimeString() %><br>
+                            <strong>Organizer:</strong> <%= event.orgfirstname %> <%= event.orglastname %><br>
+                            <strong>Email:</strong> <a href="mailto:<%= event.orgemail %>"><%= event.orgemail %></a><br>
+                            <strong>Phone:</strong> <a href="tel:<%= event.orgphone %>"><%= event.orgphone %></a>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <div class="event-list">
+                    <p>No events scheduled for the next week.</p>
+                </div>
+            <% } %>
+            
+            <!-- Embed Google Calendar -->
+            <iframe 
+                class="calendar-embed"
+                src="https://calendar.google.com/calendar/embed?src=your_calendar_id&ctz=your_timezone"
+                style="border: 0">
+            </iframe>
+        </div>
+    </div>
 
     <!-- Footer -->
     <%- include("partials/footer") %>

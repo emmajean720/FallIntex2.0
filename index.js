@@ -137,6 +137,7 @@ app.get('/logout', (req, res) => {
     });
 });
 
+
 // === Protected Pages ===
 
 // Volunteer Landing Page
@@ -263,6 +264,7 @@ app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
     }
 })();
 
+=======
 // Handle Account Creation Form Submission - Kylee
 app.post('/create-account', (req, res) => {
     const firstname = req.body.firstname || ' ';
@@ -307,10 +309,42 @@ app.post('/create-account', (req, res) => {
         })
         .then(() => {
             res.redirect("/admin");
+
+//admin calendar route(luke):
+// app.get('/admincalendar', isAuthenticated, isAdmin, (req, res) => {
+//     // Fetch any required data for the calendar, for example events
+//     // Example: db('events').select('*').then(events => { ... })
+    
+//     res.render("admincalendar", { 
+//         error: null, 
+//         title: "Admin Calendar - Turtle Shelter Project",
+//         // events: fetchedEvents
+//     });
+// });
+
+app.get('/admincalendar', isAuthenticated, isAdmin, (req, res) => {
+    // Get today's date in the format needed for querying
+    const today = new Date().toISOString().split('T')[0]; // e.g., '2024-12-04'
+
+    // Fetch events from the database for the given day
+    knex('event') //
+    .select('*')
+    .where('eventstarttime', '>=', today) //Assuming eventstarttime is a timestamp or datetime column
+        .then(events => {
+            res.render("admincalendar", { 
+                error: null, 
+                title: "Admin Calendar - Turtle Shelter Project",
+                events: events // Pass fetched events to the template
+            });
+
         })
-        .catch(err => {
-            console.error("Error creating account:", err);
-            res.render("login", { error: "An unexpected error occurred during account creation. Please try again.", title: "Create Account - Turtle Shelter Project" });
+        .catch(error => {
+            console.error("Error fetching events:", error);
+            res.render("admincalendar", {
+                error: "Failed to load events",
+                title: "Admin Calendar - Turtle Shelter Project",
+                events: []
+            });
         });
 });
 
@@ -373,6 +407,7 @@ app.post('/eventrequest', (req, res) => {
         res.render("homepage", { error: "An unexpected error when trying to create the event. Please try again.", title: "Request Event - Turtle Shelter Project" });
     });
 })
+
 
 // ===== Start the Server =====
 app.listen(port, () => console.log(`Express App has started and server is listening on port ${port}!`));
