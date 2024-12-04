@@ -7,20 +7,144 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
+  <style>
+      /* Custom Styles for Volunteer Page */
+      .main-content {
+          max-width: 900px;
+          margin: 20px auto;
+          padding: 20px;
+          background-color: #ffffff;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+      }
+
+      h2 {
+          text-align: center;
+          font-size: 1.8em;
+          margin-bottom: 10px;
+          color: black;
+      }
+
+      .success-message {
+          text-align: center;
+          color: #28a745;
+          font-weight: bold;
+          margin-bottom: 15px;
+      }
+
+      .event-table-container {
+          margin-top: 30px;
+      }
+
+      .event-table {
+          width: 100%;
+          border-collapse: collapse;
+      }
+
+      .event-table th, .event-table td {
+          padding: 12px 15px;
+          border: 1px solid #ddd;
+          text-align: center;
+      }
+
+      .event-table th {
+          background-color: #008080;
+          color: white;
+          font-weight: bold;
+      }
+
+      .event-table tbody tr:nth-child(even) {
+          background-color: #f9f9f9;
+      }
+
+      .event-table tbody tr:hover {
+          background-color: #f1f1f1;
+      }
+
+      .sign-up-container {
+          text-align: center;
+          margin-top: 20px;
+      }
+
+      .sign-up-button, .view-my-events-button {
+          background-color: #008080;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          font-size: 1em;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          margin: 10px;
+      }
+
+      .sign-up-button:hover, .view-my-events-button:hover {
+          background-color: #008080;
+      }
+
+      .checkbox {
+          transform: scale(1.2);
+      }
+
+      .footer-spacing {
+          margin-top: 50px;
+      }
+  </style>
 </head>
 <body>
-          <!-- Nav Bar -->
-          <%- include("partials/navbar") %>
-  <!-- Main Content -->
-<div class="main-content">
-<h2>Welcome Thanks for Volunteering your time and talents!
-  We can't wait to save lives with you!
-</h2>
+    <!-- Nav Bar -->
+    <%- include("partials/navbar") %>
 
-</div>
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2>Welcome! Thanks for volunteering your time and talents! <br> We can't wait to save lives with you!</h2>
+
+        <% if (success) { %>
+            <div class="success-message"><%= success %></div>
+        <% } %>
+
+        <div class="event-table-container">
+            <h3>Available Events for Volunteers</h3>
+            <form action="/volunteerhome/signup" method="POST">
+                <table class="event-table">
+                    <thead>
+                        <tr>
+                            <th>Sign Up</th>
+                            <th>Organization</th>
+                            <th>Date</th>
+                            <th>Start Time</th>
+                            <th>Stop Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% events.forEach(event => { %>
+                            <tr>
+                                <td><input type="checkbox" class="checkbox" name="eventcodes" value="<%= event.eventcode %>"></td>
+                                <td><%= event.organization %></td>
+                                <td><%= new Date(event.eventstarttime).toLocaleDateString() %></td>
+                                <td><%= new Date(event.eventstarttime).toLocaleTimeString() %></td>
+                                <td><%= new Date(event.eventstoptime).toLocaleTimeString() %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                <div class="sign-up-container">
+                    <button type="submit" class="sign-up-button">Sign Up for Selected Events</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- View My Events Button -->
+        <div class="sign-up-container">
+            <a href="/myevents">
+                <button class="view-my-events-button">View My Events</button>
+            </a>
+        </div>
+    </div>
 
     <!-- Footer -->
-    <%- include("partials/footer") %>
-
+    <div class="footer-spacing">
+        <%- include("partials/footer") %>
+    </div>
 </body>
 </html>
