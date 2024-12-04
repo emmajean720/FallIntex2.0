@@ -30,36 +30,30 @@
         <h1>Create Account</h1>
         <form action="/create-account" method="POST">
             <div class="form-group">
-
                 <!-- First Name -->
                 <label for="firstname">First Name:</label>
                 <input type="text" id="firstname" name="firstname" required>
             </div>
-
             <!-- Last Name -->
             <div class="form-group">
                 <label for="lastname">Last Name:</label>
                 <input type="text" id="lastname" name="lastname" required>
             </div>
-
             <!-- Email -->
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
-
             <!-- Phone Number -->
             <div class="form-group">
-                <label for="phonenumber">Phone Number:</label>
-                <input type="tel" id="phonenumber" name="phonenumber">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" maxlength="14" placeholder="(123) 456-7890" required>
             </div>
-
             <!-- City -->
             <div class="form-group">
                 <label for="city">Home City:</label>
                 <input type="text" id="city" name="city">
             </div>
-
             <!-- State -->
             <div class="form-group">
                 <label for="statecode">Home State:</label>
@@ -121,16 +115,15 @@
                 <label for="discoveredcode">How did you find out about us?</label>
                 <select id="discoveredcode" name="discoveredcode" required>
                     <option value="" disabled selected>-- Select --</option>
-                    <option value="7">Other</option>
                     <option value="1">Our Facebook</option>
+                    <option value="6">Other Social Media</option>
                     <option value="2">Podcasts</option>
                     <option value="3">Events</option>
                     <option value="4">Word of Mouth</option>
                     <option value="5">Our Website</option>
-                    <option value="6">Other Social Media</option>
+                    <option value="7">Other</option>
                 </select>
             </div>
-
             <!-- Skill Level -->
             <div class="form-group">
                 <label for="skilllevelcode">How skilled are you at sewing?</label>
@@ -141,7 +134,6 @@
                     <option value="3">Advanced</option>
                 </select>
             </div>
-
             <!-- Hours They can Committ -->
             <div class="form-group">
                 <label for="commithours">Estimated hours you are able to volunteer per month:</label>
@@ -157,7 +149,6 @@
                   <option value="50">50+</option>
                 </select>
             </div>
-
             <!-- Distance they can travel -->
             <div class="form-group">
                 <label for="traveldistance">How far are you willing to travel for events? (miles)</label>
@@ -169,7 +160,6 @@
                   <option value="50">50+</option>
                 </select>
             </div>
-
             <!-- Can they lead an event -->
             <div class="form-group">
                 <input type="hidden" name="leading" value="false">
@@ -178,7 +168,6 @@
                 </label>
                 <br>
             </div>
-
             <!-- Newsletter Sign Up -->
             <div class="form-group">
                 <input type="hidden" name="newsletter" value="false">
@@ -187,20 +176,17 @@
                 </label>
                 <br>
             </div>
-
             <!-- Username/Login -->
             <div class="form-group">
                 <label for="login">Username:</label>
                 <input type="text" id="login" name="login" required>
             </div>
-
             <!-- Password -->
             <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
             <div class="form-group">
-
                 <!-- Confirm Password -->
                 <label for="confirm-password">Confirm Password:</label>
                 <input type="password" id="confirm-password" name="confirmpassword" required>
@@ -228,12 +214,10 @@
             createAccountForm.style.display = 'none';
             loginForm.style.display = 'block';
         });
-
         // Toggle forms visibility based on query parameters ( from other pages)
         document.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams(window.location.search);
         const formType = params.get('form');
-
         if (formType === 'create') {
             document.getElementById('login-form').style.display = 'none';
             document.getElementById('create-account-form').style.display = 'block';
@@ -242,11 +226,29 @@
             document.getElementById('login-form').style.display = 'block';
     }
 });
-
         // Generate the inline current date
         document.addEventListener('DOMContentLoaded', () => {
             const input = document.querySelector('#startdate');
             input.value = new Date().toISOString().split('T')[0];
+        });
+
+        // format phone number when its entered - Kylee Brown
+        const phoneInput = document.getElementById('phone');
+
+        phoneInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, ''); // Remove all non-numeric characters
+            if (value.length > 10) value = value.slice(0, 10); // Limit to 10 digits
+
+            // Format the value as (123) 456-7890
+            if (value.length > 6) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6)}`;
+            } else if (value.length > 3) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+            } else if (value.length > 0) {
+                value = `(${value}`;
+            }
+
+            e.target.value = value; // Update the input value with the formatted string
         });
     </script>
 </body>
