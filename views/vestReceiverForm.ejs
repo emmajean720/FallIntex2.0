@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 90vh;
+            padding: 20px;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 30px;
+        }
+
+        .form-container h1 {
+            text-align: center;
+            color: #444;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .form-group {
+            flex: 1 1 30%;
+            min-width: 200px;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="number"],
+        .form-container input[type="date"],
+        .form-container select {
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+
+        .form-container button[type="submit"] {
+        padding: 6px 12px; /* Adjusted padding for a smaller button */
+        background-color: #008080;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.9em; /* Smaller font size */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .form-container button[type="submit"]:hover {
+        background-color: #008080;
+    }
+
+        .success-message,
+        .error-message {
+            text-align: center;
+            font-size: 1em;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .success-message {
+            color: #155724;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+
+        .records-container {
+            width: 100%;
+            max-width: 1000px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .search-container input[type="text"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+            width: 200px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <!-- Include Admin Navigation Bar -->
+    <%- include("partials/adminnavbar") %>
+
+    <div class="main-content">
+        <!-- Form to Add Vest Receiver -->
+        <div class="form-container">
+            <h1>Add Vest Receiver</h1>
+
+            <% if (error) { %>
+                <div class="error-message"><%= error %></div>
+            <% } %>
+
+            <% if (success) { %>
+                <div class="success-message"><%= success %></div>
+            <% } %>
+
+            <form action="/adminvest-receiver" method="POST">
+                <div class="form-group">
+                    <label for="recfirstname">First Name:</label>
+                    <input type="text" id="recfirstname" name="recfirstname" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reclastname">Last Name:</label>
+                    <input type="text" id="reclastname" name="reclastname" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date Passed Out:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                        <option value="O">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="size">Size:</label>
+                    <select id="size" name="size" required>
+                        <option value="">Select a Size</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                        <option value="XXXL">XXXL</option>
+                        <option value="XXXXL">XXXXL</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+
+                <div>
+                    <label for="statecode">State:</label>
+                    <select id="statecode" name="statecode" required>
+                        <option value="">Select a State</option>
+                        <option value="1">Alabama</option>
+                        <option value="2">Alaska</option>
+                        <option value="3">Arizona</option>
+                        <option value="4">Arkansas</option>
+                        <option value="5">California</option>
+                        <option value="6">Colorado</option>
+                        <option value="7">Connecticut</option>
+                        <option value="8">Delaware</option>
+                        <option value="9">Florida</option>
+                        <option value="10">Georgia</option>
+                        <option value="11">Hawaii</option>
+                        <option value="12">Idaho</option>
+                        <option value="13">Illinois</option>
+                        <option value="14">Indiana</option>
+                        <option value="15">Iowa</option>
+                        <option value="16">Kansas</option>
+                        <option value="17">Kentucky</option>
+                        <option value="18">Louisiana</option>
+                        <option value="19">Maine</option>
+                        <option value="20">Maryland</option>
+                        <option value="21">Massachusetts</option>
+                        <option value="22">Michigan</option>
+                        <option value="23">Minnesota</option>
+                        <option value="24">Mississippi</option>
+                        <option value="25">Missouri</option>
+                        <option value="26">Montana</option>
+                        <option value="27">Nebraska</option>
+                        <option value="28">Nevada</option>
+                        <option value="29">New Hampshire</option>
+                        <option value="30">New Jersey</option>
+                        <option value="31">New Mexico</option>
+                        <option value="32">New York</option>
+                        <option value="33">North Carolina</option>
+                        <option value="34">North Dakota</option>
+                        <option value="35">Ohio</option>
+                        <option value="36">Oklahoma</option>
+                        <option value="37">Oregon</option>
+                        <option value="38">Pennsylvania</option>
+                        <option value="39">Rhode Island</option>
+                        <option value="40">South Carolina</option>
+                        <option value="41">South Dakota</option>
+                        <option value="42">Tennessee</option>
+                        <option value="43">Texas</option>
+                        <option value="44">Utah</option>
+                        <option value="45">Vermont</option>
+                        <option value="46">Virginia</option>
+                        <option value="47">Washington</option>
+                        <option value="48">West Virginia</option>
+                        <option value="49">Wisconsin</option>
+                        <option value="50">Wyoming</option>
+                    </select>
+                </div>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- Search and Records Table to View Vest Receivers in the Current Year -->
+        <div class="records-container">
+            <div class="search-container">
+                <form method="GET" action="/adminvest-receiver">
+                    <input type="text" name="search" placeholder="Search by name" value="<%= typeof search !== 'undefined' ? search : '' %>">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+
+            <h2>Vest Receivers for the Current Year</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Date Passed Out</th>
+                        <th>Size</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (receivers && receivers.length > 0) { %>
+                        <% receivers.forEach(function(receiver) { %>
+                            <tr>
+                                <td><%= receiver.recfirstname %></td>
+                                <td><%= receiver.reclastname %></td>
+                                <td><%= receiver.age %></td>
+                                <td><%= receiver.gender %></td>
+                                <td><%= receiver.city %></td>
+                                <td><%= receiver.statecode %></td>
+                                <td><%= new Date(receiver.date).toLocaleDateString() %></td>
+                                <td><%= receiver.size %></td>
+                            </tr>
+                        <% }); %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="8">No records found for the current year.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Include Footer -->
+    <%- include("partials/footer") %>
+</body>
+</html>
