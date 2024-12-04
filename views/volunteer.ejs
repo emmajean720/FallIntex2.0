@@ -24,104 +24,20 @@
         <!-- Main Content -->
          <br><br><br><br><br>
 <div class="main-content">
-  <div class="card">
-    <div class="card-header">Already a Long-Term Volunteer?</div>
-    <div class="card-content">
-        <p>Sign in here to view scheduled events, hours, and more!</p>
-        <form action="/vlogin" method="POST">
-            <label for="VLogin">Username:</label>
-            <input type="text" id="VLogin" name="VLogin" required>
-            <br>
-            <label for="VPassword">Password:</label>
-            <input type="password" id="VPassword" name="VPassword" required>
-            <br>
-            <button type="submit" style="margin-top: 20px;">Login</button>
-        </form>
+  <a href="/login?form=login" class="card-link">
+    <div class="card">
+      <div class="card-header">Already a Long-Term Volunteer?</div>
+      <div class="card-content">
+      </div>
     </div>
-  </div>
-  <div class="card">
-    <div class="card-header">Become a Long-Term Volunteer</div>
-    <div class="card-content">
-      <p>Info about what long-term volunteers do</p>
-      <form action="/submit" method="POST">
-        <!-- First Name -->
-        <label for="first-name">First Name:</label>
-        <input type="text" id="first-name" name="VFirstName" required>
-        <br>
-        <!-- Last Name -->
-        <label for="last-name">Last Name:</label>
-        <input type="text" id="last-name" name="VLastName" required>
-        <br>
-        <!-- Email -->
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="VEmail" required>
-        <br>
-        <!-- Phone Number -->
-        <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="VPhone" required>
-        <br>
-        <!-- City -->
-        <label for="city">City:</label>
-        <input type="text" id="city" name="VCity" required>
-        <br>
-        <!-- State -->
-        <label for="state">State:</label>
-        <input type="text" id="state" name="VState" required>
-        <br>
-        <!-- How they discovered the organization -->
-        <label for="discovered">How did you hear about us?</label>
-        <select id="discovered" name="VDiscovered" required>
-          <option value="Facebook">Our Facebook</option>
-          <option value="Website">Our Website</option>
-          <option value="SocialMedia">Social Media</option>
-          <option value="PastVolunteers">Past Volunteers</option>
-          <option value="Other">Other</option>
-        </select>
-        <br>
-        <!-- Sewing Skill Level -->
-        <label for="sewing-skill">Sewing Skill Level:</label>
-        <select id="sewing-skill" name="SewingSkill" required>
-          <option value="Beginner">Beginner</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Experienced">Experienced</option>
-        </select>
-        <br>
-        <!-- Commitment Hours -->
-        <label for="commit-hours">Hours you can commit per month:</label>
-        <select id="commit-hours" name="CommitHours" required>
-          <option value="10">10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-          <option value="25">25</option>
-          <option value="30">30</option>
-          <option value="35">35</option>
-          <option value="40">40</option>
-          <option value="45">45</option>
-          <option value="50">50</option>
-        </select>
-        <br>
-        <!-- Newsletter Subscription -->
-        <label for="newsletter">
-          <input type="checkbox" id="newsletter" name="VNewsletter">
-          I want to receive the monthly newsletter.
-        </label>
-        <br>
-        <!-- Username/Login -->
-        <label for="login">Username:</label>
-        <input type="text" id="login" name="VLogin" required>
-        <br>
-        <!-- Password -->
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="VPassword" required>
-        <br>
-        <!-- Confirm Password -->
-        <label for="confirm-password">Confirm Password:</label>
-        <input type="password" id="confirm-password" name="VConfirmPassword" required>
-        <br>
-        <button type="submit" style="margin-top: 20px;">Sign Up</button>
-      </form>
+  </a>
+  <a href="/login?form=create" class="card-link">
+    <div class="card">
+      <div class="card-header">Become a Long-Term Volunteer</div>
+      <div class="card-content">
+      </div>
     </div>
-  </div>
+  </a>
   <div class="card">
     <div class="card-header">Schedule Your Own Event</div>
     <div class="card-content">
