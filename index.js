@@ -196,11 +196,12 @@ app.post('/delete-user/:usercode', isAuthenticated, isAdmin, (req, res) => {
         });
 });
 
-// Event Management Page
+// Event Management Page - McKenna
 app.get('/eventmanage', isAuthenticated, isAdmin, (req, res) => {
     knex('event')
-        .select('*')
-        .whereNot('status', 'completed')
+        .join('eventsummary', 'event.eventsummarycode', 'eventsummary.eventsummarycode')  // Join eventsummary table on eventcode
+        .select('event.*', 'eventsummary.*')  // Select all columns from both tables
+        .whereNot('event.status', 'completed')
         .then(events => {
             res.render("eventmanage", { error: null, title: "Event Management - Turtle Shelter Project", events });
         })
@@ -250,6 +251,50 @@ app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
         .then(() => res.redirect('/eventmanage'))
         .catch(err => {
             console.error("Error updating event:", err);
+            res.redirect('/eventmanage');
+        });
+});
+
+// Add event summary details - McKenna
+app.post('/complete-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
+    const { eventcode } = req.params;
+    const { actualparticipation, vestcut, vestpin, vestsewn, collarcut, collarpin, collarsewn, envelopecut, envelopepin, envelopesewn, pocketcut, pocketpin, pocketssewn, xscompleted, scompleted, mcompleted, lcompleted, xlcompleted, xxlcompleted, xxxlcompleted, xxxxlcompleted, status } = req.body;
+    knex('eventsummary')
+        .insert({
+            actualparticipation: parseInt(actualparticipation, 10),
+            vestcut: parseInt(vestcut, 10),
+            vestpin: parseInt(vestpin, 10),
+            vestsewn: parseInt(vestsewn, 10),
+            collarcut: parseInt(collarcut, 10),
+            collarpin: parseInt(collarpin, 10),
+            collarsewn: parseInt(collarsewn, 10),
+            envelopecut: parseInt(envelopecut, 10),
+            envelopepin: parseInt(envelopepin, 10),
+            envelopesewn: parseInt(envelopesewn, 10),
+            pocketcut: parseInt(pocketcut, 10),
+            pocketpin: parseInt(pocketpin, 10),
+            pocketssewn: parseInt(pocketssewn, 10),
+            xscompleted: parseInt(xscompleted, 10),
+            scompleted: parseInt(scompleted, 10),
+            mcompleted: parseInt(mcompleted, 10),
+            lcompleted: parseInt(lcompleted, 10),
+            xlcompleted: parseInt(xlcompleted, 10),
+            xxlcompleted: parseInt(xxlcompleted, 10),
+            xxxlcompleted: parseInt(xxxlcompleted, 10),
+            xxxxlcompleted: parseInt(xxxxlcompleted, 10)
+        })
+        .returning('eventsummarycode')
+        .then(([eventsummaryid]) => {
+            return knex('event')
+            .where('eventcode', eventcode)  // Find the event by its eventcode
+            .update({
+                status: 'completed',  // Update the status field
+                eventsummarycode: eventsummaryid
+            });
+            res.send('Event summary uploaded successfully!')}
+        )
+        .catch(err => {
+            console.error("Error adding summary:", err);
             res.redirect('/eventmanage');
         });
 });
@@ -380,15 +425,15 @@ app.post('/eventrequest', (req, res) => {
 
     knex('event')
     .insert({
-        organization: organization,
-        orgfirstname: orgfirstname,
-        orglastname: orglastname,
-        orgemail: orgemail,
+        organization: organization.toLowerCase(),
+        orgfirstname: orgfirstname.toLowerCase(),
+        orglastname: orglastname.toLowerCase(),
+        orgemail: orgemail.toLowerCase(),
         orgphone: orgphone,
         eventstarttime: eventstarttime,
         eventstoptime: eventstoptime,
-        eventaddress: eventaddress,
-        eventcity: eventcity,
+        eventaddress: eventaddress.toLowerCase(),
+        eventcity: eventcity.toLowerCase(),
         statecode: statecode,
         discoveredcode: discoveredcode,
         expectedparticipants: expectedparticipants,
@@ -401,7 +446,7 @@ app.post('/eventrequest', (req, res) => {
         storyshared: storyshared,
         orgnewsletter: newsletter,
         comments: comments,
-        status: status
+        status: status.toLowerCase()
 
     })
     .then(() => {
