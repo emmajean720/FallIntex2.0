@@ -132,36 +132,36 @@ app.get('/logout', (req, res) => {
     });
 });
 
-// // Handle Account Creation Form Submission
-// app.post('/create-account', (req, res) => {
-//     const { firstname, lastname, email, city, state, phonenumber, username, password, confirmPassword } = req.body;
+// Handle Account Creation Form Submission
+app.post('/create-account', (req, res) => {
+    const { firstname, lastname, email, city, state, phonenumber, username, password, confirmPassword } = req.body;
 
-//     if (password !== confirmPassword) {
-//         return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
-//     }
+    if (password !== confirmPassword) {
+        return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
+    }
 
-//     knex('users')
-//         .insert({
-//             firstname,
-//             lastname,
-//             email,
-//             phone: phonenumber,
-//             city,
-//             statecode: state,
-//             login: username,
-//             password, // Store plaintext password (Note: NOT SECURE)
-//             is_admin: false // Default role for new users
-//         })
-//         .then(() => {
-//             res.send('Account created successfully!');
-//         })
-//         .catch(err => {
-//             console.error("Error creating account:", err);
-//             res.render("login", { error: "An unexpected error occurred during account creation. Please try again.", title: "Create Account - Turtle Shelter Project" });
-//         });
-// });
+    knex('users')
+        .insert({
+            firstname,
+            lastname,
+            email,
+            phone: phonenumber,
+            city,
+            statecode: state,
+            login: username,
+            password, // Store plaintext password (Note: NOT SECURE)
+            is_admin: false // Default role for new users
+        })
+        .then(() => {
+            res.send('Account created successfully!');
+        })
+        .catch(err => {
+            console.error("Error creating account:", err);
+            res.render("login", { error: "An unexpected error occurred during account creation. Please try again.", title: "Create Account - Turtle Shelter Project" });
+        });
+});
 
-// Admin Management Page (Protected Route)
+
 // State abbreviations mapping
 const stateAbbreviations = {
     1: 'AL', 2: 'AK', 3: 'AZ', 4: 'AR', 5: 'CA', 6: 'CO', 7: 'CT', 8: 'DE', 9: 'FL', 10: 'GA',
@@ -324,58 +324,96 @@ app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
     }
 })();
 
-// Handle Account Creation Form Submission - McKenna
-app.post('/create-account', (req, res) => {
-    const firstname = req.body.firstname || ' ';
-    const lastname = req.body.lastname || ' '; 
-    const email = req.body.email || ' '; 
-    const phone = req.body.phone || ' '; 
-    const city = req.body.city;
-    const startdate = req.body.startdate || new Date().toISOString().split('T')[0];
-    const statecode = parseInt(req.body.statecode, 10); 
-    const discoveredcode = parseInt(req.body.discoveredcode, 10); 
-    const skilllevelcode = parseInt(req.body.skilllevelcode, 10);
-    const commithours = parseInt(req.body.commithours, 10);
-    const traveldistance = parseInt(req.body.traveldistance, 10);
-    const is_leading = req.body.leading === 'true';
-    const newsletter = req.body.newsletter === 'true';
-    const login = req.body.login;
-    const password = req.body.password;
-    const confirmpassword = req.body.confirmpassword;
-    const admin = req.body.admin === 'false'
-    if (password !== confirmpassword) {
-        return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
-    }
+//admin calendar route(luke):
+// app.get('/admincalendar', isAuthenticated, isAdmin, (req, res) => {
+//     // Fetch any required data for the calendar, for example events
+//     // Example: db('events').select('*').then(events => { ... })
+    
+//     res.render("admincalendar", { 
+//         error: null, 
+//         title: "Admin Calendar - Turtle Shelter Project",
+//         // events: fetchedEvents
+//     });
+// });
 
-    knex('users')
-        .insert({
-            firstname: firstname.toLowerCase(),
-            lastname: lastname.toLowerCase(),
-            email: email,
-            phone: phone,
-            city: city,
-            statecode: statecode,
-            discoveredcode: discoveredcode, 
-            skilllevelcode: skilllevelcode, 
-            commithours: commithours, 
-            traveldistance: traveldistance, 
-            is_leading: is_leading, 
-            newsletter: newsletter, 
-            login: login,
-            password: password, // Store plaintext password (Note: NOT SECURE)
-            startdate: startdate,
-            is_admin: admin // Default role for new users
+app.get('/admincalendar', isAuthenticated, isAdmin, (req, res) => {
+    // Get today's date in the format needed for querying
+    const today = new Date().toISOString().split('T')[0]; // e.g., '2024-12-04'
+
+    // Fetch events from the database for the given day
+    knex('event') //
+    .select('*')
+    .where('eventstarttime', '>=', today) //Assuming eventstarttime is a timestamp or datetime column
+        .then(events => {
+            res.render("admincalendar", { 
+                error: null, 
+                title: "Admin Calendar - Turtle Shelter Project",
+                events: events // Pass fetched events to the template
+            });
         })
-        .then(() => {
-            res.send('Account created successfully!');
-        })
-        .catch(err => {
-            console.error("Error creating account:", err);
-            res.render("login", { error: "An unexpected error occurred during account creation. Please try again.", title: "Create Account - Turtle Shelter Project" });
+        .catch(error => {
+            console.error("Error fetching events:", error);
+            res.render("admincalendar", {
+                error: "Failed to load events",
+                title: "Admin Calendar - Turtle Shelter Project",
+                events: []
+            });
         });
 });
 
 
+
+// Handle Account Creation Form Submission - McKenna
+// app.post('/create-account', (req, res) => {
+//     const firstname = req.body.firstname || ' ';
+//     const lastname = req.body.lastname || ' '; 
+//     const email = req.body.email || ' '; 
+//     const phone = req.body.phone || ' '; 
+//     const city = req.body.city;
+//     const startdate = req.body.startdate || new Date().toISOString().split('T')[0];
+//     const statecode = parseInt(req.body.statecode, 10); 
+//     const discoveredcode = parseInt(req.body.discoveredcode, 10); 
+//     const skilllevelcode = parseInt(req.body.skilllevelcode, 10);
+//     const commithours = parseInt(req.body.commithours, 10);
+//     const traveldistance = parseInt(req.body.traveldistance, 10);
+//     const is_leading = req.body.leading === 'true';
+//     const newsletter = req.body.newsletter === 'true';
+//     const login = req.body.login;
+//     const password = req.body.password;
+//     const confirmpassword = req.body.confirmpassword;
+//     const admin = req.body.admin === 'false'
+//     if (password !== confirmpassword) {
+//         return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
+//     }
+
+//     knex('users')
+//         .insert({
+//             firstname: firstname.toLowerCase(),
+//             lastname: lastname.toLowerCase(),
+//             email: email,
+//             phone: phone,
+//             city: city,
+//             statecode: statecode,
+//             discoveredcode: discoveredcode, 
+//             skilllevelcode: skilllevelcode, 
+//             commithours: commithours, 
+//             traveldistance: traveldistance, 
+//             is_leading: is_leading, 
+//             newsletter: newsletter, 
+//             login: login,
+//             password: password, // Store plaintext password (Note: NOT SECURE)
+//             startdate: startdate,
+//             is_admin: admin // Default role for new users
+//         })
+//         .then(() => {
+//             res.send('Account created successfully!');
+//         })
+//         .catch(err => {
+//             console.error("Error creating account:", err);
+//             res.render("login", { error: "An unexpected error occurred during account creation. Please try again.", title: "Create Account - Turtle Shelter Project" });
+//         });
+// });
+
+
 // Start the Server
 app.listen(port, () => console.log("Express App has started and server is listening!"));
-
