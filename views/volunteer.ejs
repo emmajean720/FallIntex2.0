@@ -38,9 +38,13 @@
       </div>
     </div>
   </a>
+
+  <!-- Card 1 -->
   <div class="card">
     <div class="card-header">Schedule Your Own Event</div>
     <div class="card-content">
+
+      <!-- Text before form -->
       <p>Turtle Shelter Project vests are the perfect service project/volunteer activity for groups of all sizes and types.
         From an individual or family to hundreds of participants at corporate events or conferences, participants will be part of
         making vests to help save the lives of people in need. It takes 9 volunteers hours to make a vest, so we need your help!</p>
@@ -50,28 +54,37 @@
         After your group has completed their tasks, simply send the partially completed vests back to us for expert sewing,
         and then we will send them back to you or to a location you specify.</p>
         <p>Please fill out the form below and tell us about your event idea so that we can provide options for you and your group.</p>
-        <form action="/submit" method="POST">
+
+        <!-- Event Request Form -->
+        <form action="/eventrequest" method="POST">
             <label for="organization">Organization/Group Name:</label>
             <input type="text" id="organization" name="organization" required>
             <br>
+
             <label for="orgfirstname">Organizer First Name:</label>
             <input type="text" id="orgfirstname" name="orgfirstname" required>
             <br>
+
             <label for="orglastname">Organizer Last Name:</label>
             <input type="text" id="orglastname" name="orglastname" required>
+
             <br>
             <label for="orgemail">Organizer Email:</label>
             <input type="email" id="orgemail" name="orgemail" required>
             <br>
+
             <label for="orgphone">Organizer Phone Number:</label>
             <input type="tel" id="orgphone" name="orgphone" required>
             <br>
+
             <label for="eventstarttime">Event Start Time:</label>
             <input type="datetime-local" id="eventstarttime" name="eventstarttime" required>
             <br>
+
             <label for="eventstoptime">Event Stop Time:</label>
-            <input type="datetime-local" id="email" name="email" required>
+            <input type="datetime-local" id="eventstoptime" name="eventstoptime" required>
             <br>
+
             <label>Location of Event:</label>
             <input type="text" id="eventaddress" name="eventaddress" placeholder="Street Address" required>
             <input type="text" id="eventcity" name="eventcity" placeholder="City" required>
@@ -130,6 +143,7 @@
                 <option value="50">Wyoming</option>
             </select>
             <br>
+
             <label for="discoveredcode">How did you find out about us?</label>
             <select id="discoveredcode" name="discoveredcode" required>
                 <option value="" disabled selected>-- Select --</option>
@@ -142,9 +156,11 @@
                 <option value="6">Other Social Media</option>
             </select>
             <br>
+
             <label for="expectedparticipants">How many people do you expect to participate?</label>
             <input type="number" id="expectedparticipants" name="expectedparticipants" min="1" required>
             <br>
+
             <label for="servicetypecode">What kind of service would you like to do?</label>
             <select id="servicetypecode" name="servicetypecode" onchange="toggleSewingQuestions(this.value)" required>
                 <option value="" disabled selected>-- Select --</option>
@@ -153,37 +169,48 @@
                 <option value="3">Both</option>
             </select>
             <br>
+
             <div class="sewing-questions">
               <h3>Sewing Project Details</h3>
               <label for="basicskills">How many participants have basic sewing skills?</label>
               <input type="number" id="basicskills" name="basicskills" min="0">
+
               <label for="advanced">How many participants have advanced sewing skills?</label>
               <input type="number" id="advanced" name="advanced" min="0">
+
               <label for="sewingmachines">How many sewing machines can you bring?</label>
               <input type="number" id="sewingmachines" name="sewingmachines" min="0">
+
               <label for="sergers">How many sergers can you bring?</label>
               <input type="number" id="sergers" name="sergers" min="0">
+
             </div>
             <input type="hidden" name="payfor" value="false">
             <label for="payfor">Would you be interested in helping support the material costs for this event?</label>
             <input type="checkbox" id="payfor" name="payfor" value="true">
             <br>
+
             <input type="hidden" name="storyshared" value="false">
             <label for="storyshared">Do you want Jen to share her story with your group?</label>
             <input type="checkbox" id="storyshared" name="storyshared" value="true">
             <br>
+
             <input type="hidden" name="newsletter" value="false">
             <label for="newsletter">Do you want receive monthly newsletters with Turtle Shelter Project updates?</label>
             <input type="checkbox" id="newsletter" name="newsletter" value="true">
             <br>
+
             <label for="comments">Extra comments:</label>
             <input type="text" id="comments" name="comments" placeholder="comments">
             <br>
+            
             <input type="hidden" id="status" name="status" value="Pending">
             <button type="submit" style="margin-top: 20px;">Submit</button>
         </form>
       </div>
   </div>
+
+  <!-- Card 2 -->
   <div class="card">
     <div class="card-header">Volunteer From Home</div>
     <div class="card-content">
