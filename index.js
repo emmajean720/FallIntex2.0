@@ -324,6 +324,58 @@ app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
     }
 })();
 
+// Handle Account Creation Form Submission - McKenna
+app.post('/create-account', (req, res) => {
+    const firstname = req.body.firstname || ' ';
+    const lastname = req.body.lastname || ' '; 
+    const email = req.body.email || ' '; 
+    const phone = req.body.phone || ' '; 
+    const city = req.body.city;
+    const startdate = req.body.startdate || new Date().toISOString().split('T')[0];
+    const statecode = parseInt(req.body.statecode, 10); 
+    const discoveredcode = parseInt(req.body.discoveredcode, 10); 
+    const skilllevelcode = parseInt(req.body.skilllevelcode, 10);
+    const commithours = parseInt(req.body.commithours, 10);
+    const traveldistance = parseInt(req.body.traveldistance, 10);
+    const is_leading = req.body.leading === 'true';
+    const newsletter = req.body.newsletter === 'true';
+    const login = req.body.login;
+    const password = req.body.password;
+    const confirmpassword = req.body.confirmpassword;
+    const admin = req.body.admin === 'false'
+    if (password !== confirmpassword) {
+        return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
+    }
+
+    knex('users')
+        .insert({
+            firstname: firstname.toLowerCase(),
+            lastname: lastname.toLowerCase(),
+            email: email,
+            phone: phone,
+            city: city,
+            statecode: statecode,
+            discoveredcode: discoveredcode, 
+            skilllevelcode: skilllevelcode, 
+            commithours: commithours, 
+            traveldistance: traveldistance, 
+            is_leading: is_leading, 
+            newsletter: newsletter, 
+            login: login,
+            password: password, // Store plaintext password (Note: NOT SECURE)
+            startdate: startdate,
+            is_admin: admin // Default role for new users
+        })
+        .then(() => {
+            res.send('Account created successfully!');
+        })
+        .catch(err => {
+            console.error("Error creating account:", err);
+            res.render("login", { error: "An unexpected error occurred during account creation. Please try again.", title: "Create Account - Turtle Shelter Project" });
+        });
+});
+
+
 // Start the Server
 app.listen(port, () => console.log("Express App has started and server is listening!"));
 

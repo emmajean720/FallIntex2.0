@@ -30,25 +30,37 @@
         <h1>Create Account</h1>
         <form action="/create-account" method="POST">
             <div class="form-group">
+
+                <!-- First Name -->
                 <label for="firstname">First Name:</label>
                 <input type="text" id="firstname" name="firstname" required>
             </div>
+
+            <!-- Last Name -->
             <div class="form-group">
                 <label for="lastname">Last Name:</label>
                 <input type="text" id="lastname" name="lastname" required>
             </div>
+
+            <!-- Email -->
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
+
+            <!-- Phone Number -->
             <div class="form-group">
                 <label for="phonenumber">Phone Number:</label>
                 <input type="tel" id="phonenumber" name="phonenumber">
             </div>
+
+            <!-- City -->
             <div class="form-group">
                 <label for="city">Home City:</label>
                 <input type="text" id="city" name="city">
             </div>
+
+            <!-- State -->
             <div class="form-group">
                 <label for="statecode">Home State:</label>
                 <select id="statecode" name="statecode" required>
@@ -118,6 +130,8 @@
                     <option value="6">Other Social Media</option>
                 </select>
             </div>
+
+            <!-- Skill Level -->
             <div class="form-group">
                 <label for="skilllevelcode">How skilled are you at sewing?</label>
                 <select id="skilllevelcode" name="skilllevelcode" required>
@@ -127,6 +141,8 @@
                     <option value="3">Advanced</option>
                 </select>
             </div>
+
+            <!-- Hours They can Committ -->
             <div class="form-group">
                 <label for="commithours">Estimated hours you are able to volunteer per month:</label>
                 <select id="commithours" name="commithours" required>
@@ -141,6 +157,8 @@
                   <option value="50">50+</option>
                 </select>
             </div>
+
+            <!-- Distance they can travel -->
             <div class="form-group">
                 <label for="traveldistance">How far are you willing to travel for events? (miles)</label>
                 <select id="traveldistance" name="traveldistance" required>
@@ -151,31 +169,41 @@
                   <option value="50">50+</option>
                 </select>
             </div>
+
+            <!-- Can they lead an event -->
             <div class="form-group">
                 <input type="hidden" name="leading" value="false">
-                <label for="leading">Would you be comfortable leading an event?</label>
+                <label for="leading">Would you be comfortable leading an event?
                 <input type="checkbox" id="leading" name="leading" value="true">
+                </label>
                 <br>
             </div>
+
+            <!-- Newsletter Sign Up -->
             <div class="form-group">
                 <input type="hidden" name="newsletter" value="false">
-                <label for="newsletter">Do you want receive monthly newsletters with Turtle Shelter Project updates?</label>
+                <label for="newsletter">Do you want receive monthly newsletters with Turtle Shelter Project updates?
                 <input type="checkbox" id="newsletter" name="newsletter" value="true">
+                </label>
                 <br>
             </div>
+
+            <!-- Username/Login -->
             <div class="form-group">
-                <!-- Username/Login -->
                 <label for="login">Username:</label>
                 <input type="text" id="login" name="login" required>
             </div>
+
+            <!-- Password -->
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="VPassword" required>
+                <input type="password" id="password" name="password" required>
             </div>
             <div class="form-group">
+
                 <!-- Confirm Password -->
                 <label for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" name="VConfirmPassword" required>
+                <input type="password" id="confirm-password" name="confirmpassword" required>
                 <br>
             </div>
             <input type="hidden" id="startdate" name="startdate" value="">
