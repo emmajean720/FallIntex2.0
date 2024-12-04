@@ -480,18 +480,20 @@ app.post('/create-account', (req, res) => {
     const admin = req.body.admin;
     let iCount = 0
 
-// make the codes work
-    for (let i = 0; iCount < dayofWeek.length; i++) {
-    console.log(`Day: ${daysOfWeek[i]}, iCount: ${iCount}`);
+// make the avaible codes work
+    for (let i = 0; iCount < dayofWeek.length; i++) 
+        {
+    console.log(`Day: ${dayofWeek[i]}, iCount: ${iCount}`);
 
-    // Loop through timesOfDay for each day (optional)
-    for (let j = 0; j < timesOfDay.length; j++) {
-        console.log(`  Time: ${timesOfDay[j]}`);
-    }
+        if (req.body.m = true) 
+        {
+
+        };
+
 
     // Increment iCount by 8
     iCount += 8;
-}
+        }
             
 
     if (password !== confirmpassword) {
