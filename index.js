@@ -264,7 +264,6 @@ app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
     }
 })();
 
-=======
 // Handle Account Creation Form Submission - Kylee
 app.post('/create-account', (req, res) => {
     const firstname = req.body.firstname || ' ';
@@ -309,6 +308,12 @@ app.post('/create-account', (req, res) => {
         })
         .then(() => {
             res.redirect("/admin");
+        })
+        .catch(err => {
+            console.error("Error creating account:", err);
+            res.render("homepage", { error: "An unexpected error when trying to create the event. Please try again.", title: "Request Event - Turtle Shelter Project" });
+        });
+    })
 
 //admin calendar route(luke):
 // app.get('/admincalendar', isAuthenticated, isAdmin, (req, res) => {
