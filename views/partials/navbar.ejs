@@ -2,21 +2,29 @@
 <body>
     <header>
         <div class="container">
+            <!-- Logo section of the header -->
             <div class="logo">
+                <!-- Logo image for Turtle Shelter -->
                 <img src="/images/BetterQualityLogo.png" alt="Turtle Shelter Logo" class="logo-image">
+                <!-- Project title which redirects to the homepage when clicked -->
                 <span class="logo-title" onclick="location.href='/'">TURTLE SHELTER PROJECT</span>
             </div>
+            <!-- Navigation menu -->
             <nav>
                 <ul>
+                    <!-- Link to the Home page -->
                     <li><a href="/">Home</a></li>
+                    <!-- Link to the Donate page -->
                     <li><a href="/donate">Donate</a></li>
+                    <!-- Link to the About page -->
                     <li><a href="/about">About</a></li>
 
+                    <!-- Conditional rendering for user authentication -->
                     <% if (user) { %>
-                        <!-- Display Logout button if user is logged in -->
+                        <!-- Display Logout button if the user is logged in -->
                         <li><a href="/logout" class="btn logout-btn">Logout</a></li>
                     <% } else { %>
-                        <!-- Display Login button if user is not logged in -->
+                        <!-- Display Login button if the user is not logged in -->
                         <li><a href="/login" class="btn login-btn">Login</a></li>
                     <% } %>
                 </ul>
