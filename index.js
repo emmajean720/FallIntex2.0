@@ -19,24 +19,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 // Force HTTPS in production
-app.set('trust proxy', 1); // Trust the first proxy (necessary for handling x-forwarded-proto header)
-app.use((req, res, next) => {
-    if (process.env.NODE_ENV === 'production' && req.headers['x-forwarded-proto'] !== 'https') {
-        return res.redirect(`https://${req.headers.host}${req.url}`);
-    }
-    next();
-});
+if (process.env.NODE_ENV === 'production') {
+    app.set('trust proxy', 1); // Trust the first proxy (necessary for handling x-forwarded-proto header)
+    app.use((req, res, next) => {
+        if (req.headers['x-forwarded-proto'] !== 'https') {
+            return res.redirect(`https://${req.headers.host}${req.url}`);
+        }
+        next();
+    });
+}
+
 // Set Up Session Middleware
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your_secret_key', // Use a secure session secret from .env
     resave: false,
     saveUninitialized: true,
-    cookie: { 
+    cookie: {
         secure: process.env.NODE_ENV === 'production', // Enable secure cookies in production with HTTPS
         httpOnly: true, // Prevent JavaScript access to cookies
         sameSite: 'strict' // Prevent cross-site request forgery
     }
 }));
+
 
 // Make User Session Available in All Views
 app.use((req, res, next) => {
