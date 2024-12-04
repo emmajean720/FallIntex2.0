@@ -186,7 +186,7 @@
 
             </div>
             <input type="hidden" name="payfor" value="false">
-            <label for="payfor">Would you be interested in helping support the material costs for this event?</label>
+            <label for="payfor">Would you like to help support the material costs for this event?</label>
             <input type="checkbox" id="payfor" name="payfor" value="true">
             <br>
 
@@ -195,9 +195,13 @@
             <input type="checkbox" id="storyshared" name="storyshared" value="true">
             <br>
 
-            <input type="hidden" name="newsletter" value="false">
-            <label for="newsletter">Do you want receive monthly newsletters with Turtle Shelter Project updates?</label>
-            <input type="checkbox" id="newsletter" name="newsletter" value="true">
+            <label>Do you want to receive monthly newsletters with updates about the Turtle Shelter Project?</label>
+            <label>
+            <input type="radio" name="newsletter" value="true" <%= pokemon.gender === 'M' ? 'checked' : '' %>> Yes
+            </label>
+            <label>
+            <input type="radio" name="newsletter" value="false" <%= pokemon.gender === 'F' ? 'checked' : '' %>> No
+            </label>
             <br>
 
             <label for="comments">Extra comments:</label>
