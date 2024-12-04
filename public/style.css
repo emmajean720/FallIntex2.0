@@ -91,7 +91,7 @@ header nav ul li a:hover {
     padding: 0 20px;
 }
 .hero-overlay {
-    background: rgba(0, 0, 0, 0.7); /* 70% transparent dark overlay */
+    background: rgba(0, 0, 0, 0.6); /* 70% transparent dark overlay */
     padding: 2rem;
     border-radius: 10px;
     max-width: 800px;
@@ -99,12 +99,15 @@ header nav ul li a:hover {
 .hero h2 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
-    font-weight: 400;
+    font-weight: bold;
+    color:white;
+
 }
 .hero h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
     font-weight: bold;
+    color:white;
 }
 /* Button Style (Global) */
 .btn {
