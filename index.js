@@ -202,22 +202,26 @@
 //3rd time
 require('dotenv').config(); // Load environment variables from .env file
 
-let express = require("express");
-let app = express();
-let path = require("path");
-let session = require("express-session");
+// Import Required Libraries
+const express = require("express");
+const path = require("path");
+const session = require("express-session");
 
-// Port setting from environment variables or default to 5500
-const port = process.env.PORT || 5500;
+// Initialize Express App
+const app = express();
+const port = process.env.PORT || 5500; // Port setting from environment variables or default to 5500
 
+// Set Up View Engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// Serve static files from the 'public' folder
+// Middleware Setup
+
+// Serve Static Files from 'public' Folder
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
-// Set up session middleware
+// Set Up Session Middleware
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your_secret_key', // Use a secure session secret from .env
     resave: false,
@@ -225,13 +229,13 @@ app.use(session({
     cookie: { secure: false } // Set secure: true if using HTTPS
 }));
 
-// Middleware to make the user session available in all views
+// Make User Session Available in All Views
 app.use((req, res, next) => {
     res.locals.user = req.session.user;
     next();
 });
 
-// Database connection using Knex
+// Database Connection Using Knex
 const knex = require("knex")({
     client: "pg",
     connection: {
@@ -244,7 +248,9 @@ const knex = require("knex")({
     }
 });
 
-// Middleware to check if the user is authenticated
+// Middleware Functions
+
+// Check If User is Authenticated
 function isAuthenticated(req, res, next) {
     if (req.session.user) {
         return next();
@@ -253,7 +259,7 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-// Middleware to check if the user is an admin
+// Check If User is an Admin
 function isAdmin(req, res, next) {
     if (req.session.user && req.session.user.is_admin) {
         return next();
@@ -264,46 +270,35 @@ function isAdmin(req, res, next) {
 
 // Routes to Pages
 
-// Home
+// Home Page
 app.get('/', (req, res) => {
-    const error = null;
-    const title = "Turtle Shelter Project"; // Define title for homepage
-    res.render('homepage', { error, title });
+    res.render('homepage', { error: null, title: "Turtle Shelter Project" });
 });
 
-// About
+// About Page
 app.get('/about', (req, res) => {
-    const error = null;
-    const title = "About Us - Turtle Shelter Project"; // Define title for about page
-    res.render("about", { error, title });
+    res.render("about", { error: null, title: "About Us - Turtle Shelter Project" });
 });
 
-// Volunteer
+// Volunteer Page
 app.get('/volunteer', (req, res) => {
-    const error = null;
-    const title = "Volunteer - Turtle Shelter Project"; // Define title for volunteer page
-    res.render("volunteer", { error, title });
+    res.render("volunteer", { error: null, title: "Volunteer - Turtle Shelter Project" });
 });
 
-// Donate
+// Donate Page
 app.get('/donate', (req, res) => {
-    const error = null;
-    const title = "Donate - Turtle Shelter Project"; // Define title for donate page
-    res.render("donate", { error, title });
+    res.render("donate", { error: null, title: "Donate - Turtle Shelter Project" });
 });
 
 // Login Page
 app.get('/login', (req, res) => {
-    const error = null;
-    const title = "Login - Turtle Shelter Project"; // Define title for login page
-    res.render("login", { error, title });
+    res.render("login", { error: null, title: "Login - Turtle Shelter Project" });
 });
 
 // Handle Login Form Submission
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
-    // Query database for user with matching username and password
     knex('users')
         .where({ login: username, password: password }) // Plaintext password matching
         .first()
@@ -317,14 +312,8 @@ app.post('/login', (req, res) => {
                 };
 
                 // Redirect based on user role
-                if (user.is_admin === true || user.is_admin === 'true') {
-                    res.redirect('/admin');
-                } else {
-                    res.redirect('/volunteerhome');
-                }
-
+                user.is_admin ? res.redirect('/admin') : res.redirect('/volunteerhome');
             } else {
-                // User not found or incorrect credentials
                 res.render("login", { error: "Invalid username or password", title: "Login - Turtle Shelter Project" });
             }
         })
@@ -352,7 +341,6 @@ app.post('/create-account', (req, res) => {
         return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
     }
 
-    // Insert the new user into the database with is_admin set to false by default
     knex('users')
         .insert({
             firstname,
@@ -360,7 +348,7 @@ app.post('/create-account', (req, res) => {
             email,
             phone: phonenumber,
             city,
-            statecode: state, // Assuming 'state' is saved using statecode foreign key
+            statecode: state,
             login: username,
             password, // Store plaintext password (Note: NOT SECURE)
             is_admin: false // Default role for new users
@@ -374,14 +362,12 @@ app.post('/create-account', (req, res) => {
         });
 });
 
-// Admin Management Page (protected route)
+// Admin Management Page (Protected Route)
 app.get('/adminmanage', isAuthenticated, isAdmin, (req, res) => {
     knex('users')
         .select('*')
         .then(users => {
-            const error = null;
-            const title = "Admin Management - Turtle Shelter Project";
-            res.render("adminmanage", { error, title, users });
+            res.render("adminmanage", { error: null, title: "Admin Management - Turtle Shelter Project", users });
         })
         .catch(err => {
             console.error("Error fetching users:", err);
@@ -422,16 +408,13 @@ app.post('/delete-user/:usercode', isAuthenticated, isAdmin, (req, res) => {
         });
 });
 
-
-// Event Management Page (protected route)
+// Event Management Page (Protected Route)
 app.get('/eventmanage', isAuthenticated, isAdmin, (req, res) => {
     knex('event')
         .select('*')
         .whereNot('status', 'completed') // Hide events that are marked as completed
         .then(events => {
-            const error = null;
-            const title = "Event Management - Turtle Shelter Project";
-            res.render("eventmanage", { error, title, events });
+            res.render("eventmanage", { error: null, title: "Event Management - Turtle Shelter Project", events });
         })
         .catch(err => {
             console.error("Error fetching events:", err);
@@ -502,21 +485,18 @@ app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
             res.redirect('/eventmanage');
         });
 });
-// Volunteer Landing Page (protected route)
+
+// Volunteer Landing Page (Protected Route)
 app.get('/volunteerhome', isAuthenticated, (req, res) => {
-    const error = null;
-    const title = "Volunteer Home - Turtle Shelter Project"; // Define title for Volunteer Landing Page
-    res.render("volunteerhome", { error, title });
+    res.render("volunteerhome", { error: null, title: "Volunteer Home - Turtle Shelter Project" });
 });
 
-// Admin Landing Page (protected route)
+// Admin Landing Page (Protected Route)
 app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
-    const error = null;
-    const title = "Admin Home - Turtle Shelter Project"; // Define title for Admin Landing Page
-    res.render("admin", { error, title });
+    res.render("admin", { error: null, title: "Admin Home - Turtle Shelter Project" });
 });
 
-// Test the database connection
+// Test the Database Connection
 (async () => {
     try {
         const result = await knex.raw('SELECT 1+1 AS result'); // Simple query to test connection
@@ -526,5 +506,6 @@ app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
     }
 })();
 
-// Start server
+// Start the Server
 app.listen(port, () => console.log("Express App has started and server is listening!"));
+

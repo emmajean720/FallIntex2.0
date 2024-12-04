@@ -44,8 +44,10 @@
                                     <form action="/update-event-status/<%= event.eventcode %>" method="POST">
                                         <select name="status" onchange="this.form.submit()">
                                             <option value="pending" <%= event.status === 'pending' ? 'selected' : '' %>>Pending</option>
-                                            <option value="in-progress" <%= event.status === 'in-progress' ? 'selected' : '' %>>In Progress</option>
+                                            <option value="approved" <%= event.status === 'approved' ? 'selected' : '' %>>Approved</option>
                                             <option value="completed" <%= event.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                                            <option value="declined" <%= event.status === 'declined' ? 'selected' : '' %>>Declined</option>
+
                                         </select>
                                     </form>
                                 </td>
