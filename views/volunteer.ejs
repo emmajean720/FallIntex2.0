@@ -409,9 +409,12 @@ function toggleSewingQuestions(value) {
             <textarea id="comments" name="comments" placeholder="Please include: participant age range, flexibility on event dates, and any other specific concerns, questions, and information would be helpful for us to know." rows="2" style="resize: both; width: 800px; font-family: 'Lora', serif"></textarea>
         </div>
 
+        <input type="hidden" id="status" name="status" value="pending">
+
         <div style="text-align: center; margin-top: 20px;">
-          <button type="submit" class="button" onclick="toggleForm()">Create Event</button>
+          <button type="submit" class="button">Create Event</button>
       </div>
+
     </form>
   </div>
 </div>
