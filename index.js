@@ -873,16 +873,14 @@ app.get('/adminvest-receiver', isAuthenticated, isAdmin, async (req, res) => {
 
 // Handle the form submission to add a new vest receiver
 app.post('/adminvest-receiver', isAuthenticated, isAdmin, async (req, res) => {
-    const {
-        recfirstname, 
-        reclastname, 
-        date, 
-        city, 
-        statecode, 
-        age, 
-        gender, 
-        size
-    } = req.body;
+    const recfirstname = req.body.recfirstname;
+    const reclastname = req.body.reclastname;
+    const date = req.body.date;
+    const city = req.body.city;
+    const statecode = req.body.statecode; 
+    const age = req.body.age
+    const gender = req.body.gender 
+    const size = req.body.size
 
     try {
         // Check for existing record to prevent duplicates
@@ -901,14 +899,14 @@ app.post('/adminvest-receiver', isAuthenticated, isAdmin, async (req, res) => {
 
         // Insert the new receiver data into the receivers table
         await knex('receivers').insert({
-            recfirstname,
-            reclastname,
-            date,
-            city,
-            statecode,
-            age,
-            gender,
-            size
+            recfirstname: recfirstname.toLowerCase(),
+            reclastname: reclastname.toLowerCase(),
+            date : date,
+            city : city.toLowerCase(),
+            statecode: statecode,
+            age: parseInt(age),
+            gender: gender,
+            size: size
         });
 
         // Fetch the updated list of vest receivers for the current year
