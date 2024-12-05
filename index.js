@@ -461,6 +461,14 @@ app.post('/complete-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
 // Handle Account Creation Form Submission - Kylee
 app.post('/create-account', (req, res) => {
     let dayofWeek = ["m", "t","w", "th", "f", "s"];
+    let availability = { 
+        "m": 1,
+        "t": 2,
+        "w": 3,
+        "th": 4,
+        "f": 5,
+        "s": 6
+    }
     const firstname = req.body.firstname || ' ';
     const lastname = req.body.lastname || ' '; 
     const email = req.body.email || ' '; 
@@ -478,28 +486,77 @@ app.post('/create-account', (req, res) => {
     const password = req.body.password;
     const confirmpassword = req.body.confirmpassword;
     const admin = req.body.admin;
-    let iCount = 0
+    let iCount = 0;
 
-// make the avaible codes work
-    for (let i = 0; iCount < dayofWeek.length; i++) 
-        {
-    console.log(`Day: ${dayofWeek[i]}, iCount: ${iCount}`);
+    // Loop through days of the week
+    for (let i = 0; i < dayofWeek.length; i++) {
+        let dayKey = dayofWeek[i] + "availability";
+        let morning = req.body[dayofWeek[i] + "m"];  // Access checkbox value dynamically
+        let afternoon = req.body[dayofWeek[i] + "a"];
+        let evening = req.body[dayofWeek[i] + "e"];
+        let none = req.body[dayofWeek[i] + "n"];
 
-        if (req.body.m = true) 
-        {
+        //debugging
+        console.log(morning, afternoon, evening, none)
+        console.log(`${dayKey}: ${availability[dayKey]}`);
 
-        };
+        // Log the values to verify they're being captured correctly
+        console.log(morning, afternoon, evening, none);
 
+        // Check for combinations of availability and log accordingly
+        if (morning === 'm' && afternoon === 'a' && evening === 'e') {
+            console.log("All is working!");
+            availability[dayKey] = 1 + iCount;
+            console.log(`${dayKey}: ${availability[dayKey]}`);
 
-    // Increment iCount by 8
-    iCount += 8;
+        } else if (morning === 'm' && afternoon === 'a') {
+            console.log("M + A is working!");
+            availability[dayKey] = 2 + iCount;
+            console.log(`${dayKey}: ${availability[dayKey]}`);
+
+        } else if (morning === 'm' && evening === 'e') {
+            console.log("M + E is working!");
+            availability[dayKey] = 3 + iCount;
+            console.log(`${dayKey}: ${availability[dayKey]}`);
+
+        } else if (morning === 'm') {
+            console.log("Morning is working!");
+            availability[dayKey] = 4 + iCount;
+            console.log(`${dayKey}: ${availability[dayKey]}`);
+
+        } else if (afternoon === 'a' && evening === 'e') {
+            console.log("A + E is working!");
+            availability[dayKey] = 5 + iCount;
+            console.log(`${dayKey}: ${availability[dayKey]}`);
+
+        } else if (evening === 'e') {
+            console.log("Evening is working!");
+            availability[dayKey] = 6 + iCount;
+            console.log(`${dayKey}: ${availability[dayKey]}`);
+
+        } else if (afternoon === 'a') {
+            console.log("Afternoon is working!");
+            availability[dayKey] = 7 + iCount;
+            console.log(`${dayKey}: ${availability[dayKey]}`);
+
+        } else if (none === 'n') {
+            console.log("None is working!");
+            availability[dayKey] = 8 + iCount;
+            console.log(`${dayKey}: ${availability[dayKey]}`);
+
+        } else {
+            console.log("It's broken :(");
         }
-            
+
+        // Increment iCount by 8
+        iCount += 8;
+    }
 
     if (password !== confirmpassword) {
         return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
     }
-
+    // Now proceed to insert into database using Knex
+    // Your knex logic here to save to the database
     knex('users')
         .insert({
             firstname: firstname.toLowerCase(),
@@ -526,7 +583,7 @@ app.post('/create-account', (req, res) => {
             console.error("Error creating account:", err);
             res.render("homepage", { error: "An unexpected error when trying to create the event. Please try again.", title: "Request Event - Turtle Shelter Project" });
         });
-    })
+});
 
 //Admin Calendar (luke)
     app.get('/admincalendar', isAuthenticated, isAdmin, (req, res) => {

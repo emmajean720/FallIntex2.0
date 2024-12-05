@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-      <!-- Include Header -->
+      <!-- Include Navbar -->
       <%- include("partials/navbar") %>
+<div class="main-content">
     <div class="login-container" id="login-form">
         <h1>Login</h1>
         <form action="/login" method="POST">
@@ -26,6 +27,7 @@
             <button class="link" id="show-create-account-btn">Create one here</button>
         </p>
     </div>
+</div>
     <div class="create-account-container" id="create-account-form" style="display: none;">
         <h1>Create Account</h1>
         <form action="/create-account" method="POST">
@@ -202,10 +204,10 @@
                         <label>Monday</label>
                     </div>
                     <div class="day-checkbox">
-                        <input type="checkbox" name="m" value="m"> Morning
-                        <input type="checkbox" name="a" value="a"> Afternoon
-                        <input type="checkbox" name="e" value="e"> Evening
-                        <input type="checkbox" name="n" value="n"> None
+                        <input type="checkbox" name="mm" value="m"> Morning
+                        <input type="checkbox" name="ma" value="a"> Afternoon
+                        <input type="checkbox" name="me" value="e"> Evening
+                        <input type="checkbox" name="mn" value="n"> None
                     </div>
 
                     <!-- Tuesday -->
@@ -213,9 +215,10 @@
                         <label>Tuesday</label>
                     </div>
                     <div class="day-checkbox">
-                        <input type="checkbox" name="m" value="m"> Morning
-                        <input type="checkbox" name="a" value="a"> Afternoon
-                        <input type="checkbox" name="e" value="e"> Evening
+                        <input type="checkbox" name="tm" value="m"> Morning
+                        <input type="checkbox" name="ta" value="a"> Afternoon
+                        <input type="checkbox" name="te" value="e"> Evening
+                        <input type="checkbox" name="tn" value="n"> None
                     </div>
 
                     <!-- Wednesday -->
@@ -223,9 +226,10 @@
                         <label>Wednesday</label>
                     </div>
                     <div class="day-checkbox">
-                        <input type="checkbox" name="m" value="m"> Morning
-                        <input type="checkbox" name="a" value="a"> Afternoon
-                        <input type="checkbox" name="e" value="e"> Evening
+                        <input type="checkbox" name="wm" value="m"> Morning
+                        <input type="checkbox" name="wa" value="a"> Afternoon
+                        <input type="checkbox" name="we" value="e"> Evening
+                        <input type="checkbox" name="wn" value="n"> None
                     </div>
 
                     <!-- Thursday -->
@@ -233,9 +237,10 @@
                         <label>Thursday</label>
                     </div>
                     <div class="day-checkbox">
-                        <input type="checkbox" name="m" value="m"> Morning
-                        <input type="checkbox" name="a" value="a"> Afternoon
-                        <input type="checkbox" name="e" value="e"> Evening
+                        <input type="checkbox" name="thm" value="m"> Morning
+                        <input type="checkbox" name="tha" value="a"> Afternoon
+                        <input type="checkbox" name="the" value="e"> Evening
+                        <input type="checkbox" name="thn" value="n"> None
                     </div>
 
                     <!-- Friday -->
@@ -243,9 +248,10 @@
                         <label>Friday</label>
                     </div>
                     <div class="day-checkbox">
-                        <input type="checkbox" name="m" value="m"> Morning
-                        <input type="checkbox" name="a" value="a"> Afternoon
-                        <input type="checkbox" name="e" value="e"> Evening
+                        <input type="checkbox" name="fm" value="m"> Morning
+                        <input type="checkbox" name="fa" value="a"> Afternoon
+                        <input type="checkbox" name="fe" value="e"> Evening
+                        <input type="checkbox" name="fn" value="n"> None
                     </div>
 
                     <!-- Saturday -->
@@ -253,14 +259,14 @@
                         <label>Saturday</label>
                     </div>
                     <div class="day-checkbox">
-                        <input type="checkbox" name="m" value="m"> Morning
-                        <input type="checkbox" name="a" value="a"> Afternoon
-                        <input type="checkbox" name="e" value="e"> Evening
+                        <input type="checkbox" name="sm" value="m"> Morning
+                        <input type="checkbox" name="sa" value="a"> Afternoon
+                        <input type="checkbox" name="se" value="e"> Evening
+                        <input type="checkbox" name="sn" value="n"> None
                     </div>
                 </label>
             </div>
             
-
             <!-- Username/Login -->
             <div class="form-group">
                 <label for="login">Username:</label>
