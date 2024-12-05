@@ -124,6 +124,24 @@
     margin-right: 10px;
 }
 
+.image-container {
+  display: inline-block;
+  margin: 0 10px;  /* Adds space between the images */
+  align-items: center;  /* Align images vertically */
+  
+}
+
+.image-container img {
+  width: 100%;  /* Adjust the width of each image */
+  max-height: 200px;  /* Optional: set a maximum width */
+  height: auto;  /* Maintain aspect ratio */
+  align-items: center;  /* Align images vertically */
+}
+.image-row {
+  display: flex;
+  justify-content: center;  /* Center images horizontally */
+  gap: 20px;  /* Add space between the images */
+}
 
   </style>
   <script>
@@ -166,11 +184,25 @@ function toggleSewingQuestions(value) {
       <p>No experience, including sewing, is necessary—just a willingness to serve. You can choose the hours you’re available to help each month, as well as the days that work best for you.</p>
       <p>By volunteering, you not only help facilitate events but also ensure that each vest meets the highest standards, ensuring those who need it most receive the best. Your time and effort will have a lasting impact on the community, offering warmth, dignity, and support to those facing difficult circumstances.</p>
       <p>Become a volunteer and find opportunities to serve near you!</p>
+      <div>
+        <div class="image-row">
+          <div class="image-container">
+            <img src="/images/PinningVests.jpeg" alt="Pinning Vests">
+          </div>
+          <div class="image-container">
+            <img src="/images/Vests.jpg" alt="Happy People Wearing Vests">
+          </div>
+          <div class="image-container">
+            <img src="/images/Serving.jpg" alt="Happy People Serving">
+          </div>
+        </div>
+        
+
       <div style="text-align: center; margin-top: 20px;">
         <a href="/login?form=create" class="button" style="display: inline-block;">Sign-up Now</a>
     </div>
     </div>
-
+  </div>
   <!-- Card 1 -->
   <div id="event" class="tab-content" style="display:none;">
     <h2 style="text-align: center;">Schedule an Event</h2>
@@ -436,6 +468,7 @@ function openTab(tabName) {
       }
     });
   </script>
+  <br><br>
       <!-- Footer -->
       <%- include("partials/footer") %>
 </body>
