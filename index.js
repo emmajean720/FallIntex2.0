@@ -273,8 +273,21 @@ app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
 
 // Admin Management Page
 app.get('/adminmanage', isAuthenticated, isAdmin, (req, res) => {
-    knex('users')
-        .select('*')
+    const { search } = req.query;
+    let query = knex('users').select('*'); // Initialize the query
+
+    // If search query is provided, filter by first name or last name
+    if (search) {
+        query = query.andWhere(function() {
+            this.where('firstname', 'ilike', `%${search}%`)  // Search in firstname
+                .orWhere('lastname', 'ilike', `%${search}%`); // Search in lastname
+        });
+    }
+        
+    query
+        .orderBy('is_admin','desc')
+        .orderBy('firstname')
+        .orderBy('lastname')
         .then(users => {
             // Map statecode to state_abbr for display in the table
             users = users.map(user => ({
@@ -300,6 +313,7 @@ app.get('/adminmanage', isAuthenticated, isAdmin, (req, res) => {
             });
         });
 });
+
 
 // Update Admin Status
 app.post('/update-admin-status/:usercode', isAuthenticated, isAdmin, (req, res) => {
