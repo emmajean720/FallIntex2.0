@@ -7,94 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
-    <style>
-        /* Custom styles for the Admin Page */
-        .create-admin-container {
-            margin-top: 30px;
-            padding: 30px;  /* Increased padding */
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-    
-        .create-admin-button {
-            background-color: #008080;
-            color: white;
-            padding: 12px 20px;  /* Increased padding */
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-bottom: 20px;
-            font-size: 16px;  /* Adjust font size */
-        }
-    
-        .create-admin-button:hover {
-            background-color: #005F5F;
-        }
-    
-        .create-admin-form {
-            display: none;
-            margin-top: 20px;
-        }
-    
-        .create-admin-form label {
-            display: block;
-            margin: 10px 0 5px;
-            font-weight: bold;
-            font-size: 14px;  /* Adjust font size */
-        }
-    
-        .create-admin-form input,
-        .create-admin-form select {
-            width: 100%;
-            padding: 12px;  /* Increased padding */
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            font-size: 14px;  /* Adjust font size */
-            margin-bottom: 15px;  /* Added space between inputs */
-        }
-    
-        .create-admin-form select {
-            background-color: #fff; /* Light background for dropdown */
-            border: 1px solid #ccc; /* Subtle border */
-            transition: border 0.3s ease;
-        }
-    
-        .create-admin-form select:focus {
-            border-color: #008080; /* Change border color on focus */
-            outline: none;  /* Remove default outline */
-        }
-    
-        .create-admin-form button {
-            background-color: #008080;
-            color: white;
-            padding: 12px 20px;  /* Increased padding */
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 16px;  /* Adjust font size */
-        }
-    
-        .create-admin-form button:hover {
-            background-color: #005F5F;
-        }
-    
-        /* Style for the dropdown */
-        select {
-            cursor: pointer;
-            font-size: 14px;
-            padding: 12px; /* Padding for the dropdown */
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-    
-        select:focus {
-            outline: none;
-            border-color: #008080;
-        }
-    </style>
     <script>
         function toggleAdminForm() {
             const form = document.getElementById('create-admin-form');
@@ -107,14 +19,17 @@
     <%- include("partials/adminnavbar") %>
 
     <div class="main-content">
-        <div class="search-container">
-            <form method="GET" action="/adminmanage">
-                <input type="text" name="search" placeholder="Search by name" value="<%= typeof search !== 'undefined' ? search : '' %>">
-                <button type="submit">Search</button>
-            </form>
-        </div>
         <div class="container">
             <h1>Admin Management - User List</h1>
+            <div class="search-container">
+                <form method="GET" action="/adminmanage">
+                    <input type="text" name="search" placeholder="Search User" value="<%= typeof search !== 'undefined' ? search : '' %>">
+                    <button type="submit">Search</button>
+                </form>
+                <form method="GET" action="/adminmanage">
+                    <button type="submit" class="reset-btn">Reset</button>
+                </form>
+            </div>
             <% if (error) { %>
                 <div class="error-message">
                     <%= error %>
