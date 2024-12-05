@@ -11,51 +11,88 @@
         /* Custom styles for the Admin Page */
         .create-admin-container {
             margin-top: 30px;
-            padding: 20px;
+            padding: 30px;  /* Increased padding */
             background-color: #f9f9f9;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+    
         .create-admin-button {
             background-color: #008080;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;  /* Increased padding */
             border-radius: 5px;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s ease;
             margin-bottom: 20px;
+            font-size: 16px;  /* Adjust font size */
         }
+    
         .create-admin-button:hover {
             background-color: #005F5F;
         }
+    
         .create-admin-form {
             display: none;
             margin-top: 20px;
         }
+    
         .create-admin-form label {
             display: block;
             margin: 10px 0 5px;
             font-weight: bold;
+            font-size: 14px;  /* Adjust font size */
         }
-        .create-admin-form input {
-            width: calc(100% - 20px);
-            padding: 10px;
+    
+        .create-admin-form input,
+        .create-admin-form select {
+            width: 100%;
+            padding: 12px;  /* Increased padding */
             border-radius: 5px;
             border: 1px solid #ddd;
+            font-size: 14px;  /* Adjust font size */
+            margin-bottom: 15px;  /* Added space between inputs */
         }
+    
+        .create-admin-form select {
+            background-color: #fff; /* Light background for dropdown */
+            border: 1px solid #ccc; /* Subtle border */
+            transition: border 0.3s ease;
+        }
+    
+        .create-admin-form select:focus {
+            border-color: #008080; /* Change border color on focus */
+            outline: none;  /* Remove default outline */
+        }
+    
         .create-admin-form button {
             background-color: #008080;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;  /* Increased padding */
             border-radius: 5px;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-top: 15px;
+            font-size: 16px;  /* Adjust font size */
         }
+    
         .create-admin-form button:hover {
             background-color: #005F5F;
+        }
+    
+        /* Style for the dropdown */
+        select {
+            cursor: pointer;
+            font-size: 14px;
+            padding: 12px; /* Padding for the dropdown */
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    
+        select:focus {
+            outline: none;
+            border-color: #008080;
         }
     </style>
     <script>
@@ -98,7 +135,7 @@
                             <td><%= user.email %></td>
                             <td><%= user.phone %></td>
                             <td><%= user.city %></td>
-                            <td><%= user.state_abbr %></td> <!-- Updated to use state_abbr -->
+                            <td><%= user.state_abbr %></td> <!-- Using state_abbr here -->
                             <td>
                                 <form action="/update-admin-status/<%= user.usercode %>" method="POST">
                                     <select name="is_admin" onchange="this.form.submit()">
@@ -137,7 +174,11 @@
                     <input type="text" id="city" name="city" required>
 
                     <label for="state_abbr">State:</label>
-                    <input type="text" id="state_abbr" name="state_abbr" required>
+                    <select id="state_abbr" name="state_abbr" required>
+                        <% for (let key in stateAbbreviations) { %>
+                            <option value="<%= stateAbbreviations[key] %>"><%= stateAbbreviations[key] %></option>
+                        <% } %>
+                    </select>
 
                     <label for="login">Username:</label>
                     <input type="text" id="login" name="login" required>
