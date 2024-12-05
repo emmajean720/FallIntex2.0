@@ -54,7 +54,7 @@
 </head>
 <body>
     <!-- Nav Bar -->
-    <%- include("partials/adminnavbar") %>
+    <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
 
     <!-- Main Content -->
     <div class="main-content">

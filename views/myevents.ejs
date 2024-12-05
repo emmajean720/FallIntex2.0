@@ -82,7 +82,7 @@
 </head>
 <body>
     <!-- Nav Bar -->
-    <%- include("partials/navbar") %>
+    <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
 
     <!-- Main Content -->
     <div class="main-content">

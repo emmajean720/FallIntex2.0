@@ -156,7 +156,7 @@
 </style>
 <body>
     <!-- Nav Bar -->
-    <%- include("partials/navbar") %>
+    <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
     <section class="hero" style="background-image: url('/images/Homepage.jpg'); background-size: cover; background-position: center;">
         <div class="hero-overlay">
             <h2>Every Life Has Value. Every Person Can Serve.</h2>

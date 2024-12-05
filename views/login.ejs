@@ -8,8 +8,8 @@
 </head>
 <body>
       <!-- Include Navbar -->
-      <%- include("partials/navbar") %>
-<div class="main-content">
+      <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
+      <div class="main-content">
     <div class="login-container" id="login-form">
         <h1>Login</h1>
         <form action="/login" method="POST">

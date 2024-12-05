@@ -35,7 +35,13 @@
                     <!-- Link to the calendar page -->
                     <li><a href="/admincalendar">Calendar</a></li>
                     <li><a href="/volunteerhome">See Events</a></li>
-                    <li><a href="/logout" class="btn login-btn">Logout</a></li>
+
+                    <% if (user) { %> <!-- Check if user is logged in -->
+                        <!-- Display 'Hello, Firstname' button that routes to the admin page -->
+                        <li><a href="/admin" class="btn hello-btn">Hello, <%= user.firstname %></a></li>
+                        <!-- Logout link -->
+                        <li><a href="/logout" class="btn logout-btn">Logout</a></li>
+                    <% } %>
                 </ul>
             </nav>
         </div>

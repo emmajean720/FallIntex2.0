@@ -158,8 +158,9 @@ function toggleSewingQuestions(value) {
 </head>
 <body>
         <!-- Nav Bar -->
-        <%- include("partials/navbar") %>
-<!-- Main Content -->
+        
+        <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
+  <!-- Main Content -->
   <div class="main-content" style="font-family: 'Lora', serif">
       <h1>Volunteer Your Time with the Turtle Shelter Project</h1>
       <p style="text-align: center; width: 75%; margin: 0 auto;">
