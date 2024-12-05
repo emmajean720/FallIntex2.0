@@ -250,6 +250,19 @@ footer .contact-info a:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/*css fro cards on admin events page*/
+.bigcard {
+    width: 90%;
+    max-width: 1250px;
+    margin: 30px auto; /* Increased margin to create better spacing between cards */
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Slightly increased border-radius for a more modern look */
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* Smooth transition for hover effects */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .card:hover {
     transform: translateY(-5px); /* Card moves up slightly to show interactivity */
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover for better focus */

@@ -200,15 +200,13 @@ app.post('/delete-user/:usercode', isAuthenticated, isAdmin, (req, res) => {
 app.get('/eventmanage', isAuthenticated, isAdmin, (req, res) => {
     knex('event')
         .leftJoin('eventsummary', 'event.eventcode', 'eventsummary.eventcode')  // Join eventsummary table on eventcode
-        .select('event.eventcode', 
-            'event.organization', 
-            'event.eventstarttime',
-            'event.eventstoptime',
-            'event.orgfirstname',
-            'event.orglastname',
-            'event.status',
-            'eventsummary.eventsummarycode' || 0, 
-            'eventsummary.actualparticipation' || 0, 
+        .leftJoin('state', 'event.statecode', 'state.statecode')
+        .leftJoin('discovered', 'event.discoveredcode', 'discovered.discoveredcode')
+        .leftJoin('servicetypes', 'event.servicetypecode', 'servicetypes.servicetypecode')
+        .select('event.*' || null, 
+            'state.description as state_description',
+            'discovered.description as discovered_description',
+            'servicetypes.servicedescription',
             'eventsummary.vestcut' || 0, 
             'eventsummary.vestpin' || 0, 
             'eventsummary.collarcut' || 0, 
@@ -230,7 +228,6 @@ app.get('/eventmanage', isAuthenticated, isAdmin, (req, res) => {
             'eventsummary.xxlcompleted' || 0, 
             'eventsummary.xxxlcompleted' || 0, 
             'eventsummary.xxxxlcompleted' || 0,)  // Select all columns from both tables
-        .whereNot('event.status', 'completed')
         .then(events => {
             res.render("eventmanage", { error: null, title: "Event Management - Turtle Shelter Project", events });
         })
@@ -323,7 +320,9 @@ app.post('/complete-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
             .update({
                 status: 'completed',  // Update the status field
             });
-            res.send('Event summary uploaded successfully!')}
+            res.send('Event summary uploaded successfully!')
+            res.redirect('/eventmanage');}
+            
         )
         .catch(err => {
             console.error("Error adding summary:", err);
