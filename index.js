@@ -476,11 +476,24 @@ app.post('/delete-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
 // Edit Event OG
 app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
     const { eventcode } = req.params;
-    const { organization, eventstarttime, eventstoptime, orgfirstname, orglastname, status } = req.body;
+    const organization = req.body.organization;
+    const eventstarttime = req.body.eventstarttime;
+    const eventstoptime = req.body.eventstoptime;
+    const orgfirstname = req.body.orgfirstname;
+    const orglastname = req.body.orglastname;
+    const status = req.body.status;
+    const 
 
     knex('event')
         .where('eventcode', eventcode)
-        .update({ organization, eventstarttime, eventstoptime, orgfirstname, orglastname, status })
+        .update({ 
+            organization: organization.toLowerCase(),
+            eventstarttime: eventstarttime,
+            eventstoptime: eventstoptime,
+            orgfirstname: orgfirstname.toLowerCase,
+            orglastname: orglastname.toLowerCase,
+            status: status, 
+        })
         .then(() => res.redirect('/eventmanage'))
         .catch(err => {
             console.error("Error updating event:", err);
@@ -635,12 +648,12 @@ app.post('/create-account', (req, res) => {
             lastname: lastname.toLowerCase(),
             email: email,
             phone: phone,
-            city: city,
-            statecode: statecode,
-            discoveredcode: discoveredcode, 
-            skilllevelcode: skilllevelcode, 
-            commithours: commithours, 
-            traveldistance: traveldistance, 
+            city: city.toLowerCase(),
+            statecode: parseInt(statecode),
+            discoveredcode: parseInt(discoveredcode), 
+            skilllevelcode: parseInt(skilllevelcode), 
+            commithours: parseInt(commithours), 
+            traveldistance: parseInt(traveldistance), 
             is_leading: is_leading, 
             newsletter: newsletter, 
             login: login,
@@ -746,14 +759,14 @@ app.post('/eventrequest', (req, res) => {
         eventstoptime: eventstoptime,
         eventaddress: eventaddress.toLowerCase(),
         eventcity: eventcity.toLowerCase(),
-        statecode: statecode,
-        discoveredcode: discoveredcode,
-        expectedparticipants: expectedparticipants,
-        servicetypecode: servicetypecode,
-        basicskills: basicskills,
-        advancedskills: advanced,
-        sewingmachines: sewingmachines,
-        sergers: sergers,
+        statecode: parseInt(statecod),
+        discoveredcode: parseInt(discoveredcode),
+        expectedparticipants: parseInt(expectedparticipants),
+        servicetypecode: parseInt(servicetypecode),
+        basicskills: parseInt(basicskills),
+        advancedskills: parseInt(advanced),
+        sewingmachines: parseInt(sewingmachines),
+        sergers: parseInt(sergers),
         payfor: payfor,
         storyshared: storyshared,
         orgnewsletter: newsletter,
@@ -806,14 +819,14 @@ app.post('/eventrequestadmin', (req, res) => {
         eventstoptime: eventstoptime,
         eventaddress: eventaddress.toLowerCase(),
         eventcity: eventcity.toLowerCase(),
-        statecode: statecode,
-        discoveredcode: discoveredcode,
-        expectedparticipants: expectedparticipants,
-        servicetypecode: servicetypecode,
-        basicskills: basicskills,
-        advancedskills: advanced,
-        sewingmachines: sewingmachines,
-        sergers: sergers,
+        statecode: parseInt(statecode),
+        discoveredcode: parseInt(discoveredcode),
+        expectedparticipants: parseInt(expectedparticipants),
+        servicetypecode: parseInt(servicetypecode),
+        basicskills: parseInt(basicskills),
+        advancedskills: parseInt(advanced),
+        sewingmachines: parseInt(sewingmachines),
+        sergers: parseInt(sergers),
         payfor: payfor,
         storyshared: storyshared,
         orgnewsletter: newsletter,
