@@ -25,10 +25,11 @@
                 <form method="GET" action="/adminmanage">
                     <input type="text" name="search" placeholder="Search User" value="<%= typeof search !== 'undefined' ? search : '' %>">
                     <button type="submit">Search</button>
+                    <form method="GET" action="/adminmanage">
+                        <button type="submit" class="reset-btn">Reset</button>
+                    </form>
                 </form>
-                <form method="GET" action="/adminmanage">
-                    <button type="submit" class="reset-btn">Reset</button>
-                </form>
+
             </div>
             <% if (error) { %>
                 <div class="error-message">
