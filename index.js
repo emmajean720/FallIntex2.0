@@ -677,6 +677,66 @@ app.post('/eventrequest', (req, res) => {
     });
 })
 
+// Handle Event Request Form from admin- McKenna (using Kylee's)
+app.post('/eventrequestadmin', (req, res) => {
+    const organization = req.body.organization || ' ';
+    const orgfirstname = req.body.orgfirstname || ' ';
+    const orglastname = req.body.orglastname || ' ';
+    const orgemail = req.body.orgemail || ' ';
+    const orgphone = req.body.orgphone;
+    const eventstarttime = req.body.eventstarttime;
+    const eventstoptime = req.body.eventstoptime;
+    const eventaddress = req.body.eventaddress;
+    const eventcity = req.body.eventcity
+    const statecode = req.body.statecode
+    const discoveredcode = req.body.discoveredcode
+    const expectedparticipants = req.body.expectedparticipants
+    const servicetypecode = req.body.servicetypecode
+    const basicskills = req.body.basicskills || null;
+    const advanced = req.body.advanced || null;
+    const sewingmachines = req.body.sewingmachines || null;
+    const sergers = req.body.sergers || null;
+    const payfor = req.body.payfor === 'true' ? true : false;
+    const storyshared = req.body.storyshared === 'true' ? true : false;
+    const newsletter = req.body.newsletter=== 'true' ? true : false;
+    const comments = req.body.comments;
+    const status = req.body.status;
+
+    knex('event')
+    .insert({
+        organization: organization.toLowerCase(),
+        orgfirstname: orgfirstname.toLowerCase(),
+        orglastname: orglastname.toLowerCase(),
+        orgemail: orgemail.toLowerCase(),
+        orgphone: orgphone,
+        eventstarttime: eventstarttime,
+        eventstoptime: eventstoptime,
+        eventaddress: eventaddress.toLowerCase(),
+        eventcity: eventcity.toLowerCase(),
+        statecode: statecode,
+        discoveredcode: discoveredcode,
+        expectedparticipants: expectedparticipants,
+        servicetypecode: servicetypecode,
+        basicskills: basicskills,
+        advancedskills: advanced,
+        sewingmachines: sewingmachines,
+        sergers: sergers,
+        payfor: payfor,
+        storyshared: storyshared,
+        orgnewsletter: newsletter,
+        comments: comments,
+        status: status.toLowerCase()
+
+    })
+    .then(() => {
+        res.redirect('/eventmanage');
+    })
+    .catch(err => {
+        console.error("Error creating account:", err);
+        res.render("homepage", { error: "An unexpected error when trying to create the event. Please try again.", title: "Request Event - Turtle Shelter Project" });
+    });
+})
+
 //vest receiver form (luke)
 // Display the form for vest receivers and the current year's records
 // Display the form for vest receivers and the current year's records

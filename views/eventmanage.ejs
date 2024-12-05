@@ -47,11 +47,6 @@
             gap: 20px;
         }
 
-        .form-group {
-            flex: 1 1 30%;
-            min-width: 200px;
-        }
-
         .form-container label {
             display: block;
             margin-bottom: 5px;
@@ -59,17 +54,59 @@
             color: #555;
         }
 
-        .form-container input[type="text"],
-        .form-container input[type="number"],
-        .form-container input[type="date"],
-        .form-container select {
+        .form-container input[type="text"]{
             padding: 10px;
             width: 100%;
             border-radius: 5px;
             border: 1px solid #ddd;
             font-size: 1em;
         }
+       
+        .form-container input[type="number"]{
+            padding: 10px;
+            width: 15%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
 
+        .form-container input[type="datetime-local"]{
+            padding: 10px;
+            width: 40%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+    
+        .form-container select {
+            padding: 10px;
+            width: 30%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+        .form-container input[type="tel"] {
+            padding: 10px;
+            width: 25%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+        .form-container input[type="email"] {
+            padding: 10px;
+            width: 35%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+
+        .form-container input[type="radio"] {
+            padding: 10px;
+            width: 5%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
         /* Buttons for Forms */
         .form-button {
             background-color: #008080;
@@ -190,178 +227,180 @@
     
         <div class="form-container">
             <h1>Add New Event</h1>
-        <form action="/adminvest-receiver" method="POST">
             <!-- Event Request Form -->
-        <form action="/eventrequest" method="POST">
+            <form action="/eventrequestadmin" method="POST">
 
-             <div class="form-group">  
-                <label for="organization">Organization/Group Name:</label>
-                <input type="text" id="organization" name="organization" required>
-                <br>
-
-                <label for="orgfirstname">Organizer First Name:</label>
-                <input type="text" id="orgfirstname" name="orgfirstname" required>
-                <br>
-
-                <label for="orglastname">Organizer Last Name:</label>
-                <input type="text" id="orglastname" name="orglastname" required>
-
-                <br>
-                <label for="orgemail">Organizer Email:</label>
-                <input type="email" id="orgemail" name="orgemail" required>
-                <br>
-
-                <label for="orgphone">Organizer Phone Number:</label>
-                <input type="tel" id="orgphone" name="orgphone" required>
-                <br>
-
-                <label for="eventstarttime">Event Start Time:</label>
-                <input type="datetime-local" id="eventstarttime" name="eventstarttime" required>
-                <br>
-
-                <label for="eventstoptime">Event Stop Time:</label>
-                <input type="datetime-local" id="eventstoptime" name="eventstoptime" required>
-                <br>
-
-                <label>Location of Event:</label>
-                <input type="text" id="eventaddress" name="eventaddress" placeholder="Street Address" required>
-                <input type="text" id="eventcity" name="eventcity" placeholder="City" required>
-                <select id="statecode" name="statecode" required>
-                    <option value="" disabled selected>-- Select State --</option>
-                    <option value="1">Alabama</option>
-                    <option value="2">Alaska</option>
-                    <option value="3">Arizona</option>
-                    <option value="4">Arkansas</option>
-                    <option value="5">California</option>
-                    <option value="6">Colorado</option>
-                    <option value="7">Connecticut</option>
-                    <option value="8">Delaware</option>
-                    <option value="9">Florida</option>
-                    <option value="10">Georgia</option>
-                    <option value="11">Hawaii</option>
-                    <option value="12">Idaho</option>
-                    <option value="13">Illinois</option>
-                    <option value="14">Indiana</option>
-                    <option value="15">Iowa</option>
-                    <option value="16">Kansas</option>
-                    <option value="17">Kentucky</option>
-                    <option value="18">Louisiana</option>
-                    <option value="19">Maine</option>
-                    <option value="20">Maryland</option>
-                    <option value="21">Massachusetts</option>
-                    <option value="22">Michigan</option>
-                    <option value="23">Minnesota</option>
-                    <option value="24">Mississippi</option>
-                    <option value="25">Missouri</option>
-                    <option value="26">Montana</option>
-                    <option value="27">Nebraska</option>
-                    <option value="28">Nevada</option>
-                    <option value="29">New Hampshire</option>
-                    <option value="30">New Jersey</option>
-                    <option value="31">New Mexico</option>
-                    <option value="32">New York</option>
-                    <option value="33">North Carolina</option>
-                    <option value="34">North Dakota</option>
-                    <option value="35">Ohio</option>
-                    <option value="36">Oklahoma</option>
-                    <option value="37">Oregon</option>
-                    <option value="38">Pennsylvania</option>
-                    <option value="39">Rhode Island</option>
-                    <option value="40">South Carolina</option>
-                    <option value="41">South Dakota</option>
-                    <option value="42">Tennessee</option>
-                    <option value="43">Texas</option>
-                    <option value="44">Utah</option>
-                    <option value="45">Vermont</option>
-                    <option value="46">Virginia</option>
-                    <option value="47">Washington</option>
-                    <option value="48">West Virginia</option>
-                    <option value="49">Wisconsin</option>
-                    <option value="50">Wyoming</option>
-                </select>
-                <br>
-
-                <label for="discoveredcode">How did you find out about us?</label>
-                <select id="discoveredcode" name="discoveredcode" required>
-                    <option value="" disabled selected>-- Select --</option>
-                    <option value="7">Other</option>
-                    <option value="1">Our Facebook</option>
-                    <option value="2">Podcasts</option>
-                    <option value="3">Events</option>
-                    <option value="4">Word of Mouth</option>
-                    <option value="5">Our Website</option>
-                    <option value="6">Other Social Media</option>
-                </select>
-                <br>
-
-                <label for="expectedparticipants">How many people do you expect to participate?</label>
-                <input type="number" id="expectedparticipants" name="expectedparticipants" min="1" required>
-                <br>
-
-                <label for="servicetypecode">What kind of service would you like to do?</label>
-                <select id="servicetypecode" name="servicetypecode" onchange="toggleSewingQuestions(this.value)" required>
-                <option value="" disabled selected>-- Select --</option>
-                <option value="1">Sewing</option>
-                <option value="2">Non-Sewing</option>
-                <option value="3">Both</option>
-            </select>
-                <br>
-
-                <!-- Sewing Questions after drop down -->
-                <div class="sewing-questions">
-                <h3>Sewing Project Details</h3>
-                <label for="basicskills">How many participants have basic sewing skills?</label>
-                <input type="number" id="basicskills" name="basicskills" min="0">
-
-                <label for="advanced">How many participants have advanced sewing skills?</label>
-                <input type="number" id="advanced" name="advanced" min="0">
-
-                <label for="sewingmachines">How many sewing machines can you bring?</label>
-                <input type="number" id="sewingmachines" name="sewingmachines" min="0">
-
-                <label for="sergers">How many sergers can you bring?</label>
-                <input type="number" id="sergers" name="sergers" min="0">
-
+                <div>  
+                    <label for="organization">Organization/Group Name:</label>
+                    <input type="text" id="organization" name="organization"  style="width: 100%" placeholder="Group Name" required>
                 </div>
-                <label>Would you like to help support the material costs for this event?</label>
-                <label>
-                <input type="radio" name="payfor" value="true"> Yes
-                </label>
-                <label>
-                <input type="radio" name="payfor" value="false"> No
-                </label>
-                <br>
 
-                <label>Do you want Jen to share her story with your group?</label>
-                <label>
-                <input type="radio" name="storyshared" value="true"> Yes
-                </label>
-                <label>
-                <input type="radio" name="storyshared" value="false"> No
-                </label>
-                <br>
+                <div> 
+                    <label>Organizer Name:</label>
+                    <input type="text" id="orgfirstname" name="orgfirstname" placeholder="First Name" style="width: 49%" required>
+                    <input type="text" id="orglastname" name="orglastname" placeholder="Last Name" style="width: 49%" required>
+                </div>
 
-                <label>Do you want to receive monthly newsletters with updates about the Turtle Shelter Project?</label>
-                <label>
-                <input type="radio" name="newsletter" value="true"> Yes
-                </label>
-                <label>
-                <input type="radio" name="newsletter" value="false"> No
-                </label>
-                <br>
+                <div> 
+                    <label>Organizer Contact Info:</label>
+                    <input type="email" id="orgemail" name="orgemail" placeholder="Email" style="width: 60%" required>
+                    <input type="tel" id="orgphone" name="orgphone" placeholder="Phone" style="width: 37%" maxlength="14" placeholder="(123) 456-7890" required>
+                </div>
 
-                <label for="comments">Extra comments:</label>
-                <input type="text" id="comments" name="comments" placeholder="comments">
-                <br>
-                
-                <input type="hidden" id="status" name="status" value="pending">
-                <button type="submit" class="form-button">Submit</button>
+                <div> 
+                    <label>Event Duration:</label>
+                    <input type="datetime-local" id="eventstarttime" name="eventstarttime" required> to 
+                    <input type="datetime-local" id="eventstoptime" name="eventstoptime" required>
+                </div>
+
+                <div> 
+                    <label>Location of Event:</label>
+                    <input type="text" id="eventaddress" name="eventaddress" placeholder="Street Address" style="width: 40%" required>
+                    <input type="text" id="eventcity" name="eventcity" placeholder="City" style="width: 40%" required>
+                    <select id="statecode" name="statecode" style="width: 16%" required>
+                        <option value="" disabled selected>State</option>
+                        <option value="1">Alabama</option>
+                        <option value="2">Alaska</option>
+                        <option value="3">Arizona</option>
+                        <option value="4">Arkansas</option>
+                        <option value="5">California</option>
+                        <option value="6">Colorado</option>
+                        <option value="7">Connecticut</option>
+                        <option value="8">Delaware</option>
+                        <option value="9">Florida</option>
+                        <option value="10">Georgia</option>
+                        <option value="11">Hawaii</option>
+                        <option value="12">Idaho</option>
+                        <option value="13">Illinois</option>
+                        <option value="14">Indiana</option>
+                        <option value="15">Iowa</option>
+                        <option value="16">Kansas</option>
+                        <option value="17">Kentucky</option>
+                        <option value="18">Louisiana</option>
+                        <option value="19">Maine</option>
+                        <option value="20">Maryland</option>
+                        <option value="21">Massachusetts</option>
+                        <option value="22">Michigan</option>
+                        <option value="23">Minnesota</option>
+                        <option value="24">Mississippi</option>
+                        <option value="25">Missouri</option>
+                        <option value="26">Montana</option>
+                        <option value="27">Nebraska</option>
+                        <option value="28">Nevada</option>
+                        <option value="29">New Hampshire</option>
+                        <option value="30">New Jersey</option>
+                        <option value="31">New Mexico</option>
+                        <option value="32">New York</option>
+                        <option value="33">North Carolina</option>
+                        <option value="34">North Dakota</option>
+                        <option value="35">Ohio</option>
+                        <option value="36">Oklahoma</option>
+                        <option value="37">Oregon</option>
+                        <option value="38">Pennsylvania</option>
+                        <option value="39">Rhode Island</option>
+                        <option value="40">South Carolina</option>
+                        <option value="41">South Dakota</option>
+                        <option value="42">Tennessee</option>
+                        <option value="43">Texas</option>
+                        <option value="44">Utah</option>
+                        <option value="45">Vermont</option>
+                        <option value="46">Virginia</option>
+                        <option value="47">Washington</option>
+                        <option value="48">West Virginia</option>
+                        <option value="49">Wisconsin</option>
+                        <option value="50">Wyoming</option>
+                    </select>
+                </div>
+
+                <div> 
+                    <label for="discoveredcode">How did they learn about us?</label>
+                    <select id="discoveredcode" name="discoveredcode" style="width: 100%"required>
+                        <option value="" disabled selected>-- Select --</option>
+                        <option value="7">Other</option>
+                        <option value="1">Our Facebook</option>
+                        <option value="2">Podcasts</option>
+                        <option value="3">Events</option>
+                        <option value="4">Word of Mouth</option>
+                        <option value="5">Our Website</option>
+                        <option value="6">Other Social Media</option>
+                    </select>
+                </div>
+
+                <div> 
+                    <label for="expectedparticipants">Expected Participants:</label>
+                    <input type="number" id="expectedparticipants" name="expectedparticipants" min="1" style="width: 100%" placeholder= 0 required>
+                </div>
+
+                <div> 
+                    <label for="servicetypecode">Type of Service:</label>
+                    <select id="servicetypecode" name="servicetypecode"  style="width: 100%" onchange="toggleSewingQuestions(this.value)" required>
+                        <option value=""disabled selected>-- Select --</option>
+                        <option value="1">Sewing</option>
+                        <option value="2">Non-Sewing</option>
+                        <option value="3">Both</option>
+                    </select>
+                </div>
+                <div> 
+                    <label for="Status">Event Status:</label>
+                    <select name="status" style="width: 100%">
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="declined">Declined</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <!-- Sewing Questions after drop down -->
+                <div class="sewing-questions" style="flex-direction: column; gap: 5px;">
+                    <div>
+                        <label>Participant Skills and Machines</label>
+                        <input type="number" id="basicskills" name="basicskills" placeholder="Basic" style="width: 15%" min="0">
+                        <input type="number" id="advanced" name="advanced" placeholder="Advanced" style="width: 15%" min="0">
+                        <input type="number" id="sewingmachines" name="sewingmachines" placeholder="Sewing" style="width: 15%" min="0">
+                        <input type="number" id="sergers" name="sergers" placeholder="Sergers" style="width: 15%" min="0">
+                    </div>
+                </div>
+                <div> 
+                    <label>Have they offered to support the material costs of the event?</label>
+                    <label>
+                    <input type="radio" name="payfor" value="true"> Yes
+                    </label>
+                    <label>
+                    <input type="radio" name="payfor" value="false"> No
+                    </label>
+                </div>
+
+                <div> 
+                    <label>Is Jen sharing her story?</label>
+                    <label>
+                    <input type="radio" name="storyshared" value="true"> Yes
+                    </label>
+                    <label>
+                    <input type="radio" name="storyshared" value="false"> No
+                    </label>
+                </div>
+
+                <div> 
+                    <label>Do they want to recieve newsletters?</label>
+                    <label>
+                    <input type="radio" name="newsletter" value="true"> Yes
+                    </label>
+                    <label>
+                    <input type="radio" name="newsletter" value="false"> No
+                    </label>
+                </div>
+
+                <div> 
+                    <label for="comments">Extra comments:</label>
+                    <textarea id="comments" name="comments" placeholder="Enter comments here" rows="2" style="resize: both; width: 400px; font-family: Arial, sans-serif "></textarea>
+                </div>
+
+                <button type="submit" class="form-button">Create Event</button>
             </form>
         </div> 
         </div>
 
         </div>
-        </div>
+
 
 
         <!--pending-->
@@ -756,6 +795,26 @@
                 sewingQuestions.style.display = 'none'; // Hide the sewing questions
             }
         }
+
+        // format phone number when its entered - Kylee Brown
+        const phoneInput = document.getElementById('orgphone');
+
+        phoneInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, ''); // Remove all non-numeric characters
+            if (value.length > 10) value = value.slice(0, 10); // Limit to 10 digits
+
+            // Format the value as (123) 456-7890
+            if (value.length > 6) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6)}`;
+            } else if (value.length > 3) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+            } else if (value.length > 0) {
+                value = `(${value}`;
+            }
+
+            e.target.value = value; // Update the input value with the formatted string
+        });
+
     </script>
 </body>
 </html>
