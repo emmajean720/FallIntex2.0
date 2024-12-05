@@ -530,23 +530,14 @@ app.post('/complete-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
     }
 })();
 
-// Handle Account Creation Form Submission - Kylee
+//create account feature
 app.post('/create-account', (req, res) => {
-    let dayofWeek = ["m", "t","w", "th", "f", "s"];
-    let availability = { 
-        "m": 1,
-        "t": 2,
-        "w": 3,
-        "th": 4,
-        "f": 5,
-        "s": 6
-    }
-    let mavailability = 0
-    let tavailability = 0
-    let wavailability = 0
-    let thavailability = 0
-    let favailability = 0
-    let savailability = 0
+    let dayofWeek = ["m", "t", "w", "th", "f", "s"];
+    
+    // Initialize availability variables for each day
+    let mavailability = 0, tavailability = 0, wavailability = 0, thavailability = 0, favailability = 0, savailability = 0;
+    
+    // Extract form data
     const firstname = req.body.firstname || ' ';
     const lastname = req.body.lastname || ' '; 
     const email = req.body.email || ' '; 
@@ -564,70 +555,63 @@ app.post('/create-account', (req, res) => {
     const password = req.body.password;
     const confirmpassword = req.body.confirmpassword;
     const admin = req.body.admin;
-    let iCount = 0;
+    
+    // Starting point for availability codes
+    let availabilityBase = {
+        "m": 1,  // Monday starts at 1
+        "t": 9,  // Tuesday starts at 9 (multiples of 8)
+        "w": 17, // Wednesday starts at 17
+        "th": 25, // Thursday starts at 25
+        "f": 33, // Friday starts at 33
+        "s": 41  // Saturday starts at 41
+    };
 
-    // Loop through days of the week
+    // Loop through days of the week to capture availability
     for (let i = 0; i < dayofWeek.length; i++) {
         let dayKey = dayofWeek[i] + "availability";
-        let morning = req.body[dayofWeek[i] + "m"];  // Access checkbox value dynamically
+        let morning = req.body[dayofWeek[i] + "m"];
         let afternoon = req.body[dayofWeek[i] + "a"];
         let evening = req.body[dayofWeek[i] + "e"];
         let none = req.body[dayofWeek[i] + "n"];
 
-        //debugging
-        console.log(morning, afternoon, evening, none)
+        // Assign availability codes based on checked boxes for each day
+        let availabilityCode = availabilityBase[dayofWeek[i]];  // Starting point for that day
 
-        // Check for combinations of availability and log accordingly
         if (morning === 'm' && afternoon === 'a' && evening === 'e') {
-            availability[dayKey] = 7 + iCount;
-            console.log(`${dayKey}: ${availability[dayKey]}`);
-
+            availabilityCode += 6; // Morning, Afternoon, Evening
         } else if (morning === 'm' && afternoon === 'a') {
-            console.log("M + A is working!");
-            availability[dayKey] = 4 + iCount;
-            console.log(`${dayKey}: ${availability[dayKey]}`);
-
+            availabilityCode += 3; // Morning and Afternoon
         } else if (morning === 'm' && evening === 'e') {
-            console.log("M + E is working!");
-            availability[dayKey] = 5 + iCount;
-            console.log(`${dayKey}: ${availability[dayKey]}`);
-
+            availabilityCode += 4; // Morning and Evening
         } else if (morning === 'm') {
-            console.log("Morning is working!");
-            availability[dayKey] = 1 + iCount;
-            console.log(`${dayKey}: ${availability[dayKey]}`);
-
+            availabilityCode += 0; // Morning only
         } else if (afternoon === 'a' && evening === 'e') {
-            console.log("A + E is working!");
-            availability[dayKey] = 6 + iCount;
-            console.log(`${dayKey}: ${availability[dayKey]}`);
-
+            availabilityCode += 5; // Afternoon and Evening
         } else if (evening === 'e') {
-            console.log("Evening is working!");
-            availability[dayKey] = 3 + iCount;
-            console.log(`${dayKey}: ${availability[dayKey]}`);
-
+            availabilityCode += 2; // Evening only
         } else if (afternoon === 'a') {
-            console.log("Afternoon is working!");
-            availability[dayKey] = 2 + iCount;
-            console.log(`${dayKey}: ${availability[dayKey]}`);
+            availabilityCode += 1; // Afternoon only
+        } else if (none === 'n') {
+            availabilityCode += 7; // None
+        }
 
-        } else (none === 'n') 
-        {
-            console.log("None is working!");
-            availability[dayKey] = 8 + iCount;
-            console.log(`${dayKey}: ${availability[dayKey]}`)
-        };
-
-        // Increment iCount by 8
-        iCount += 8;
+        // Assign these calculated values to the corresponding availability variables
+        switch(dayofWeek[i]) {
+            case "m": mavailability = availabilityCode; break;
+            case "t": tavailability = availabilityCode; break;
+            case "w": wavailability = availabilityCode; break;
+            case "th": thavailability = availabilityCode; break;
+            case "f": favailability = availabilityCode; break;
+            case "s": savailability = availabilityCode; break;
+        }
     }
 
+    // Check if passwords match
     if (password !== confirmpassword) {
         return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
     }
-    // Now proceed to insert into database using Knex
-    // Your knex logic here to save to the database
+
+    // Insert the new user into the database
     knex('users')
         .insert({
             firstname: firstname.toLowerCase(),
@@ -646,76 +630,34 @@ app.post('/create-account', (req, res) => {
             password: password, // Store plaintext password (Note: NOT SECURE)
             startdate: startdate,
             is_admin: admin // Default role for new users
-
         })
         .returning('usercode')
-        .then(([usercode]) => { // Destructure to get the usercode
-            console.log("Generated Usercode:", usercode); // Debug
-            if (!usercode) throw new Error("Usercode not returned");
-    
-            // Insert a single row into volunteeravailability
-            return knex('volunteeravailability').insert({
-                volunteercode: parseInt(usercode),
-                availabilitycode: parseInt(mavailability) // Single value
-            });
-        })
-        .then(([usercode]) => { // Destructure to get the usercode
-            console.log("Generated Usercode:", usercode); // Debug
-            if (!usercode) throw new Error("Usercode not returned");
-    
-            // Insert a single row into volunteeravailability
-            return knex('volunteeravailability').insert({
-                volunteercode: parseInt(usercode),
-                availabilitycode: parseInt(tavailability) // Single value
-            });
-        })
-        .then(([usercode]) => { // Destructure to get the usercode
-            console.log("Generated Usercode:", usercode); // Debug
-            if (!usercode) throw new Error("Usercode not returned");
-    
-            // Insert a single row into volunteeravailability
-            return knex('volunteeravailability').insert({
-                volunteercode: parseInt(usercode),
-                availabilitycode: parseInt(wavailability) // Single value
-            });
-        })
-        .then(([usercode]) => { // Destructure to get the usercode
-            console.log("Generated Usercode:", usercode); // Debug
-            if (!usercode) throw new Error("Usercode not returned");
-    
-            // Insert a single row into volunteeravailability
-            return knex('volunteeravailability').insert({
-                volunteercode: parseInt(usercode),
-                availabilitycode: parseInt(thavailability) // Single value
-            });
-        })
-        .then(([usercode]) => { // Destructure to get the usercode
-            console.log("Generated Usercode:", usercode); // Debug
-            if (!usercode) throw new Error("Usercode not returned");
-    
-            // Insert a single row into volunteeravailability
-            return knex('volunteeravailability').insert({
-                volunteercode: parseInt(usercode),
-                availabilitycode: parseInt(favailability) // Single value
-            });
-        })
-        .then(([usercode]) => { // Destructure to get the usercode
-            console.log("Generated Usercode:", usercode); // Debug
-            if (!usercode) throw new Error("Usercode not returned");
-    
-            // Insert a single row into volunteeravailability
-            return knex('volunteeravailability').insert({
-                volunteercode: parseInt(usercode),
-                availabilitycode: parseInt(savailability) // Single value
-            });
-        })
-        .then(() => {
-            res.redirect("/login");
-        })
-        .catch(err => {
-            console.error("Error creating account:", err);
-            res.render("homepage", { error: "An unexpected error when trying to create the event. Please try again.", title: "Request Event - Turtle Shelter Project" });
-        });
+    .then((result) => {
+        // Access the first element of the result array, which contains the usercode
+        const usercode = result[0].usercode;
+        
+        console.log("Availability codes being inserted:", mavailability, tavailability, wavailability, thavailability, favailability, savailability);
+
+        // Now insert the availability data using the correct usercode
+        return knex('volunteeravailability')
+            .insert([
+                { volunteercode: usercode, availabilitycode: mavailability },
+                { volunteercode: usercode, availabilitycode: tavailability },
+                { volunteercode: usercode, availabilitycode: wavailability },
+                { volunteercode: usercode, availabilitycode: thavailability },
+                { volunteercode: usercode, availabilitycode: favailability },
+                { volunteercode: usercode, availabilitycode: savailability }
+            ])
+            .onConflict(['volunteercode', 'availabilitycode'])  // Check for conflict based on both columns
+            .ignore();  // Ignore the insert if a duplicate combination of volunteercode and availabilitycode exists
+    })
+    .then(() => {
+        res.redirect("/login");
+    })
+    .catch(err => {
+        console.error("Error creating account:", err);
+        res.render("homepage", { error: "An unexpected error occurred when trying to create the account. Please try again.", title: "Request Event - Turtle Shelter Project" });
+    });
 });
 
 //Admin Calendar (luke)
