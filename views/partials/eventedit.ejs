@@ -1,0 +1,173 @@
+<head>
+    <!-- Setting character encoding to UTF-8 for compatibility with most characters -->
+    <meta charset="UTF-8">
+    <!-- Ensuring the page is responsive to different devices by setting the viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Linking an external CSS file to style the page -->
+    <link rel="stylesheet" href="/style.css">
+    <!-- Title of the page that appears in the browser tab -->
+    <title>EventEdit</title>
+</head>
+<body>
+    <tr id="edit-form-<%= event.eventcode %>" style="display:none;">
+        <td colspan="22">
+            <form action="/edit-event/<%= event.eventcode %>" method="POST" class="form-container">
+                <label>Organization Name:</label>
+                <input type="text" name="organization" class="form-group" value="<%= event.organization %>">
+
+                <label>Start Time:</label>
+                <input type="datetime-local" name="eventstarttime" value="<%= new Date(event.eventstarttime).toISOString().slice(0,16) %>">
+
+                <label>Stop Time:</label>
+                <input type="datetime-local" name="eventstoptime" value="<%= new Date(event.eventstoptime).toISOString().slice(0,16) %>">
+
+                <label>Location of Event:</label>
+                <input type="text" id="eventaddress" name="eventaddress" value="<%= event.eventaddress %>">
+                <input type="text" id="eventcity" name="eventcity" value="<%= event.eventcity %>">
+                <label for="statecode">Select your state:</label>
+                <select id="statecode" name="statecode" required>
+                    <option value="<%= event.statecode %>" selected><%= event.state_description %></option>
+                    <option value="1">Alabama</option>
+                    <option value="2">Alaska</option>
+                    <option value="3">Arizona</option>
+                    <option value="4">Arkansas</option>
+                    <option value="5">California</option>
+                    <option value="6">Colorado</option>
+                    <option value="7">Connecticut</option>
+                    <option value="8">Delaware</option>
+                    <option value="9">Florida</option>
+                    <option value="10">Georgia</option>
+                    <option value="11">Hawaii</option>
+                    <option value="12">Idaho</option>
+                    <option value="13">Illinois</option>
+                    <option value="14">Indiana</option>
+                    <option value="15">Iowa</option>
+                    <option value="16">Kansas</option>
+                    <option value="17">Kentucky</option>
+                    <option value="18">Louisiana</option>
+                    <option value="19">Maine</option>
+                    <option value="20">Maryland</option>
+                    <option value="21">Massachusetts</option>
+                    <option value="22">Michigan</option>
+                    <option value="23">Minnesota</option>
+                    <option value="24">Mississippi</option>
+                    <option value="25">Missouri</option>
+                    <option value="26">Montana</option>
+                    <option value="27">Nebraska</option>
+                    <option value="28">Nevada</option>
+                    <option value="29">New Hampshire</option>
+                    <option value="30">New Jersey</option>
+                    <option value="31">New Mexico</option>
+                    <option value="32">New York</option>
+                    <option value="33">North Carolina</option>
+                    <option value="34">North Dakota</option>
+                    <option value="35">Ohio</option>
+                    <option value="36">Oklahoma</option>
+                    <option value="37">Oregon</option>
+                    <option value="38">Pennsylvania</option>
+                    <option value="39">Rhode Island</option>
+                    <option value="40">South Carolina</option>
+                    <option value="41">South Dakota</option>
+                    <option value="42">Tennessee</option>
+                    <option value="43">Texas</option>
+                    <option value="44">Utah</option>
+                    <option value="45">Vermont</option>
+                    <option value="46">Virginia</option>
+                    <option value="47">Washington</option>
+                    <option value="48">West Virginia</option>
+                    <option value="49">Wisconsin</option>
+                    <option value="50">Wyoming</option>
+                </select>
+
+                <label>Organizer First Name:</label>
+                <input type="text" name="orgfirstname" value="<%= event.orgfirstname %>">
+
+                <label>Organizer Last Name:</label>
+                <input type="text" name="orglastname" value="<%= event.orglastname %>">
+
+                <label >Organizer Email:</label>
+                <input type="email" id="orgemail" name="orgemail" value="<%= event.orgemail %>">
+
+                <label >Organizer Phone Number:</label>
+                <input type="tel" id="orgphone" name="orgphone" value="<%= event.orgphone %>">
+                            
+                <label for="discoveredcode">How did you find out about us?</label>
+                <select id="discoveredcode" name="discoveredcode" required>
+                    <option value="<%= event.discoveredcode %>" selected><%= event.discovered_description %></option>
+                    <option value="7">Other</option>
+                    <option value="1">Our Facebook</option>
+                    <option value="2">Podcasts</option>
+                    <option value="3">Events</option>
+                    <option value="4">Word of Mouth</option>
+                    <option value="5">Our Website</option>
+                    <option value="6">Other Social Media</option>
+                </select>
+                
+                <label for="servicetypecode">What kind of service would you like to do?</label>
+                <select id="servicetypecode" name="servicetypecode" required>
+                <option value="<%= event.servicetypecode %>" selected><%= event.servicedescription %></option>
+                <option value="1">Sewing</option>
+                <option value="2">Non-Sewing</option>
+                <option value="3">Both</option>
+                </select>
+
+                <label for="expectedparticipants">How many people do you expect to participate?</label>
+                <input type="number" id="expectedparticipants" name="expectedparticipants" min="1" value="<%= event.expectedparticipants %>">
+
+                <!-- Sewing Questions after drop down -->
+                <div class="sewing-questions">
+                <h3>Sewing Project Details</h3>
+                <label for="basicskills">How many participants have basic sewing skills?</label>
+                <input type="number" id="basicskills" name="basicskills" min="0" value="<%= event.basicskills || 0 %>">
+
+                <label for="advanced">How many participants have advanced sewing skills?</label>
+                <input type="number" id="advanced" name="advanced" min="0" value="<%= event.advancedskills || 0 %>">
+
+                <label for="sewingmachines">How many sewing machines can you bring?</label>
+                <input type="number" id="sewingmachines" name="sewingmachines" min="0" value="<%= event.sewingmachines || 0 %>">
+
+                <label for="sergers">How many sergers can you bring?</label>
+                <input type="number" id="sergers" name="sergers" min="0" value="<%= event.sergers || 0 %>">
+
+                </div>
+
+                <label>Would you like to help support the material costs for this event?</label>
+                <label>
+                    <input type="radio" name="payfor" value="true" <%= event.payfor === true ? 'checked' : '' %>> Yes
+                </label>
+                <label>
+                    <input type="radio" name="payfor" value="false" <%= event.payfor === false ? 'checked' : '' %>> No
+                </label>
+                
+                <label>Do you want Jen to share her story with your group?</label>
+                <label>
+                    <input type="radio" name="storyshared" value="true" <%= event.storyshared === true ? 'checked' : '' %>> Yes
+                </label>
+                <label>
+                    <input type="radio" name="storyshared" value="false" <%= event.storyshared === false ? 'checked' : '' %>> No
+                </label>
+
+                <label>Do you want to receive monthly newsletters with updates about the Turtle Shelter Project?</label>
+                <label>
+                <input type="radio" name="newsletter" value="true" <%= event.orgnewsletter === true ? 'checked' : '' %>> Yes
+                </label>
+                <label>
+                <input type="radio" name="newsletter" value="false" <%= event.orgnewsletter === false ? 'checked' : '' %>> No
+                </label>
+
+                <label for="comments">Extra comments:</label>
+                <input type="text" id="comments" name="comments" value="<%=event.comments%>">
+
+                <label>Status:</label>
+                <select name="status">
+                    <option value="pending" <%= event.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                    <option value="approved" <%= event.status === 'approved' ? 'selected' : '' %>>Approved</option>
+                    <option value="declined" <%= event.status === 'declined' ? 'selected' : '' %>>Declined</option>
+                    <option value="completed" <%= event.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                </select>
+                <button type="submit" class="form-button">Save Changes</button>
+                <button class="form-button" onclick="toggleEditForm('<%= event.eventcode %>')">Close</button>
+            </form>
+        </td>
+    </tr>
+</body>
