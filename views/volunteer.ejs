@@ -88,6 +88,43 @@
         background-color: #005F5F;
     }
 
+    .form-container {
+    width: 90%;
+    max-width: 1210px;
+    margin: 30px auto;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 30px;
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 10px; /* More space below the label */
+    font-weight: bold;
+    color: #555;
+    padding-left: 10px;
+}
+
+.form-container input[type="text"],
+.form-container input[type="number"],
+.form-container input[type="datetime-local"],
+.form-container select,
+.form-container input[type="tel"],
+.form-container input[type="email"] {
+    padding: 15px; /* More padding for inputs */
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1em;
+    margin-bottom: 25px; /* Increased space between rows */
+}
+
+.form-container input[type="radio"] {
+    margin-right: 10px;
+}
+
 
   </style>
   <script>
@@ -106,7 +143,7 @@ function toggleSewingQuestions(value) {
         <!-- Nav Bar -->
         <%- include("partials/navbar") %>
         <!-- Main Content -->
-  <div class="main-content">
+  <div class="main-content" style="font-family: 'Lora', serif">
       <h1>Volunteer Your Time with the Turtle Shelter Project</h1>
       <p style="text-align: center; width: 75%; margin: 0 auto;">
         Become a part of something truly transformative with the Turtle Shelter Project! We offer many opportunities to make a meaningful difference for those in need. 
@@ -123,18 +160,20 @@ function toggleSewingQuestions(value) {
 
       <!-- create account tab -->
       <div id="volunteer" class="tab-content">
-
+        <h2 style="text-align: center;">Become a Volunteer</h2>
       <!-- Text before form -->
       <p>Volunteers are at the heart of the Turtle Shelter Project, making a profound difference in the lives of the homeless by helping create quality vests for those in need. Whether you’re comfortable leading events or prefer supporting behind the scenes, your involvement is crucial.</p>
       <p>No experience, including sewing, is necessary—just a willingness to serve. You can choose the hours you’re available to help each month, as well as the days that work best for you.</p>
       <p>By volunteering, you not only help facilitate events but also ensure that each vest meets the highest standards, ensuring those who need it most receive the best. Your time and effort will have a lasting impact on the community, offering warmth, dignity, and support to those facing difficult circumstances.</p>
-      <p>Become a volunteer and find opportunitis to serve near you!</p>
-      <a href="/login?form=create" class="button">Sign-up Now</a>
+      <p>Become a volunteer and find opportunities to serve near you!</p>
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="/login?form=create" class="button" style="display: inline-block;">Sign-up Now</a>
+    </div>
     </div>
 
   <!-- Card 1 -->
   <div id="event" class="tab-content" style="display:none;">
-
+    <h2 style="text-align: center;">Schedule an Event</h2>
       <!-- Text before form -->
       <p>Turtle Shelter Project vests are the perfect service project/volunteer activity for groups of all sizes and types.
         From an individual or family to hundreds of participants at corporate events or conferences, participants will be part of
@@ -146,42 +185,38 @@ function toggleSewingQuestions(value) {
         and then we will send them back to you or to a location you specify.</p>
         <p>Please fill out the form below and tell us about your event idea so that we can provide options for you and your group.</p>
 
-        <!-- Event Request Form -->
-        <form action="/eventrequest" method="POST">
+      <h3>Event Request Form</h3>
+      <!-- Event Request Form -->
+      <form action="/eventrequest" method="POST">    
+        <div style="margin-bottom: 5px;">  
             <label for="organization">Organization/Group Name:</label>
-            <input type="text" id="organization" name="organization" required>
-            <br>
+            <input type="text" id="organization" name="organization"  style="width: 20%" placeholder="Group Name" required>
+        </div>
 
-            <label for="orgfirstname">Organizer First Name:</label>
-            <input type="text" id="orgfirstname" name="orgfirstname" required>
-            <br>
+        <div style="margin-bottom: 5px;"> 
+            <label>Organizer Name:</label>
+            <input type="text" id="orgfirstname" name="orgfirstname" placeholder="First Name" style="width: 20%" required>
+            <input type="text" id="orglastname" name="orglastname" placeholder="Last Name" style="width: 20%" required>
+        </div>
 
-            <label for="orglastname">Organizer Last Name:</label>
-            <input type="text" id="orglastname" name="orglastname" required>
+        <div style="margin-bottom: 5px;"> 
+            <label>Organizer Contact Info:</label>
+            <input type="email" id="orgemail" name="orgemail" placeholder="Email" style="width: 30%" required>
+            <input type="tel" id="orgphone" name="orgphone" placeholder="Phone" style="width: 25%" maxlength="14" placeholder="(123) 456-7890" required>
+        </div>
 
-            <br>
-            <label for="orgemail">Organizer Email:</label>
-            <input type="email" id="orgemail" name="orgemail" required>
-            <br>
-
-            <label for="orgphone">Organizer Phone Number:</label>
-            <input type="tel" id="orgphone" name="orgphone" required>
-            <br>
-
-            <label for="eventstarttime">Event Start Time:</label>
-            <input type="datetime-local" id="eventstarttime" name="eventstarttime" required>
-            <br>
-
-            <label for="eventstoptime">Event Stop Time:</label>
+        <div style="margin-bottom: 5px;"> 
+            <label>Event Duration:</label>
+            <input type="datetime-local" id="eventstarttime" name="eventstarttime" required> to 
             <input type="datetime-local" id="eventstoptime" name="eventstoptime" required>
-            <br>
+        </div>
 
+        <div style="margin-bottom: 5px;"> 
             <label>Location of Event:</label>
-            <input type="text" id="eventaddress" name="eventaddress" placeholder="Street Address" required>
-            <input type="text" id="eventcity" name="eventcity" placeholder="City" required>
-            <label for="statecode">Select your state:</label>
-            <select id="statecode" name="statecode" required>
-                <option value="" disabled selected>-- Select State --</option>
+            <input type="text" id="eventaddress" name="eventaddress" placeholder="Street Address" style="width: 25%" required>
+            <input type="text" id="eventcity" name="eventcity" placeholder="City" style="width: 15%" required>
+            <select id="statecode" name="statecode" style="width: 5%" required>
+                <option value="" disabled selected>State</option>
                 <option value="1">Alabama</option>
                 <option value="2">Alaska</option>
                 <option value="3">Arizona</option>
@@ -233,10 +268,11 @@ function toggleSewingQuestions(value) {
                 <option value="49">Wisconsin</option>
                 <option value="50">Wyoming</option>
             </select>
-            <br>
+        </div>
 
-            <label for="discoveredcode">How did you find out about us?</label>
-            <select id="discoveredcode" name="discoveredcode" required>
+        <div style="margin-bottom: 5px;"> 
+            <label for="discoveredcode">How did you learn about us?</label>
+            <select id="discoveredcode" name="discoveredcode" style="width: 20%"required>
                 <option value="" disabled selected>-- Select --</option>
                 <option value="7">Other</option>
                 <option value="1">Our Facebook</option>
@@ -246,112 +282,120 @@ function toggleSewingQuestions(value) {
                 <option value="5">Our Website</option>
                 <option value="6">Other Social Media</option>
             </select>
-            <br>
+        </div>
 
+        <div style="margin-bottom: 5px;"> 
             <label for="expectedparticipants">How many people do you expect to participate?</label>
-            <input type="number" id="expectedparticipants" name="expectedparticipants" min="1" required>
-            <br>
+            <input type="number" id="expectedparticipants" name="expectedparticipants" min="1" style="width: 10%" placeholder= 0 required>
+        </div>
 
+        <div style="margin-bottom: 5px;"> 
             <label for="servicetypecode">What kind of service would you like to do?</label>
-            <select id="servicetypecode" name="servicetypecode" onchange="toggleSewingQuestions(this.value)" required>
-              <option value="" disabled selected>-- Select --</option>
-              <option value="1">Sewing</option>
-              <option value="2">Non-Sewing</option>
-              <option value="3">Both</option>
-          </select>
-            <br>
-
-            <!-- Sewing Questions after drop down -->
-            <div class="sewing-questions">
-              <h3>Sewing Project Details</h3>
-              <label for="basicskills">How many participants have basic sewing skills?</label>
-              <input type="number" id="basicskills" name="basicskills" min="0">
-
-              <label for="advanced">How many participants have advanced sewing skills?</label>
-              <input type="number" id="advanced" name="advanced" min="0">
-
-              <label for="sewingmachines">How many sewing machines can you bring?</label>
-              <input type="number" id="sewingmachines" name="sewingmachines" min="0">
-
-              <label for="sergers">How many sergers can you bring?</label>
-              <input type="number" id="sergers" name="sergers" min="0">
-
+            <select id="servicetypecode" name="servicetypecode"  style="width: 20%" onchange="toggleSewingQuestions(this.value)" required>
+                <option value=""disabled selected>-- Select --</option>
+                <option value="1">Sewing</option>
+                <option value="2">Non-Sewing</option>
+                <option value="3">Both</option>
+            </select>
+        </div>
+        <!-- Sewing Questions after drop down -->
+        <div class="sewing-questions" style="flex-direction: column; gap: 5px; margin-bottom: 5px;">
+            <div style="margin-bottom: 5px;">
+                <label>How many participants have basic sewing skills?</label>
+                <input type="number" id="basicskills" name="basicskills" placeholder= 0 style="width: 10%" min="0">
             </div>
-            <label>Would you like to help support the material costs for this event?</label>
+
+            <div style="margin-bottom: 5px;">
+                <label>How many participants have advanced sewing skills?</label>
+                <input type="number" id="advanced" name="advanced" placeholder= 0 style="width: 10%" min="0">
+            </div>
+            <div style="margin-bottom: 5px;">
+                <label>How many sewing machines can you bring?</label>
+                <input type="number" id="sewingmachines" name="sewingmachines" placeholder= 0 style="width: 10%" min="0">
+            </div>
+            <div style="margin-bottom: 5px;">
+                <label>How many sergers can you bring?</label>
+                <input type="number" id="sergers" name="sergers" placeholder="Sergers" style="width: 10%" min="0">
+            </div>
+        </div>
+        <div style="margin-bottom: 5px;"> 
+            <label>Would you like to help support the material costs for this event? </label>
             <label>
             <input type="radio" name="payfor" value="true"> Yes
             </label>
             <label>
             <input type="radio" name="payfor" value="false"> No
             </label>
-            <br>
+        </div>
 
-            <label>Do you want Jen to share her story with your group?</label>
+        <div style="margin-bottom: 5px;"> 
+            <label>Do you want Jen to share her story with your group? </label>
             <label>
             <input type="radio" name="storyshared" value="true"> Yes
             </label>
             <label>
             <input type="radio" name="storyshared" value="false"> No
             </label>
-            <br>
+        </div>
 
-            <label>Do you want to receive monthly newsletters with updates about the Turtle Shelter Project?</label>
-            <label>
-            <input type="radio" name="newsletter" value="true"> Yes
-            </label>
-            <label>
-            <input type="radio" name="newsletter" value="false"> No
-            </label>
-            <br>
+        <div style="margin-bottom: 5px;"> 
+          <label>Do you want to receive monthly newsletters with updates about the Turtle Shelter Project?</label>
+          <label>
+          <input type="radio" name="newsletter" value="true"> Yes
+          </label>
+          <label>
+          <input type="radio" name="newsletter" value="false"> No
+          </label>
+        </div>
 
-            <label for="comments">Extra comments:</label>
-            <input type="text" id="comments" name="comments" placeholder="comments">
-            <br>
-            
-            <input type="hidden" id="status" name="status" value="pending">
-            <button type="submit" style="margin-top: 20px;">Submit</button>
-        </form>
+        <div style="margin-bottom: 5px;"> 
+            <label for="comments">Extra Information:</label>
+        </div>
+        <div style="margin-bottom: 5px;"> 
+            <textarea id="comments" name="comments" placeholder="Please include: participant age range, flexibility on event dates, and any other specific concerns, questions, and information would be helpful for us to know." rows="2" style="resize: both; width: 800px; font-family: 'Lora', serif"></textarea>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+          <button type="submit" class="button">Create Event</button>
       </div>
+    </form>
+  </div>
 
   <!-- Volunteer From Home -->
   <div id="home" class="tab-content" style="display:none;">
-      <p>You can do some of the sewing or other steps of the production process at home!
-        Indicate in the form below what you would like to do. Please include your sewing skill level:</p>
-        <p>No sewing: can cut, pin and mark vest components</p>
-        <p>Beginning sewing: just learning to use a sewing machine</p>
-        <p>Basic sewing: can sew a straight stitch</p>
-        <p>Advanced sewing: can handle challenging sewing tasks.</p>
-        <form action="/submit" method="POST">
-          <label for="first-name">First Name:</label>
-          <input type="text" id="first-name" name="firstName" required>
-          <br>
-          <label for="last-name">Last Name:</label>
-          <input type="text" id="last-name" name="lastName" required>
-          <br>
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required>
-          <br>
-          <label for="phone-number">Phone Number:</label>
-          <input type="tel" id="phone-number" name="phoneNumber" required>
-          <br>
-          <label for="home-address">Home Address:</label>
-          <input type="text" id="street-address" name="streetAddress" placeholder="Street Address" required>
-          <input type="text" id="city" name="city" placeholder="City" required>
-          <input type="text" id="state" name="state" placeholder="State" required>
-          <br>
-          <label for="sewing-skill-level">Sewing Skill Level:</label>
-          <select id="sewing-skill-level" name="sewingSkillLevel" required>
-              <option value="">-- Select --</option>
-              <option value="no-sewing">No Sewing</option>
-              <option value="beginning-sewing">Beginning Sewing</option>
-              <option value="basic-sewing">Basic Sewing</option>
-              <option value="advanced-sewing">Advanced Sewing</option>
-          </select>
-          <button type="submit" style="margin-top: 20px;">Submit</button>
-      </form>
-    </div>
-    <br><br>
+      <h2 style="text-align: center;">Volunteer From Home</h2>
+      <p>
+          Volunteering from home with the Turtle Shelter Project is an incredible way to make a difference from the comfort of your own space! 
+          There are numerous steps in our vest production process, and each one is critical to ensuring we can provide quality products to those in need. 
+          Whether you're a skilled sewer or have never threaded a needle, there's a place for you:
+      </p>
+      <ul>
+          <li><strong>Cutting and Pinning:</strong> No sewing skills? No problem! You can help cut fabric pieces and pin them together.</li>
+          <li><strong>Marking Components:</strong> Assist in ensuring vest components are prepared for sewing by marking and organizing pieces.</li>
+          <li><strong>Basic Sewing:</strong> If you know how to sew a straight stitch, your contribution can help assemble crucial pieces of the vest.</li>
+          <li><strong>Advanced Sewing:</strong> Confident with challenging sewing tasks? Your expertise will play a vital role in completing the most intricate parts of the vests.</li>
+      </ul>
+      <p>
+          This is your chance to make a meaningful impact from wherever you are. Share your time and talent to create high-quality vests that will make a real difference in someone’s life.
+      </p>
+      <h3>Contact Us</h3>
+      <p>
+          To volunteer from home, please email us with the following information:
+          <ul>
+              <li>Your <strong>first and last name</strong></li>
+              <li>Your <strong>email</strong> and <strong>phone number</strong></li>
+              <li>Your <strong>home address</strong></li>
+              <li>Your <strong>availability</strong> (days and hours per month you can commit)</li>
+              <li>Your <strong>sewing skill level</strong> (No Sewing, Beginner, Basic, Advanced)</li>
+          </ul>
+          Let us know how you'd like to help, and we’ll guide you through the process!
+      </p>
+      <div style="text-align: center; margin-top: 20px;">
+          <a href="mailto:turtleshelterproject@gmail.com" class="button">Contact Us to Volunteer</a>
+      </div>
+  </div>
 </div>
+  
   <script>
 
 function openTab(tabName) {
