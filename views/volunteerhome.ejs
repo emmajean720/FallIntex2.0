@@ -79,7 +79,7 @@
       }
 
       .sign-up-button:hover, .view-my-events-button:hover {
-          background-color: #008080;
+          background-color: #006666;
       }
 
       .checkbox {
@@ -114,20 +114,27 @@
                             <th>Date</th>
                             <th>Start Time</th>
                             <th>Stop Time</th>
+                            <th>City</th>
+                            <th>State</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% events.forEach(event => { %>
                             <tr>
-                                <td><input type="checkbox" class="checkbox" name="eventcodes" value="<%= event.eventcode %>"></td>
+                                <td>
+                                    <input type="checkbox" name="eventcodes" value="<%= event.eventcode %>" class="checkbox">
+                                </td>
                                 <td><%= event.organization %></td>
                                 <td><%= new Date(event.eventstarttime).toLocaleDateString() %></td>
                                 <td><%= new Date(event.eventstarttime).toLocaleTimeString() %></td>
                                 <td><%= new Date(event.eventstoptime).toLocaleTimeString() %></td>
+                                <td><%= event.eventcity %></td>
+                                <td><%= event.statecode %></td>
                             </tr>
                         <% }) %>
                     </tbody>
                 </table>
+                
                 <div class="sign-up-container">
                     <button type="submit" class="sign-up-button">Sign Up for Selected Events</button>
                 </div>
