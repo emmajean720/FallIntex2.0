@@ -46,6 +46,14 @@ const knex = require("knex")({
     }
 });
 
+// ======= Function to make first letter capalized and others lower case (for city, names, etc)=======
+function capitalizeFirstLetter(string) {
+    return string
+        .split(' ') // Split the string into words
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize first letter of each word
+        .join(' '); // Join the words back together
+}
+
 // State Abbreviations Mapping
 const stateAbbreviations = {
     1: 'AL', 2: 'AK', 3: 'AZ', 4: 'AR', 5: 'CA', 6: 'CO', 7: 'CT', 8: 'DE', 9: 'FL', 10: 'GA',
@@ -141,7 +149,6 @@ app.get('/logout', (req, res) => {
 // === Protected Pages ===
 
 // Volunteer Landing Page (Luke)
-// Volunteer Home Page Route
 app.get('/volunteerhome', isAuthenticated, (req, res) => {
     const usercode = req.session.user.id; // Get the logged-in user's usercode
 
@@ -173,7 +180,7 @@ app.get('/volunteerhome', isAuthenticated, (req, res) => {
         });
 });
 
-
+// sign up for an event
 app.post('/volunteerhome/signup', isAuthenticated, (req, res) => {
     const user = req.session.user;
 
@@ -233,7 +240,7 @@ app.post('/volunteerhome/signup', isAuthenticated, (req, res) => {
         });
 });
 
-//my events page(luke)
+//Volunteer my events page(luke)
 app.get('/myevents', isAuthenticated, (req, res) => {
     const user = req.session.user;
 
@@ -265,13 +272,14 @@ app.get('/myevents', isAuthenticated, (req, res) => {
         });
 });
 
+// ====== Admin Page Routes =======
 
 // Admin Landing Page
 app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
     res.render("admin", { error: null, title: "Admin Home - Turtle Shelter Project" });
 });
 
-// Admin Management Page
+// Manage Users Page
 app.get('/adminmanage', isAuthenticated, isAdmin, (req, res) => {
     const { search } = req.query;
     let query = knex('users').select('*'); // Initialize the query
@@ -333,10 +341,20 @@ app.post('/update-admin-status/:usercode', isAuthenticated, isAdmin, (req, res) 
 // Delete User
 app.post('/delete-user/:usercode', isAuthenticated, isAdmin, (req, res) => {
     const { usercode } = req.params;
-
-    knex('users')
-        .where('usercode', usercode)
-        .del()
+    
+    knex('volunteeravailability')
+                .where('volunteercode', usercode)
+                .del()
+        .then(() => { 
+            return knex('volunteersatevents')
+                .where('usercode', usercode)
+                .del();
+        })
+        .then(() => { 
+            return knex('users')
+            .where('usercode', usercode)
+            .del();
+        })
         .then(() => res.redirect('/adminmanage'))
         .catch(err => {
             console.error("Error deleting user:", err);
