@@ -110,21 +110,38 @@
 .form-container input[type="text"],
 .form-container input[type="number"],
 .form-container input[type="datetime-local"],
-.form-container select,
 .form-container input[type="tel"],
-.form-container input[type="email"] {
-    padding: 15px; /* More padding for inputs */
-    width: 100%;
+.form-container input[type="email"],
+.form-container select
+{
+    font-size: 14px;
+    padding: 12px;
     border-radius: 5px;
     border: 1px solid #ddd;
-    font-size: 1em;
-    margin-bottom: 25px; /* Increased space between rows */
 }
 
 .form-container input[type="radio"] {
     margin-right: 10px;
 }
 
+.image-container {
+  display: inline-block;
+  margin: 0 10px;  /* Adds space between the images */
+  align-items: center;  /* Align images vertically */
+  
+}
+
+.image-container img {
+  width: 100%;  /* Adjust the width of each image */
+  max-height: 200px;  /* Optional: set a maximum width */
+  height: auto;  /* Maintain aspect ratio */
+  align-items: center;  /* Align images vertically */
+}
+.image-row {
+  display: flex;
+  justify-content: center;  /* Center images horizontally */
+  gap: 20px;  /* Add space between the images */
+}
 
   </style>
   <script>
@@ -141,8 +158,9 @@ function toggleSewingQuestions(value) {
 </head>
 <body>
         <!-- Nav Bar -->
+        
         <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
-        <!-- Main Content -->
+  <!-- Main Content -->
   <div class="main-content" style="font-family: 'Lora', serif">
       <h1>Volunteer Your Time with the Turtle Shelter Project</h1>
       <p style="text-align: center; width: 75%; margin: 0 auto;">
@@ -161,16 +179,31 @@ function toggleSewingQuestions(value) {
       <!-- create account tab -->
       <div id="volunteer" class="tab-content">
         <h2 style="text-align: center;">Become a Volunteer</h2>
+
       <!-- Text before form -->
       <p>Volunteers are at the heart of the Turtle Shelter Project, making a profound difference in the lives of the homeless by helping create quality vests for those in need. Whether you’re comfortable leading events or prefer supporting behind the scenes, your involvement is crucial.</p>
       <p>No experience, including sewing, is necessary—just a willingness to serve. You can choose the hours you’re available to help each month, as well as the days that work best for you.</p>
       <p>By volunteering, you not only help facilitate events but also ensure that each vest meets the highest standards, ensuring those who need it most receive the best. Your time and effort will have a lasting impact on the community, offering warmth, dignity, and support to those facing difficult circumstances.</p>
       <p>Become a volunteer and find opportunities to serve near you!</p>
+      <div>
+        <div class="image-row">
+          <div class="image-container">
+            <img src="/images/PinningVests.jpeg" alt="Pinning Vests">
+          </div>
+          <div class="image-container">
+            <img src="/images/Vests.jpg" alt="Happy People Wearing Vests">
+          </div>
+          <div class="image-container">
+            <img src="/images/Serving.jpg" alt="Happy People Serving">
+          </div>
+        </div>
+        
+
       <div style="text-align: center; margin-top: 20px;">
         <a href="/login?form=create" class="button" style="display: inline-block;">Sign-up Now</a>
     </div>
     </div>
-
+  </div>
   <!-- Card 1 -->
   <div id="event" class="tab-content" style="display:none;">
     <h2 style="text-align: center;">Schedule an Event</h2>
@@ -215,7 +248,7 @@ function toggleSewingQuestions(value) {
             <label>Location of Event:</label>
             <input type="text" id="eventaddress" name="eventaddress" placeholder="Street Address" style="width: 25%" required>
             <input type="text" id="eventcity" name="eventcity" placeholder="City" style="width: 15%" required>
-            <select id="statecode" name="statecode" style="width: 5%" required>
+            <select id="statecode" name="statecode" style="width: 20%" required>
                 <option value="" disabled selected>State</option>
                 <option value="1">Alabama</option>
                 <option value="2">Alaska</option>
@@ -298,6 +331,7 @@ function toggleSewingQuestions(value) {
                 <option value="3">Both</option>
             </select>
         </div>
+        
         <!-- Sewing Questions after drop down -->
         <div class="sewing-questions" style="flex-direction: column; gap: 5px; margin-bottom: 5px;">
             <div style="margin-bottom: 5px;">
@@ -435,6 +469,7 @@ function openTab(tabName) {
       }
     });
   </script>
+  <br><br>
       <!-- Footer -->
       <%- include("partials/footer") %>
 </body>

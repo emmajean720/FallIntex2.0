@@ -754,7 +754,7 @@
                                         <td>
                                             <button class="form-button" onclick="toggleEditForm('<%= event.eventcode %>')">View/Edit</button>
                                             <form action="/delete-event/<%= event.eventcode %>" method="POST" style="display:inline;">
-                                                <button type="submit" class="form-button" style="background-color: #a30202 ">Delete</button>
+                                                <button type="submit" class="form-button" style="background-color: #a30202 " onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
                                             </form>
                                         </td>
                                     </tr>

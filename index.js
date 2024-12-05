@@ -366,7 +366,14 @@ app.post('/delete-user/:usercode', isAuthenticated, isAdmin, (req, res) => {
 
 // Create Admin Account
 app.post('/create-admin', isAuthenticated, isAdmin, (req, res) => {
-    const { firstname, lastname, email, phone, city, state_abbr, login, password } = req.body;
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
+    const email = req.body.email;
+    const phone = req.body.phone;
+    const city = req.body.city;
+    const state_abbr = req.body.state_abbr;
+    const login = req.body.login;
+    const password = req.body.password;
 
     // Find the statecode based on the abbreviation selected
     const statecode = Object.keys(stateAbbreviations).find(key => stateAbbreviations[key] === state_abbr);
@@ -380,17 +387,17 @@ app.post('/create-admin', isAuthenticated, isAdmin, (req, res) => {
         });
     }
 
-    // Insert new admin user into the 'users' table (no password hashing)
+// Insert new admin user into the 'users' table (no password hashing)
     knex('users')
         .insert({
-            firstname,
-            lastname,
-            email,
-            phone,
-            city,
+            firstname: firstname.toLowerCase(),
+            lastname: lastname.toLowerCase(),
+            email: email,
+            phone: phone,
+            city: city,
             statecode: parseInt(statecode), // Save the numeric state code
-            login,
-            password,  // Store the password as is (not hashed)
+            login: login,
+            password: password,  // Store the password as is (not hashed)
             is_admin: true
         })
         .then(() => {
@@ -450,11 +457,12 @@ app.get('/eventmanage', isAuthenticated, isAdmin, (req, res) => {
 // Update Event Status
 app.post('/update-event-status/:eventcode', isAuthenticated, isAdmin, (req, res) => {
     const { eventcode } = req.params;
-    const { status } = req.body;
+    const status = req.body.status;
 
     knex('event')
         .where('eventcode', eventcode)
-        .update({ status })
+        .update({
+            status: status.toLowerCase() })
         .then(() => res.redirect('/eventmanage'))
         .catch(err => {
             console.error("Error updating event status:", err);
@@ -479,11 +487,55 @@ app.post('/delete-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
 // Edit Event OG
 app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
     const { eventcode } = req.params;
-    const { organization, eventstarttime, eventstoptime, orgfirstname, orglastname, status } = req.body;
+    const organization = req.body.organization;
+    const eventstarttime = req.body.eventstarttime;
+    const eventstoptime = req.body.eventstoptime;
+    const orgfirstname = req.body.orgfirstname;
+    const orglastname = req.body.orglastname;
+    const status = req.body.status;
+    const orgemail = req.body.orgemail;
+    const orgphone = req.body.phone;
+    const discoveredcode = req.body.discoveredcode;
+    const servicetypecode = req.body.servicetypecode;
+    const basicskills = req.body.basicskills;
+    const advanced = req.body.advanced;
+    const sewingmachines = req.body.sewingmachines;
+    const sergers = req.body.sergers;
+    const comments = req.body.comments;
+    const expectedparticipants = req.body.expectedparticipants;
+    const storyshared = req.body.storyshared;
+    const newsletter = req.body.newsletter;
+    const eventcity = req.body.city;
+    const statecode = req.body.statecode;
+    const eventaddress = req.body.eventaddress;
+    const payfor = req.body.payfor;
 
     knex('event')
         .where('eventcode', eventcode)
-        .update({ organization, eventstarttime, eventstoptime, orgfirstname, orglastname, status })
+        .update({ 
+            organization: organization.toLowerCase(),
+            orgfirstname: orgfirstname.toLowerCase(),
+            orglastname: orglastname.toLowerCase(),
+            orgemail: orgemail.toLowerCase(),
+            orgphone: orgphone,
+            eventstarttime: eventstarttime,
+            eventstoptime: eventstoptime,
+            eventaddress: eventaddress.toLowerCase(),
+            eventcity: eventcity.toLowerCase(),
+            statecode: parseInt(statecode),
+            discoveredcode: parseInt(discoveredcode),
+            expectedparticipants: parseInt(expectedparticipants),
+            servicetypecode: parseInt(servicetypecode),
+            basicskills: parseInt(basicskills),
+            advancedskills: parseInt(advanced),
+            sewingmachines: parseInt(sewingmachines),
+            sergers: parseInt(sergers),
+            payfor: payfor,
+            storyshared: storyshared,
+            orgnewsletter: newsletter,
+            comments: comments,
+            status: status.toLowerCase()
+        })
         .then(() => res.redirect('/eventmanage'))
         .catch(err => {
             console.error("Error updating event:", err);
@@ -638,12 +690,12 @@ app.post('/create-account', (req, res) => {
             lastname: lastname.toLowerCase(),
             email: email,
             phone: phone,
-            city: city,
-            statecode: statecode,
-            discoveredcode: discoveredcode, 
-            skilllevelcode: skilllevelcode, 
-            commithours: commithours, 
-            traveldistance: traveldistance, 
+            city: city.toLowerCase(),
+            statecode: parseInt(statecode),
+            discoveredcode: parseInt(discoveredcode), 
+            skilllevelcode: parseInt(skilllevelcode), 
+            commithours: parseInt(commithours), 
+            traveldistance: parseInt(traveldistance), 
             is_leading: is_leading, 
             newsletter: newsletter, 
             login: login,
@@ -676,7 +728,7 @@ app.post('/create-account', (req, res) => {
     })
     .catch(err => {
         console.error("Error creating account:", err);
-        res.render("homepage", { error: "An unexpected error occurred when trying to create the account. Please try again.", title: "Request Event - Turtle Shelter Project" });
+        res.render("homepage", { error: "An unexpected error occurred when trying to create the account. Please try again.", title: "Turtle Shelter Project" });
     });
 });
 
@@ -749,14 +801,14 @@ app.post('/eventrequest', (req, res) => {
         eventstoptime: eventstoptime,
         eventaddress: eventaddress.toLowerCase(),
         eventcity: eventcity.toLowerCase(),
-        statecode: statecode,
-        discoveredcode: discoveredcode,
-        expectedparticipants: expectedparticipants,
-        servicetypecode: servicetypecode,
-        basicskills: basicskills,
-        advancedskills: advanced,
-        sewingmachines: sewingmachines,
-        sergers: sergers,
+        statecode: parseInt(statecod),
+        discoveredcode: parseInt(discoveredcode),
+        expectedparticipants: parseInt(expectedparticipants),
+        servicetypecode: parseInt(servicetypecode),
+        basicskills: parseInt(basicskills),
+        advancedskills: parseInt(advanced),
+        sewingmachines: parseInt(sewingmachines),
+        sergers: parseInt(sergers),
         payfor: payfor,
         storyshared: storyshared,
         orgnewsletter: newsletter,
@@ -769,7 +821,7 @@ app.post('/eventrequest', (req, res) => {
     })
     .catch(err => {
         console.error("Error creating account:", err);
-        res.render("homepage", { error: "An unexpected error when trying to create the event. Please try again.", title: "Request Event - Turtle Shelter Project" });
+        res.render("homepage", { error: "An unexpected error when trying to create the event. Please try again.", title: "Turtle Shelter Project" });
     });
 })
 
@@ -809,14 +861,14 @@ app.post('/eventrequestadmin', (req, res) => {
         eventstoptime: eventstoptime,
         eventaddress: eventaddress.toLowerCase(),
         eventcity: eventcity.toLowerCase(),
-        statecode: statecode,
-        discoveredcode: discoveredcode,
-        expectedparticipants: expectedparticipants,
-        servicetypecode: servicetypecode,
-        basicskills: basicskills,
-        advancedskills: advanced,
-        sewingmachines: sewingmachines,
-        sergers: sergers,
+        statecode: parseInt(statecode),
+        discoveredcode: parseInt(discoveredcode),
+        expectedparticipants: parseInt(expectedparticipants),
+        servicetypecode: parseInt(servicetypecode),
+        basicskills: parseInt(basicskills),
+        advancedskills: parseInt(advanced),
+        sewingmachines: parseInt(sewingmachines),
+        sergers: parseInt(sergers),
         payfor: payfor,
         storyshared: storyshared,
         orgnewsletter: newsletter,
