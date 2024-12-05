@@ -112,10 +112,9 @@
 .form-container input[type="datetime-local"],
 .form-container input[type="tel"],
 .form-container input[type="email"],
-.form-container select
-{
-    font-size: 14px;
-    padding: 12px;
+.form-container textarea {
+    padding: 15px; /* More padding for inputs */
+    width: 100%;
     border-radius: 5px;
     border: 1px solid #ddd;
 }
@@ -220,6 +219,7 @@ function toggleSewingQuestions(value) {
 
       <h3>Event Request Form</h3>
       <!-- Event Request Form -->
+       <div class="form-container">
       <form action="/eventrequest" method="POST">    
         <div style="margin-bottom: 5px;">  
             <label for="organization">Organization/Group Name:</label>
@@ -240,8 +240,8 @@ function toggleSewingQuestions(value) {
 
         <div style="margin-bottom: 5px;"> 
             <label>Event Duration:</label>
-            <input type="datetime-local" id="eventstarttime" name="eventstarttime" required> to 
-            <input type="datetime-local" id="eventstoptime" name="eventstoptime" required>
+            <input type="datetime-local" id="eventstarttime" name="eventstarttime" style="width: 30%" required> to 
+            <input type="datetime-local" id="eventstoptime" name="eventstoptime" style="width: 30%" required>
         </div>
 
         <div style="margin-bottom: 5px;"> 
@@ -301,8 +301,9 @@ function toggleSewingQuestions(value) {
                 <option value="49">Wisconsin</option>
                 <option value="50">Wyoming</option>
             </select>
-        </div>
+          </div>
 
+        <div class="dropdown">
         <div style="margin-bottom: 5px;"> 
             <label for="discoveredcode">How did you learn about us?</label>
             <select id="discoveredcode" name="discoveredcode" style="width: 20%"required>
@@ -316,12 +317,14 @@ function toggleSewingQuestions(value) {
                 <option value="6">Other Social Media</option>
             </select>
         </div>
+        </div>
 
         <div style="margin-bottom: 5px;"> 
             <label for="expectedparticipants">How many people do you expect to participate?</label>
             <input type="number" id="expectedparticipants" name="expectedparticipants" min="1" style="width: 10%" placeholder= 0 required>
         </div>
 
+        <div class="dropdown">
         <div style="margin-bottom: 5px;"> 
             <label for="servicetypecode">What kind of service would you like to do?</label>
             <select id="servicetypecode" name="servicetypecode"  style="width: 20%" onchange="toggleSewingQuestions(this.value)" required>
@@ -331,7 +334,7 @@ function toggleSewingQuestions(value) {
                 <option value="3">Both</option>
             </select>
         </div>
-        
+        </div>
         <!-- Sewing Questions after drop down -->
         <div class="sewing-questions" style="flex-direction: column; gap: 5px; margin-bottom: 5px;">
             <div style="margin-bottom: 5px;">
@@ -349,7 +352,7 @@ function toggleSewingQuestions(value) {
             </div>
             <div style="margin-bottom: 5px;">
                 <label>How many sergers can you bring?</label>
-                <input type="number" id="sergers" name="sergers" placeholder="Sergers" style="width: 10%" min="0">
+                <input type="number" id="sergers" name="sergers" placeholder=0 style="width: 10%" min="0">
             </div>
         </div>
         <div style="margin-bottom: 5px;"> 
@@ -394,6 +397,7 @@ function toggleSewingQuestions(value) {
       </div>
     </form>
   </div>
+</div>
 
   <!-- Volunteer From Home -->
   <div id="home" class="tab-content" style="display:none;">
