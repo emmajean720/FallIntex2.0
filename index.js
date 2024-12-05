@@ -124,8 +124,10 @@ app.post('/login', (req, res) => {
                 req.session.user = {
                     id: user.usercode,
                     username: user.login,
+                    firstname: user.firstname, // Store the user's first name for personalized greeting
                     is_admin: user.is_admin
                 };
+                // Redirect based on the user role (admin or volunteer)
                 user.is_admin ? res.redirect('/admin') : res.redirect('/volunteerhome');
             } else {
                 res.render("login", { error: "Invalid username or password", title: "Login - Turtle Shelter Project" });
@@ -280,11 +282,11 @@ app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
 });
 
 // Manage Users Page
+// Admin Management Page
 app.get('/adminmanage', isAuthenticated, isAdmin, (req, res) => {
     const { search } = req.query;
-    let query = knex('users').select('*'); // Initialize the query to fetch all users
+    let query = knex('users').select('*'); // Initialize the query
 
-    // If search query is provided, filter by first name or last name
     if (search) {
         query = query.andWhere(function() {
             this.where('firstname', 'ilike', `%${search}%`)  // Search in firstname
@@ -293,7 +295,7 @@ app.get('/adminmanage', isAuthenticated, isAdmin, (req, res) => {
     }
         
     query
-        .orderBy('is_admin','desc')
+        .orderBy('is_admin', 'desc')
         .orderBy('firstname')
         .orderBy('lastname')
         .then(users => {
@@ -303,12 +305,12 @@ app.get('/adminmanage', isAuthenticated, isAdmin, (req, res) => {
                 state_abbr: stateAbbreviations[user.statecode] || 'N/A' // Display state abbreviation
             }));
 
-            // Pass users and stateAbbreviations to EJS
             res.render("adminmanage", {
                 error: null,
                 title: "Admin Management - Turtle Shelter Project",
                 users,
-                stateAbbreviations // Make stateAbbreviations available for the select dropdown
+                stateAbbreviations,
+                user: req.session.user // Pass the logged-in user data to the view
             });
         })
         .catch(err => {
@@ -317,7 +319,8 @@ app.get('/adminmanage', isAuthenticated, isAdmin, (req, res) => {
                 error: "An error occurred fetching users",
                 title: "Admin Management - Turtle Shelter Project",
                 users: [],
-                stateAbbreviations // Ensure this is passed even in the error case
+                stateAbbreviations,
+                user: req.session.user // Pass the logged-in user data to the view
             });
         });
 });

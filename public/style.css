@@ -918,3 +918,20 @@ select:focus {
     text-align: left;
     font-weight: normal;
 }
+
+/* volunteer navbar */
+.my-page-btn {
+    background-color: #008080;
+    color: white;
+    padding: 8px 16px;  /* Adjust padding for text */
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;  /* Adjust font size */
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.my-page-btn:hover {
+    background-color: #005F5F;
+}
