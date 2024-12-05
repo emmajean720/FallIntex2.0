@@ -67,19 +67,19 @@
         }
 
         .form-container button[type="submit"] {
-        padding: 6px 12px; /* Adjusted padding for a smaller button */
-        background-color: #008080;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 0.9em; /* Smaller font size */
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
+            padding: 6px 12px; /* Adjusted padding for a smaller button */
+            background-color: #008080;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9em; /* Smaller font size */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-    .form-container button[type="submit"]:hover {
-        background-color: #008080;
-    }
+        .form-container button[type="submit"]:hover {
+            background-color: #008080;
+        }
 
         .success-message,
         .error-message {
@@ -142,6 +142,24 @@
         th {
             background-color: #f2f2f2;
         }
+
+        /* Styling for the Reset button */
+        .reset-btn {
+            background-color: #f44336;
+            color: white;
+            padding: 8px 16px; 
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px; /* Space between search button and reset button */
+            transition: background-color 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            background-color: #d32f2f;
+        }
+
     </style>
 </head>
 <body>
@@ -274,6 +292,9 @@
 
         <!-- Search and Records Table to View Vest Receivers in the Current Year -->
         <div class="records-container">
+            <h2>Vest Receivers for the Current Year</h2>
+            
+            <!-- Search Form -->
             <div class="search-container">
                 <form method="GET" action="/adminvest-receiver">
                     <input type="text" name="search" placeholder="Search by name" value="<%= typeof search !== 'undefined' ? search : '' %>">
@@ -281,7 +302,13 @@
                 </form>
             </div>
 
-            <h2>Vest Receivers for the Current Year</h2>
+            <!-- Reset Button -->
+            <div class="search-container">
+                <form method="GET" action="/adminvest-receiver">
+                    <button type="submit" class="reset-btn">Reset</button>
+                </form>
+            </div>
+
             <table>
                 <thead>
                     <tr>
