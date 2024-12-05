@@ -8,6 +8,152 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
 </head>
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Lora', serif;
+        color: #333333; /* Charcoal for main text */
+    }
+
+    /* Introduction Section */
+    .introduction {
+        background-color: #f9f9f9; /* Light gray background for contrast */
+        padding: 40px 20px;
+        margin: 30px auto;
+        max-width: 1000px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .introduction .content {
+        text-align: center;
+    }
+
+    .introduction h2 {
+        font-size: 2.2em;
+        color: #008080; /* Teal header color */
+        margin-bottom: 20px;
+    }
+
+    .introduction p {
+        font-size: 1.1em;
+        line-height: 1.8;
+        color: #333333; /* Charcoal color for readability */
+        max-width: 900px;
+        margin: 0 auto 20px;
+    }
+
+    .introduction p:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Call-to-Action Buttons */
+    .call-to-action {
+        padding: 60px 0;
+        background-color: #f1f1f1; /* Light gray to separate section */
+        text-align: center;
+    }
+
+    .action-buttons-container {
+        display: flex;
+        justify-content: center;
+        gap: 80px; /* Extra space between buttons */
+        flex-wrap: wrap;
+        margin-top: 30px;
+    }
+
+    .action-button {
+        text-align: center;
+    }
+
+    .action-button a {
+        text-decoration: none;
+        color: #333333; /* Dark gray for text on button labels */
+    }
+
+    .action-button .circle {
+        width: 120px;
+        height: 120px;
+        background-color: #008080; /* Teal for primary buttons */
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        transition: background-color 0.3s ease;
+    }
+
+    .action-button .circle:hover {
+        background-color: #005f5f; /* Darken teal on hover */
+    }
+
+    .action-button i {
+        font-size: 3em;
+        color: #ffffff; /* White icon color */
+    }
+
+    .action-button span {
+        display: block;
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 1.3em;
+    }
+
+    /* Hero Section Overlay */
+    .hero-overlay {
+        background: rgba(0, 0, 0, 0.5);
+        color: #ffffff;
+        text-align: center;
+        padding: 80px 20px;
+    }
+
+    .hero-overlay h1 {
+        font-size: 3em;
+        color: #FFD700; /* Sunshine Yellow for main headline to create energy */
+    }
+
+    .hero-overlay h2 {
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+
+    /* Stats Section */
+    .stats {
+        background-color: #f9f9f9; /* Light gray background to keep it soft */
+        padding: 50px 20px;
+        text-align: center;
+    }
+
+    .stats-title {
+        color: #008080; /* Teal for the section title */
+        font-size: 2em;
+        margin-bottom: 30px;
+    }
+
+    .stat-box {
+        display: inline-block;
+        width: 200px;
+        margin: 0 20px;
+    }
+
+    .stat-number {
+        font-size: 2.5em;
+        color: #FF7043; /* Rusty Orange for emphasis on stats */
+    }
+
+    .btn {
+        background-color: #FF7043; /* Rusty Orange for button */
+        color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #d65c31; /* Darken the button on hover */
+    }
+</style>
 <body>
     <!-- Nav Bar -->
     <%- include("partials/navbar") %>
@@ -17,6 +163,51 @@
             <h1>IT STARTS WITH YOU</h1>
         </div>
     </section>
+    <section id="introduction" class="introduction">
+        <div class="content">
+            <h2>Warmth for the Homeless, One Vest at a Time</h2>
+            <p>
+                Imagine battling freezing temperatures without the comfort of a warm bed or a roof over your head. For thousands of individuals experiencing homelessness, this is a grim reality every winter. The Turtle Shelter Project is on a mission to change that—one vest at a time. Our "Turtle Shelters" are insulated vests designed to be lightweight, durable, and, most importantly, life-saving. These vests provide essential warmth, acting as a portable shelter that individuals can carry with them, much like a turtle carries its home.
+            </p>
+            <p>
+                Each vest is made with care by our community of volunteers, and each one represents a chance for someone to endure the winter safely. Our efforts aren't just about warmth—they are about restoring dignity, offering hope, and building a supportive community for those most in need. When you support the Turtle Shelter Project, you're not just providing a vest—you’re offering a lifeline.
+            </p>
+            <p>
+                Join us in making a difference, because every small action counts when it comes to saving lives. Together, we can turn compassion into real impact.
+            </p>
+        </div>
+    </section>
+    <section id="call-to-action" class="call-to-action">
+        <div class="action-buttons-container">
+            <!-- Volunteer Button -->
+            <div class="action-button">
+                <a href="/volunteer">
+                    <div class="circle">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <span>Volunteer</span>
+                </a>
+            </div>
+            <!-- Donate Button -->
+            <div class="action-button">
+                <a href="/donate">
+                    <div class="circle">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <span>Donate</span>
+                </a>
+            </div>
+            <!-- Schedule an Event Button -->
+            <div class="action-button">
+                <a href="/volunteer">
+                    <div class="circle">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <span>Schedule an Event</span>
+                </a>
+            </div>
+        </div>
+    </section>    
     <section id="stats" class="stats">
         <h2 class="stats-title">Our Impact</h2>
         <div class="stats-container">
@@ -53,42 +244,12 @@
                     <p>I began thinking that if homelessness crushed me, even with all that I had, then what would it do to someone who had much less, or even nothing? I wanted to do something to help people with this burden. When I learned about foam clothing, I knew without a doubt that God was telling me - "THIS IS HOW YOU CAN HELP!"</p>
                     <p>...We want these vests to go to people living outdoors or who don't have access to shelters, because they are the ones who need this technology the most. The vests are called "Turtle Shelters" because they are a portable shelter - just like a turtle taking its shelter with it.</p>
                     <p>
-                    <a href="/help" class="btn">Learn How You Can Help</a>
+                    <a href="/donate" class="btn">Learn How You Can Help</a>
                     </p>
                 </div>
             </div>
         </section>
-<!-- Jen's Story Section -->
-                            <section id="story" class="story">
-                                <div class="content" style="display: flex; align-items: flex-start;">
-                                    <!-- Image to the left -->
-                                    <img src="/images/Jen.png" alt="Jen" class="story-image" style="max-width: 40%; margin-right: 20px;">
 
-                                    <!-- Text with collapsible functionality -->
-                                    <div class="story-text">
-                                        <h2>Jen's Story</h2>
-                                        <p>My addiction led me to being homeless on several occasions throughout my life, and during that time <em style="font-weight: bold; font-style: italic; font-size: 1.2em">I personally knew seven people who froze to death.</em>
-                                        </b> </p>
-                                        <!-- Collapsible text -->
-                                        <div id="collapsible-text">
-                                            <div id="extra-text" style="display: none;">
-                                                <p>When I first learned about this lifesaving technology, my mind flooded with ideas on how many people's lives this could save. I'd recently been homeless during an extreme winter. It had been one of the coldest winters Utah had suffered in a long time, so the misery of surviving the bitter cold was still very fresh in my mind.</p>
-                                                <p>While I was homeless, I remember feeling the chill all the way to my bones. I couldn't even think or function. It completely zapped me of my energy so much that I was losing my will to live. Everything felt beyond overwhelming. Simple tasks, like finding a bathroom, seemed to feel like huge obstacles. The crazy thing about it was: I had a car I was living in; I had a storage unit I could hang out in during the day and at night; and I had an income that was sufficient for my needs. But being homeless completely broke me - even with all of the resources I had available to me.</p>
-                                                <p>I began thinking that if homelessness crushed me, even with all that I had, then what would it do to someone who had much less, or even nothing? I wanted to do something to help people with this burden. When I learned about foam clothing, I knew without a doubt that God was telling me - "THIS IS HOW YOU CAN HELP!"</p>
-                                                <p>...We want these vests to go to people living outdoors or who don't have access to shelters, because they are the ones who need this technology the most. The vests are called "Turtle Shelters" because they are a portable shelter - just like a turtle taking its shelter with it.</p>
-                                                </p>
-                                            </div>
-                                            <p>
-                                                <a href="javascript:void(0);" id="toggle-link" onclick="toggleText()">Keep Reading</a>
-                                            </p>
-                                        </div>
-
-                                        <p>
-                                            <a href="/help" class="btn">Learn How You Can Help</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </section>
     </main>
     <!-- Footer -->
     <%- include("partials/footer") %>
