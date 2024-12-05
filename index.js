@@ -527,6 +527,12 @@ app.post('/create-account', (req, res) => {
         "f": 5,
         "s": 6
     }
+    let mavailability = 0
+    let tavailability = 0
+    let wavailability = 0
+    let thavailability = 0
+    let favailability = 0
+    let savailability = 0
     const firstname = req.body.firstname || ' ';
     const lastname = req.body.lastname || ' '; 
     const email = req.body.email || ' '; 
@@ -592,14 +598,12 @@ app.post('/create-account', (req, res) => {
             availability[dayKey] = 2 + iCount;
             console.log(`${dayKey}: ${availability[dayKey]}`);
 
-        } else if (none === 'n') {
+        } else (none === 'n') 
+        {
             console.log("None is working!");
             availability[dayKey] = 8 + iCount;
-            console.log(`${dayKey}: ${availability[dayKey]}`);
-
-        } else {
-            console.log("It's broken :(");
-        }
+            console.log(`${dayKey}: ${availability[dayKey]}`)
+        };
 
         // Increment iCount by 8
         iCount += 8;
@@ -630,15 +634,69 @@ app.post('/create-account', (req, res) => {
             is_admin: admin // Default role for new users
 
         })
-        .then(() => {
+        .returning('usercode')
+        .then(([usercode]) => { // Destructure to get the usercode
+            console.log("Generated Usercode:", usercode); // Debug
+            if (!usercode) throw new Error("Usercode not returned");
+    
+            // Insert a single row into volunteeravailability
             return knex('volunteeravailability').insert({
-                volunteercode: usercode,
-                availabilitycode: mavailability
-            })
-
+                volunteercode: parseInt(usercode),
+                availabilitycode: parseInt(mavailability) // Single value
+            });
+        })
+        .then(([usercode]) => { // Destructure to get the usercode
+            console.log("Generated Usercode:", usercode); // Debug
+            if (!usercode) throw new Error("Usercode not returned");
+    
+            // Insert a single row into volunteeravailability
+            return knex('volunteeravailability').insert({
+                volunteercode: parseInt(usercode),
+                availabilitycode: parseInt(tavailability) // Single value
+            });
+        })
+        .then(([usercode]) => { // Destructure to get the usercode
+            console.log("Generated Usercode:", usercode); // Debug
+            if (!usercode) throw new Error("Usercode not returned");
+    
+            // Insert a single row into volunteeravailability
+            return knex('volunteeravailability').insert({
+                volunteercode: parseInt(usercode),
+                availabilitycode: parseInt(wavailability) // Single value
+            });
+        })
+        .then(([usercode]) => { // Destructure to get the usercode
+            console.log("Generated Usercode:", usercode); // Debug
+            if (!usercode) throw new Error("Usercode not returned");
+    
+            // Insert a single row into volunteeravailability
+            return knex('volunteeravailability').insert({
+                volunteercode: parseInt(usercode),
+                availabilitycode: parseInt(thavailability) // Single value
+            });
+        })
+        .then(([usercode]) => { // Destructure to get the usercode
+            console.log("Generated Usercode:", usercode); // Debug
+            if (!usercode) throw new Error("Usercode not returned");
+    
+            // Insert a single row into volunteeravailability
+            return knex('volunteeravailability').insert({
+                volunteercode: parseInt(usercode),
+                availabilitycode: parseInt(favailability) // Single value
+            });
+        })
+        .then(([usercode]) => { // Destructure to get the usercode
+            console.log("Generated Usercode:", usercode); // Debug
+            if (!usercode) throw new Error("Usercode not returned");
+    
+            // Insert a single row into volunteeravailability
+            return knex('volunteeravailability').insert({
+                volunteercode: parseInt(usercode),
+                availabilitycode: parseInt(savailability) // Single value
+            });
         })
         .then(() => {
-            res.redirect("/admin");
+            res.redirect("/login");
         })
         .catch(err => {
             console.error("Error creating account:", err);
