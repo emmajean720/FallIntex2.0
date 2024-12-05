@@ -216,10 +216,27 @@ function toggleSewingQuestions(value) {
         After your group has completed their tasks, simply send the partially completed vests back to us for expert sewing,
         and then we will send them back to you or to a location you specify.</p>
         <p>Please fill out the form below and tell us about your event idea so that we can provide options for you and your group.</p>
+      <td>
 
-      <h3>Event Request Form</h3>
+        <div class="image-row">
+          <div class="image-container">
+            <img src="/images/SewingAgain.jpg" alt="Happy People Wearing Vests">
+          </div>
+          <div class="image-container">
+            <img src="/images/Sewing.jpg" alt="Pinning Vests">
+          </div>
+          <div class="image-container">
+            <img src="/images/CuttingVests.jpg" alt="Happy People Serving">
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+          <div class="button" onclick="toggleForm()">Event Request Form</div>
+      </div>
+      </td>
+
       <!-- Event Request Form -->
-       <div class="form-container">
+       <div class="form-container" style="display: none;">
       <form action="/eventrequest" method="POST">    
         <div style="margin-bottom: 5px;">  
             <label for="organization">Organization/Group Name:</label>
@@ -393,7 +410,7 @@ function toggleSewingQuestions(value) {
         </div>
 
         <div style="text-align: center; margin-top: 20px;">
-          <button type="submit" class="button">Create Event</button>
+          <button type="submit" class="button" onclick="toggleForm()">Create Event</button>
       </div>
     </form>
   </div>
@@ -472,6 +489,11 @@ function openTab(tabName) {
         alert('Passwords do not match!');
       }
     });
+
+    function toggleForm() {
+    const formContainer = document.querySelector('.form-container');
+    formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
+  }
   </script>
   <br><br>
       <!-- Footer -->
