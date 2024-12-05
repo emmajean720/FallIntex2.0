@@ -141,16 +141,19 @@ app.get('/logout', (req, res) => {
 // === Protected Pages ===
 
 // Volunteer Landing Page (Luke)
+// Volunteer Home Page Route
 app.get('/volunteerhome', isAuthenticated, (req, res) => {
-    const user = req.session.user;
+    const usercode = req.session.user.id; // Get the logged-in user's usercode
 
-    if (!user || !user.id) {
-        return res.render('login', { error: 'Please log in to view volunteer opportunities.' });
-    }
-
+    // Fetch only events that are approved and the user hasn't signed up for
     knex('event')
-        .select('*')
-        .where('status', 'approved') // Fetch only events that volunteers can join
+        .leftJoin('volunteersatevents', function() {
+            this.on('event.eventcode', '=', 'volunteersatevents.eventcode')
+                .andOn('volunteersatevents.usercode', '=', knex.raw('?', [usercode]));
+        })
+        .select('event.*')
+        .where('event.status', 'approved')
+        .whereNull('volunteersatevents.eventcode') // Events not signed up for by the user
         .then(events => {
             res.render('volunteerhome', {
                 title: "Volunteer Home - Available Events",
@@ -169,6 +172,7 @@ app.get('/volunteerhome', isAuthenticated, (req, res) => {
             });
         });
 });
+
 
 app.post('/volunteerhome/signup', isAuthenticated, (req, res) => {
     const user = req.session.user;
@@ -242,7 +246,7 @@ app.get('/myevents', isAuthenticated, (req, res) => {
     // Query to get the events that the user has signed up for
     knex('volunteersatevents')
         .join('event', 'volunteersatevents.eventcode', '=', 'event.eventcode')
-        .select('event.organization', 'event.eventstarttime', 'event.eventstoptime', 'event.status')
+        .select('event.organization', 'event.eventstarttime', 'event.eventstoptime','event.eventcity','event.statecode', 'event.status')
         .where('volunteersatevents.usercode', usercode)
         .then(events => {
             res.render('myevents', {
@@ -312,6 +316,37 @@ app.post('/delete-user/:usercode', isAuthenticated, isAdmin, (req, res) => {
             res.redirect('/adminmanage');
         });
 });
+
+// Create Admin Account
+app.post('/create-admin', isAuthenticated, isAdmin, (req, res) => {
+    const { firstname, lastname, email, phone, city, state_abbr, login, password } = req.body;
+
+    // Insert new admin user into the 'users' table
+    knex('users')
+        .insert({
+            firstname,
+            lastname,
+            email,
+            phone,
+            city,
+            statecode: state_abbr, // Assuming the state_abbr is used to map to the statecode in your database
+            login,
+            password, // Note: You should hash the password before storing it in production for security
+            is_admin: true
+        })
+        .then(() => {
+            res.redirect('/adminmanage');
+        })
+        .catch(err => {
+            console.error("Error creating new admin:", err);
+            res.render("adminmanage", {
+                error: "An error occurred while creating the admin account. Please try again.",
+                title: "Admin Management - Turtle Shelter Project",
+                users: [] // You could also re-query the users to provide more context
+            });
+        });
+});
+
 
 // Event Management Page - McKenna
 app.get('/eventmanage', isAuthenticated, isAdmin, (req, res) => {

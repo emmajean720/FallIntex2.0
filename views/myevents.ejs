@@ -23,8 +23,28 @@
             font-size: 1.8em;
             margin-bottom: 10px;
             color: #008080;
-        };
-        
+        }
+
+        .back-button-container {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            background-color: #008080;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #005F5F;
+        }
 
         .event-table-container {
             margin-top: 30px;
@@ -66,6 +86,10 @@
 
     <!-- Main Content -->
     <div class="main-content">
+        <div class="back-button-container">
+            <a href="/volunteerhome" class="back-button">Back to Volunteer Home</a>
+        </div>
+
         <h2>My Events</h2>
         <% if (error) { %>
             <div class="error-message"><%= error %></div>
@@ -80,13 +104,15 @@
                         <th>Date</th>
                         <th>Start Time</th>
                         <th>Stop Time</th>
+                        <th>City</th>
+                        <th>State</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% if (events.length === 0) { %>
                         <tr>
-                            <td colspan="5">You have not signed up for any events yet.</td>
+                            <td colspan="7">You have not signed up for any events yet.</td>
                         </tr>
                     <% } else { %>
                         <% events.forEach(event => { %>
@@ -95,6 +121,8 @@
                                 <td><%= new Date(event.eventstarttime).toLocaleDateString() %></td>
                                 <td><%= new Date(event.eventstarttime).toLocaleTimeString() %></td>
                                 <td><%= new Date(event.eventstoptime).toLocaleTimeString() %></td>
+                                <td><%= event.eventcity %></td>
+                                <td><%= event.statecode %></td>
                                 <td><%= event.status %></td>
                             </tr>
                         <% }) %>
