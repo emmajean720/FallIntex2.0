@@ -85,6 +85,14 @@
             border: 1px solid #ddd;
             font-size: 1em;
         }
+        .form-container textarea {
+            padding: 10px;
+            width: 30%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+
         .form-container input[type="tel"] {
             padding: 10px;
             width: 25%;
@@ -123,19 +131,69 @@
             background-color: #005F5F;
         }
 
-        /*css fro cards on admin events page*/
-        .bigcard {
-            width: 90%;
-            max-width: 1250px;
-            margin: 30px auto; /* Increased margin to create better spacing between cards */
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px; /* Slightly increased border-radius for a more modern look */
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* Smooth transition for hover effects */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            
-        }
+            /* Container for the tabs */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      width: 70%; /* Adjust this to control the overall width */
+      margin: 0 auto; /* Centers the tabs horizontally */
+    }
+
+    /* Style for each tab button */
+    .tab-btn {
+      padding: 12px 0; /* Adjust padding to make tabs more compact */
+      margin: 0 5px; /* Reduce space between tabs */
+      flex: 1; /* Make each tab take equal width */
+      background-color: #f1f3f5;
+      color: #006666;
+      border: 2px solid #006666;
+      border-radius: 25px 25px 0 0;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .tab-btn:hover {
+      background-color: #006666;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .tab-btn:focus {
+      outline: none;
+    }
+
+    /* Active tab style */
+    .tab-btn.active {
+      background-color: #008080;
+      color: white;
+      border-color: #006666;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Content section for each tab */
+    .tab-content {
+      display: none;
+      padding: 25px;
+      padding-bottom: 40px; /* Added bottom padding for buffer */
+      background-color: #ffffff;
+      border: 2px solid #006666;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      max-width: 75%;
+      margin: 0 auto;
+      margin-top: -2px;
+    }
+
+
+    /* Optional: Style for tab content text */
+    .tab-content p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.6;
+    }
 
         .card-header {
             padding: 20px; /* Increased padding for more spacious header */
@@ -220,11 +278,365 @@
     <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
     <div class="main-content">
 
-    <!-- Form to Add Vest Receiver -->
-    <div class="bigcard">
-        <div class="card-header">Add New Event</div>
-        <div class="card-content">
+    <br>
+    <div class="tabs">
+        <button class="tab-btn" onclick="openTab('pending')">Pending Events</button>
+        <button class="tab-btn" onclick="openTab('approved')">Approved Events</button>
+        <button class="tab-btn" onclick="openTab('completed')">Completed Events</button>
+        <button class="tab-btn" onclick="openTab('declined')">Declined Events</button>
+        <button class="tab-btn" onclick="openTab('addnewevent')">Add New Event</button>
+    </div>
+
+        <!-- Form to Add Vest Receiver -->
+        <!--pending-->
+        <div id="pending" class="tab-content">
+            <h1>Pending Events</h1>
+                    <% if (error) { %>
+                        <div class="error-message"><%= error %></div>
+                    <% } %>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Organization</th>
+                                <th>Event Date(s)</th>
+                                <th>Event Times</th>
+                                <th>Event Address</th>
+                                <th>Contact Name</th>
+                                <th>Contact Email</th>
+                                <th>Contact Phone</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% events.forEach(event => { %>
+                                <% if (event.status == 'pending') { %>
+                                    <tr>
+                                        <td><%= event.organization %></td>
+                                        <td><%= new Date(event.eventstarttime).toLocaleDateString() %>    <% if (new Date(event.eventstarttime).toLocaleDateString() !== new Date(event.eventstoptime).toLocaleDateString()) { %>
+                                            - <%= new Date(event.eventstoptime).toLocaleDateString() %>
+                                        <% } %></td>
+                                        <td>
+                                            <%= new Date(event.eventstarttime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).replace(/([APM]{2})$/, '') %>-
+                                            <%= new Date(event.eventstoptime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) %>
+                                        </td>
+                                        <td><%= event.eventaddress %>, <%= event.eventcity %>, <%= event.state_description %></td>
+                                        <td><%= event.orgfirstname %> <%= event.orglastname %></td>
+                                        <td><%= event.orgemail %></td>
+                                        <td><%= event.orgphone %></td>
+                                        <td>
+                                            <!-- Approve Button -->
+                                            <form action="/update-event-status/<%= event.eventcode %>" method="POST" style="display:inline;">
+                                                <input type="hidden" name="status" value="approved">
+                                                <button type="submit" class="form-button" style="background-color: #006813 ">Approve</button>
+                                            </form>
+                                            <!-- Decline Button -->
+                                            <form action="/update-event-status/<%= event.eventcode %>" method="POST" style="display:inline;">
+                                                <input type="hidden" name="status" value="declined">
+                                                <button type="submit" class="form-button" style="background-color: #a30202 ">Decline</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <button class="form-button" onclick="toggleEditForm('<%= event.eventcode %>')">View/Edit</button>
+                                        </td>
+                                    </tr>
+                                    <!-- Include the edit event form partial -->
+                                    <%- include('partials/eventedit', { event: event }) %>
+                                <% } %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+
+        <!--approved events-->
+        <div id="approved" class="tab-content">
+            <h1>Approved Events</h1>
+                    <% if (error) { %>
+                        <div class="error-message"><%= error %></div>
+                    <% } %>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Organization</th>
+                                <th>Event Date(s)</th>
+                                <th>Event Times</th>
+                                <th>Event Address</th>
+                                <th>Contact Name</th>
+                                <th>Contact Email</th>
+                                <th>Contact Phone</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% events.forEach(event => { %>
+                                <% if (event.status == 'approved') { %>
+                                    <tr>
+                                        <td><%= event.organization %></td>
+                                        <td><%= new Date(event.eventstarttime).toLocaleDateString() %>    <% if (new Date(event.eventstarttime).toLocaleDateString() !== new Date(event.eventstoptime).toLocaleDateString()) { %>
+                                            - <%= new Date(event.eventstoptime).toLocaleDateString() %>
+                                        <% } %></td>
+                                        <td>
+                                            <%= new Date(event.eventstarttime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).replace(/([APM]{2})$/, '') %>-
+                                            <%= new Date(event.eventstoptime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) %>
+                                        </td>
+                                        <td><%= event.eventaddress %>, <%= event.eventcity %>, <%= event.state_description %></td>
+                                        <td><%= event.orgfirstname %> <%= event.orglastname %></td>
+                                        <td><%= event.orgemail %></td>
+                                        <td><%= event.orgphone %></td>
+                                        <td>
+                                            <form action="/update-event-status/<%= event.eventcode%>" method="POST">
+                                                <select name="status" onchange="this.form.submit()">
+                                                    <option value="pending" <%= event.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                                                    <option value="approved" <%= event.status === 'approved' ? 'selected' : '' %>>Approved</option>
+                                                    <option value="declined" <%= event.status === 'declined' ? 'selected' : '' %>>Declined</option>
+                                                    <option value="completed" <%= event.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                                                </select>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <button class="form-button" onclick="toggleEditForm('<%= event.eventcode %>')">View/Edit</button>
+                                            <button class="form-button" onclick="toggleCompleteForm('<%= event.eventcode %>')">Complete</button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Include the edit event form partial -->
+                                    <%- include('partials/eventedit', { event: event }) %>
+
+                                    <tr id="complete-form-<%= event.eventcode %>" style="display:none;" class="form-container">
+                                        <td colspan="7">
+                                            <form action="/complete-event/<%= event.eventcode %>" method="POST" class="edit-event-form">
+                                                <label>Actual number of participants:</label>
+                                                <input type="number" name="actualparticipation" value="<%= event.actualparticipation %>" placeholder="0">
+                                                <p>Vests:
+                                                    <label>Cut:</label>
+                                                    <input type="number" name="vestcut" value="<%= event.vestcut %>" placeholder="0">
+                                                    <label>Pinned:</label>
+                                                    <input type="number" name="vestpin" value="<%= event.vestpin %>" placeholder="0">
+                                                    <label>Sewn:</label>
+                                                    <input type="number" name="vestsewn" value="<%= event.vestsewn %>" placeholder="0">
+                                                <p>Collars:</p>
+                                                    <label>Cut:</label>
+                                                    <input type="number" name="collarcut" value="<%= event.collarcut %>" placeholder="0">
+                                                    <label>Pinned:</label>
+                                                    <input type="number" name="collarpin" value="<%= event.collarpin %>" placeholder="0">
+                                                    <label>Sewn:</label>
+                                                    <input type="number" name="collarsewn" value="<%= event.collarsewn %>" placeholder="0">
+                                                <p>Envelopes:</p>
+                                                    <label>Cut:</label>
+                                                    <input type="number" name="envelopecut" value="<%= event.envelopecut %>" placeholder="0">
+                                                    <label>Pinned:</label>
+                                                    <input type="number" name="envelopepin" value="<%= event.envelopepin %>" placeholder="0">
+                                                    <label>Sewn:</label>
+                                                    <input type="number" name="envelopesewn" value="<%= event.envelopesewn %>" placeholder="0">
+                                                <p>Pockets:</p>
+                                                    <label>Cut:</label>
+                                                    <input type="number" name="pocketcut" value="<%= event.pocketcut %>" placeholder="0">
+                                                    <label>Pinned:</label>
+                                                    <input type="number" name="pocketpin" value="<%= event.pocketpin %>" placeholder="0">
+                                                    <label>Sewn:</label>
+                                                    <input type="number" name="pocketssewn" value="<%= event.pocketssewn %>" placeholder="0">
+                                                <p>Completed Vests:</p>
+                                                    <label>X-Small:</label>
+                                                    <input type="number" name="xscompleted" value="<%= event.xscompleted %>" placeholder="0">
+                                                    <label>Small:</label>
+                                                    <input type="number" name="scompleted" value="<%= event.scompleted %>" placeholder="0">
+                                                    <label>Medium:</label>
+                                                    <input type="number" name="mcompleted" value="<%= event.mcompleted %>" placeholder="0">
+                                                    <label>Large:</label>
+                                                    <input type="number" name="lcompleted" value="<%= event.lcompleted %>" placeholder="0">
+                                                    <label>X-Large:</label>
+                                                    <input type="number" name="xlcompleted" value="<%= event.xlcompleted %>" placeholder="0">
+                                                    <label>XX-Large:</label>
+                                                    <input type="number" name="xxlcompleted" value="<%= event.xxlcompleted %>" placeholder="0">
+                                                    <label>XXX-Large:</label>
+                                                    <input type="number" name="xxxlcompleted" value="<%= event.xxxlcompleted  %>" placeholder="0">
+                                                    <label>XXX-Large:</label>
+                                                    <input type="number" name="xxxxlcompleted" value="<%= event.xxxxlcompleted %>" placeholder="0">
+                                                <button type="submit" class="form-button">Save Changes</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                <% } %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+
+        <!--completed events-->
+        <div id="completed" class="tab-content">
+                    <h1>Completed Events</h1>
+                    <% if (error) { %>
+                        <div class="error-message"><%= error %></div>
+                    <% } %>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Organization</th>
+                                <th>Event Date(s)</th>
+                                <th>Event Times</th>
+                                <th>Event Address</th>
+                                <th>Contact Name</th>
+                                <th>Contact Email</th>
+                                <th>Contact Phone</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% events.forEach(event => { %>
+                                <% if (event.status == 'completed') { %> <!-- Hide events that are marked as completed -->
+                                    <tr>
+                                        <td><%= event.organization %></td>
+                                        <td><%= new Date(event.eventstarttime).toLocaleDateString() %>    <% if (new Date(event.eventstarttime).toLocaleDateString() !== new Date(event.eventstoptime).toLocaleDateString()) { %>
+                                            - <%= new Date(event.eventstoptime).toLocaleDateString() %>
+                                        <% } %></td>
+                                        <td>
+                                            <%= new Date(event.eventstarttime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).replace(/([APM]{2})$/, '') %>-
+                                            <%= new Date(event.eventstoptime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) %>
+                                        </td>
+                                        <td><%= event.eventaddress %>, <%= event.eventcity %>, <%= event.state_description %></td>
+                                        <td><%= event.orgfirstname %> <%= event.orglastname %></td>
+                                        <td><%= event.orgemail %></td>
+                                        <td><%= event.orgphone %></td>
+                                        <td>
+                                            <form action="/update-event-status/<%= event.eventcode%>" method="POST">
+                                                <select name="status" onchange="this.form.submit()">
+                                                    <option value="pending" <%= event.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                                                    <option value="approved" <%= event.status === 'approved' ? 'selected' : '' %>>Approved</option>
+                                                    <option value="declined" <%= event.status === 'declined' ? 'selected' : '' %>>Declined</option>
+                                                    <option value="completed" <%= event.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                                                </select>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <button class="form-button" onclick="toggleEditForm('<%= event.eventcode %>')">View/Edit</button>
+                                        </td>
+                                    </tr>
+                                    <tr id="complete-form-<%= event.eventcode %>" style="display:none;">
+                                        <td colspan="7">
+                                            <form action="/complete-event/<%= event.eventcode %>" method="POST" class="edit-event-form">
+                                                <label>Actual number of participants:</label>
+                                                <input type="number" name="actualparticipation" value="<%= event.actualparticipation %>" placeholder="0">
+                                                <p>Vests:
+                                                    <label>Cut:</label>
+                                                    <input type="number" name="vestcut" value="<%= event.vestcut %>" placeholder="0">
+                                                    <label>Pinned:</label>
+                                                    <input type="number" name="vestpin" value="<%= event.vestpin %>" placeholder="0">
+                                                    <label>Sewn:</label>
+                                                    <input type="number" name="vestsewn" value="<%= event.vestsewn %>" placeholder="0">
+                                                <p>Collars:</p>
+                                                    <label>Cut:</label>
+                                                    <input type="number" name="collarcut" value="<%= event.collarcut %>" placeholder="0">
+                                                    <label>Pinned:</label>
+                                                    <input type="number" name="collarpin" value="<%= event.collarpin %>" placeholder="0">
+                                                    <label>Sewn:</label>
+                                                    <input type="number" name="collarsewn" value="<%= event.collarsewn %>" placeholder="0">
+                                                <p>Envelopes:</p>
+                                                    <label>Cut:</label>
+                                                    <input type="number" name="envelopecut" value="<%= event.envelopecut %>" placeholder="0">
+                                                    <label>Pinned:</label>
+                                                    <input type="number" name="envelopepin" value="<%= event.envelopepin %>" placeholder="0">
+                                                    <label>Sewn:</label>
+                                                    <input type="number" name="envelopesewn" value="<%= event.envelopesewn %>" placeholder="0">
+                                                <p>Pockets:</p>
+                                                    <label>Cut:</label>
+                                                    <input type="number" name="pocketcut" value="<%= event.pocketcut %>" placeholder="0">
+                                                    <label>Pinned:</label>
+                                                    <input type="number" name="pocketpin" value="<%= event.pocketpin %>" placeholder="0">
+                                                    <label>Sewn:</label>
+                                                    <input type="number" name="pocketssewn" value="<%= event.pocketssewn %>" placeholder="0">
+                                                <p>Completed Vests:</p>
+                                                    <label>X-Small:</label>
+                                                    <input type="number" name="xscompleted" value="<%= event.xscompleted %>" placeholder="0">
+                                                    <label>Small:</label>
+                                                    <input type="number" name="scompleted" value="<%= event.scompleted %>" placeholder="0">
+                                                    <label>Medium:</label>
+                                                    <input type="number" name="mcompleted" value="<%= event.mcompleted %>" placeholder="0">
+                                                    <label>Large:</label>
+                                                    <input type="number" name="lcompleted" value="<%= event.lcompleted %>" placeholder="0">
+                                                    <label>X-Large:</label>
+                                                    <input type="number" name="xlcompleted" value="<%= event.xlcompleted %>" placeholder="0">
+                                                    <label>XX-Large:</label>
+                                                    <input type="number" name="xxlcompleted" value="<%= event.xxlcompleted %>" placeholder="0">
+                                                    <label>XXX-Large:</label>
+                                                    <input type="number" name="xxxlcompleted" value="<%= event.xxxlcompleted  %>" placeholder="0">
+                                                    <label>XXX-Large:</label>
+                                                    <input type="number" name="xxxxlcompleted" value="<%= event.xxxxlcompleted %>" placeholder="0">
+                                                <button type="submit">Save Changes</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+
+        <!--declined events-->
+        <div id="declined" class="tab-content">
+                    <h1>Declined Events</h1>
+                    <% if (error) { %>
+                        <div class="error-message"><%= error %></div>
+                    <% } %>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Organization</th>
+                                <th>Event Date(s)</th>
+                                <th>Event Times</th>
+                                <th>Event Address</th>
+                                <th>Contact Name</th>
+                                <th>Contact Email</th>
+                                <th>Contact Phone</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% events.forEach(event => { %>
+                                <% if (event.status == 'declined') { %> <!-- Hide events that are marked as completed -->
+                                    <tr>
+                                        <td><%= event.organization %></td>
+                                        <td><%= new Date(event.eventstarttime).toLocaleDateString() %>    <% if (new Date(event.eventstarttime).toLocaleDateString() !== new Date(event.eventstoptime).toLocaleDateString()) { %>
+                                            - <%= new Date(event.eventstoptime).toLocaleDateString() %>
+                                        <% } %></td>
+                                        <td>
+                                            <%= new Date(event.eventstarttime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).replace(/([APM]{2})$/, '') %>-
+                                            <%= new Date(event.eventstoptime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) %>
+                                        </td>
+                                        <td><%= event.eventaddress %>, <%= event.eventcity %>, <%= event.state_description %></td>
+                                        <td><%= event.orgfirstname %> <%= event.orglastname %></td>
+                                        <td><%= event.orgemail %></td>
+                                        <td><%= event.orgphone %></td>
+                                        <td>
+                                            <form action="/update-event-status/<%= event.eventcode%>" method="POST">
+                                                <select name="status" onchange="this.form.submit()">
+                                                    <option value="pending" <%= event.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                                                    <option value="approved" <%= event.status === 'approved' ? 'selected' : '' %>>Approved</option>
+                                                    <option value="declined" <%= event.status === 'declined' ? 'selected' : '' %>>Declined</option>
+                                                    <option value="completed" <%= event.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                                                </select>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <button class="form-button" onclick="toggleEditForm('<%= event.eventcode %>')">View/Edit</button>
+                                            <form action="/delete-event/<%= event.eventcode %>" method="POST" style="display:inline;">
+                                                <button type="submit" class="form-button" style="background-color: #a30202 " onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <!-- Include the edit event form partial -->
+                                    <%- include('partials/eventedit', { event: event }) %>
+                                <% } %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+
     
+    <div id="addnewevent" class="tab-content">
         <div class="form-container">
             <h1>Add New Event</h1>
             <!-- Event Request Form -->
@@ -397,376 +809,7 @@
                 <button type="submit" class="form-button">Create Event</button>
             </form>
         </div> 
-        </div>
-
-        </div>
-
-
-
-        <!--pending-->
-        <div class="bigcard">
-            <div class="card-header">Pending Events</div>
-            <div class="card-content">
-                <div class="container">
-                    <% if (error) { %>
-                        <div class="error-message"><%= error %></div>
-                    <% } %>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Organization</th>
-                                <th>Event Date(s)</th>
-                                <th>Event Times</th>
-                                <th>Event Address</th>
-                                <th>Contact Name</th>
-                                <th>Contact Email</th>
-                                <th>Contact Phone</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% events.forEach(event => { %>
-                                <% if (event.status == 'pending') { %>
-                                    <tr>
-                                        <td><%= event.organization %></td>
-                                        <td><%= new Date(event.eventstarttime).toLocaleDateString() %>    <% if (new Date(event.eventstarttime).toLocaleDateString() !== new Date(event.eventstoptime).toLocaleDateString()) { %>
-                                            - <%= new Date(event.eventstoptime).toLocaleDateString() %>
-                                        <% } %></td>
-                                        <td>
-                                            <%= new Date(event.eventstarttime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).replace(/([APM]{2})$/, '') %>-
-                                            <%= new Date(event.eventstoptime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) %>
-                                        </td>
-                                        <td><%= event.eventaddress %>, <%= event.eventcity %>, <%= event.state_description %></td>
-                                        <td><%= event.orgfirstname %> <%= event.orglastname %></td>
-                                        <td><%= event.orgemail %></td>
-                                        <td><%= event.orgphone %></td>
-                                        <td>
-                                            <!-- Approve Button -->
-                                            <form action="/update-event-status/<%= event.eventcode %>" method="POST" style="display:inline;">
-                                                <input type="hidden" name="status" value="approved">
-                                                <button type="submit" class="form-button" style="background-color: #006813 ">Approve</button>
-                                            </form>
-                                            <!-- Decline Button -->
-                                            <form action="/update-event-status/<%= event.eventcode %>" method="POST" style="display:inline;">
-                                                <input type="hidden" name="status" value="declined">
-                                                <button type="submit" class="form-button" style="background-color: #a30202 ">Decline</button>
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <button class="form-button" onclick="toggleEditForm('<%= event.eventcode %>')">View/Edit</button>
-                                        </td>
-                                    </tr>
-                                    <!-- Include the edit event form partial -->
-                                    <%- include('partials/eventedit', { event: event }) %>
-                                <% } %>
-                            <% }) %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!--approved events-->
-        <div class="bigcard">
-            <div class="card-header">Approved Events</div>
-            <div class="card-content">
-                <div class="container">
-                    <% if (error) { %>
-                        <div class="error-message"><%= error %></div>
-                    <% } %>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Organization</th>
-                                <th>Event Date(s)</th>
-                                <th>Event Times</th>
-                                <th>Event Address</th>
-                                <th>Contact Name</th>
-                                <th>Contact Email</th>
-                                <th>Contact Phone</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% events.forEach(event => { %>
-                                <% if (event.status == 'approved') { %>
-                                    <tr>
-                                        <td><%= event.organization %></td>
-                                        <td><%= new Date(event.eventstarttime).toLocaleDateString() %>    <% if (new Date(event.eventstarttime).toLocaleDateString() !== new Date(event.eventstoptime).toLocaleDateString()) { %>
-                                            - <%= new Date(event.eventstoptime).toLocaleDateString() %>
-                                        <% } %></td>
-                                        <td>
-                                            <%= new Date(event.eventstarttime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).replace(/([APM]{2})$/, '') %>-
-                                            <%= new Date(event.eventstoptime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) %>
-                                        </td>
-                                        <td><%= event.eventaddress %>, <%= event.eventcity %>, <%= event.state_description %></td>
-                                        <td><%= event.orgfirstname %> <%= event.orglastname %></td>
-                                        <td><%= event.orgemail %></td>
-                                        <td><%= event.orgphone %></td>
-                                        <td>
-                                            <form action="/update-event-status/<%= event.eventcode%>" method="POST">
-                                                <select name="status" onchange="this.form.submit()">
-                                                    <option value="pending" <%= event.status === 'pending' ? 'selected' : '' %>>Pending</option>
-                                                    <option value="approved" <%= event.status === 'approved' ? 'selected' : '' %>>Approved</option>
-                                                    <option value="declined" <%= event.status === 'declined' ? 'selected' : '' %>>Declined</option>
-                                                    <option value="completed" <%= event.status === 'completed' ? 'selected' : '' %>>Completed</option>
-                                                </select>
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <button class="form-button" onclick="toggleEditForm('<%= event.eventcode %>')">View/Edit</button>
-                                            <button class="form-button" onclick="toggleCompleteForm('<%= event.eventcode %>')">Complete</button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Include the edit event form partial -->
-                                    <%- include('partials/eventedit', { event: event }) %>
-
-                                    <tr id="complete-form-<%= event.eventcode %>" style="display:none;" class="form-container">
-                                        <td colspan="7">
-                                            <form action="/complete-event/<%= event.eventcode %>" method="POST" class="edit-event-form">
-                                                <label>Actual number of participants:</label>
-                                                <input type="number" name="actualparticipation" value="<%= event.actualparticipation %>" placeholder="0">
-                                                <p>Vests:
-                                                    <label>Cut:</label>
-                                                    <input type="number" name="vestcut" value="<%= event.vestcut %>" placeholder="0">
-                                                    <label>Pinned:</label>
-                                                    <input type="number" name="vestpin" value="<%= event.vestpin %>" placeholder="0">
-                                                    <label>Sewn:</label>
-                                                    <input type="number" name="vestsewn" value="<%= event.vestsewn %>" placeholder="0">
-                                                <p>Collars:</p>
-                                                    <label>Cut:</label>
-                                                    <input type="number" name="collarcut" value="<%= event.collarcut %>" placeholder="0">
-                                                    <label>Pinned:</label>
-                                                    <input type="number" name="collarpin" value="<%= event.collarpin %>" placeholder="0">
-                                                    <label>Sewn:</label>
-                                                    <input type="number" name="collarsewn" value="<%= event.collarsewn %>" placeholder="0">
-                                                <p>Envelopes:</p>
-                                                    <label>Cut:</label>
-                                                    <input type="number" name="envelopecut" value="<%= event.envelopecut %>" placeholder="0">
-                                                    <label>Pinned:</label>
-                                                    <input type="number" name="envelopepin" value="<%= event.envelopepin %>" placeholder="0">
-                                                    <label>Sewn:</label>
-                                                    <input type="number" name="envelopesewn" value="<%= event.envelopesewn %>" placeholder="0">
-                                                <p>Pockets:</p>
-                                                    <label>Cut:</label>
-                                                    <input type="number" name="pocketcut" value="<%= event.pocketcut %>" placeholder="0">
-                                                    <label>Pinned:</label>
-                                                    <input type="number" name="pocketpin" value="<%= event.pocketpin %>" placeholder="0">
-                                                    <label>Sewn:</label>
-                                                    <input type="number" name="pocketssewn" value="<%= event.pocketssewn %>" placeholder="0">
-                                                <p>Completed Vests:</p>
-                                                    <label>X-Small:</label>
-                                                    <input type="number" name="xscompleted" value="<%= event.xscompleted %>" placeholder="0">
-                                                    <label>Small:</label>
-                                                    <input type="number" name="scompleted" value="<%= event.scompleted %>" placeholder="0">
-                                                    <label>Medium:</label>
-                                                    <input type="number" name="mcompleted" value="<%= event.mcompleted %>" placeholder="0">
-                                                    <label>Large:</label>
-                                                    <input type="number" name="lcompleted" value="<%= event.lcompleted %>" placeholder="0">
-                                                    <label>X-Large:</label>
-                                                    <input type="number" name="xlcompleted" value="<%= event.xlcompleted %>" placeholder="0">
-                                                    <label>XX-Large:</label>
-                                                    <input type="number" name="xxlcompleted" value="<%= event.xxlcompleted %>" placeholder="0">
-                                                    <label>XXX-Large:</label>
-                                                    <input type="number" name="xxxlcompleted" value="<%= event.xxxlcompleted  %>" placeholder="0">
-                                                    <label>XXX-Large:</label>
-                                                    <input type="number" name="xxxxlcompleted" value="<%= event.xxxxlcompleted %>" placeholder="0">
-                                                <button type="submit" class="form-button">Save Changes</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-
-                                <% } %>
-                            <% }) %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!--completed events-->
-        <div class="bigcard">
-            <div class="card-header">Completed Events</div>
-            <div class="card-content">
-                <div class="container">
-                    <h1>Completed Events</h1>
-                    <% if (error) { %>
-                        <div class="error-message"><%= error %></div>
-                    <% } %>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Organization</th>
-                                <th>Event Date(s)</th>
-                                <th>Event Times</th>
-                                <th>Event Address</th>
-                                <th>Contact Name</th>
-                                <th>Contact Email</th>
-                                <th>Contact Phone</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% events.forEach(event => { %>
-                                <% if (event.status == 'completed') { %> <!-- Hide events that are marked as completed -->
-                                    <tr>
-                                        <td><%= event.organization %></td>
-                                        <td><%= new Date(event.eventstarttime).toLocaleDateString() %>    <% if (new Date(event.eventstarttime).toLocaleDateString() !== new Date(event.eventstoptime).toLocaleDateString()) { %>
-                                            - <%= new Date(event.eventstoptime).toLocaleDateString() %>
-                                        <% } %></td>
-                                        <td>
-                                            <%= new Date(event.eventstarttime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).replace(/([APM]{2})$/, '') %>-
-                                            <%= new Date(event.eventstoptime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) %>
-                                        </td>
-                                        <td><%= event.eventaddress %>, <%= event.eventcity %>, <%= event.state_description %></td>
-                                        <td><%= event.orgfirstname %> <%= event.orglastname %></td>
-                                        <td><%= event.orgemail %></td>
-                                        <td><%= event.orgphone %></td>
-                                        <td>
-                                            <form action="/update-event-status/<%= event.eventcode%>" method="POST">
-                                                <select name="status" onchange="this.form.submit()">
-                                                    <option value="pending" <%= event.status === 'pending' ? 'selected' : '' %>>Pending</option>
-                                                    <option value="approved" <%= event.status === 'approved' ? 'selected' : '' %>>Approved</option>
-                                                    <option value="declined" <%= event.status === 'declined' ? 'selected' : '' %>>Declined</option>
-                                                    <option value="completed" <%= event.status === 'completed' ? 'selected' : '' %>>Completed</option>
-                                                </select>
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <button class="form-button" onclick="toggleEditForm('<%= event.eventcode %>')">View/Edit</button>
-                                        </td>
-                                    </tr>
-                                    <tr id="complete-form-<%= event.eventcode %>" style="display:none;">
-                                        <td colspan="7">
-                                            <form action="/complete-event/<%= event.eventcode %>" method="POST" class="edit-event-form">
-                                                <label>Actual number of participants:</label>
-                                                <input type="number" name="actualparticipation" value="<%= event.actualparticipation %>" placeholder="0">
-                                                <p>Vests:
-                                                    <label>Cut:</label>
-                                                    <input type="number" name="vestcut" value="<%= event.vestcut %>" placeholder="0">
-                                                    <label>Pinned:</label>
-                                                    <input type="number" name="vestpin" value="<%= event.vestpin %>" placeholder="0">
-                                                    <label>Sewn:</label>
-                                                    <input type="number" name="vestsewn" value="<%= event.vestsewn %>" placeholder="0">
-                                                <p>Collars:</p>
-                                                    <label>Cut:</label>
-                                                    <input type="number" name="collarcut" value="<%= event.collarcut %>" placeholder="0">
-                                                    <label>Pinned:</label>
-                                                    <input type="number" name="collarpin" value="<%= event.collarpin %>" placeholder="0">
-                                                    <label>Sewn:</label>
-                                                    <input type="number" name="collarsewn" value="<%= event.collarsewn %>" placeholder="0">
-                                                <p>Envelopes:</p>
-                                                    <label>Cut:</label>
-                                                    <input type="number" name="envelopecut" value="<%= event.envelopecut %>" placeholder="0">
-                                                    <label>Pinned:</label>
-                                                    <input type="number" name="envelopepin" value="<%= event.envelopepin %>" placeholder="0">
-                                                    <label>Sewn:</label>
-                                                    <input type="number" name="envelopesewn" value="<%= event.envelopesewn %>" placeholder="0">
-                                                <p>Pockets:</p>
-                                                    <label>Cut:</label>
-                                                    <input type="number" name="pocketcut" value="<%= event.pocketcut %>" placeholder="0">
-                                                    <label>Pinned:</label>
-                                                    <input type="number" name="pocketpin" value="<%= event.pocketpin %>" placeholder="0">
-                                                    <label>Sewn:</label>
-                                                    <input type="number" name="pocketssewn" value="<%= event.pocketssewn %>" placeholder="0">
-                                                <p>Completed Vests:</p>
-                                                    <label>X-Small:</label>
-                                                    <input type="number" name="xscompleted" value="<%= event.xscompleted %>" placeholder="0">
-                                                    <label>Small:</label>
-                                                    <input type="number" name="scompleted" value="<%= event.scompleted %>" placeholder="0">
-                                                    <label>Medium:</label>
-                                                    <input type="number" name="mcompleted" value="<%= event.mcompleted %>" placeholder="0">
-                                                    <label>Large:</label>
-                                                    <input type="number" name="lcompleted" value="<%= event.lcompleted %>" placeholder="0">
-                                                    <label>X-Large:</label>
-                                                    <input type="number" name="xlcompleted" value="<%= event.xlcompleted %>" placeholder="0">
-                                                    <label>XX-Large:</label>
-                                                    <input type="number" name="xxlcompleted" value="<%= event.xxlcompleted %>" placeholder="0">
-                                                    <label>XXX-Large:</label>
-                                                    <input type="number" name="xxxlcompleted" value="<%= event.xxxlcompleted  %>" placeholder="0">
-                                                    <label>XXX-Large:</label>
-                                                    <input type="number" name="xxxxlcompleted" value="<%= event.xxxxlcompleted %>" placeholder="0">
-                                                <button type="submit">Save Changes</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                <% } %>
-                            <% }) %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!--declined events-->
-        <div class="bigcard">
-            <div class="card-header">Declined Events</div>
-            <div class="card-content">
-                <div class="container">
-                    <h1>Declined Events</h1>
-                    <% if (error) { %>
-                        <div class="error-message"><%= error %></div>
-                    <% } %>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Organization</th>
-                                <th>Event Date(s)</th>
-                                <th>Event Times</th>
-                                <th>Event Address</th>
-                                <th>Contact Name</th>
-                                <th>Contact Email</th>
-                                <th>Contact Phone</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% events.forEach(event => { %>
-                                <% if (event.status == 'declined') { %> <!-- Hide events that are marked as completed -->
-                                    <tr>
-                                        <td><%= event.organization %></td>
-                                        <td><%= new Date(event.eventstarttime).toLocaleDateString() %>    <% if (new Date(event.eventstarttime).toLocaleDateString() !== new Date(event.eventstoptime).toLocaleDateString()) { %>
-                                            - <%= new Date(event.eventstoptime).toLocaleDateString() %>
-                                        <% } %></td>
-                                        <td>
-                                            <%= new Date(event.eventstarttime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).replace(/([APM]{2})$/, '') %>-
-                                            <%= new Date(event.eventstoptime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) %>
-                                        </td>
-                                        <td><%= event.eventaddress %>, <%= event.eventcity %>, <%= event.state_description %></td>
-                                        <td><%= event.orgfirstname %> <%= event.orglastname %></td>
-                                        <td><%= event.orgemail %></td>
-                                        <td><%= event.orgphone %></td>
-                                        <td>
-                                            <form action="/update-event-status/<%= event.eventcode%>" method="POST">
-                                                <select name="status" onchange="this.form.submit()">
-                                                    <option value="pending" <%= event.status === 'pending' ? 'selected' : '' %>>Pending</option>
-                                                    <option value="approved" <%= event.status === 'approved' ? 'selected' : '' %>>Approved</option>
-                                                    <option value="declined" <%= event.status === 'declined' ? 'selected' : '' %>>Declined</option>
-                                                    <option value="completed" <%= event.status === 'completed' ? 'selected' : '' %>>Completed</option>
-                                                </select>
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <button class="form-button" onclick="toggleEditForm('<%= event.eventcode %>')">View/Edit</button>
-                                            <form action="/delete-event/<%= event.eventcode %>" method="POST" style="display:inline;">
-                                                <button type="submit" class="form-button" style="background-color: #a30202 " onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <!-- Include the edit event form partial -->
-                                    <%- include('partials/eventedit', { event: event }) %>
-                                <% } %>
-                            <% }) %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+    </div>
     </div>
     <!-- Footer -->
     <%- include("partials/footer") %>
@@ -779,12 +822,33 @@
             const formRow = document.getElementById(`complete-form-${eventCode}`);
             formRow.style.display = formRow.style.display === 'none' ? '' : 'none';
         }
-        document.querySelectorAll('.card-header').forEach(header => {
-        header.addEventListener('click', () => {
-            const card = header.parentElement;
-            card.classList.toggle('open');
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.style.display = 'none');
+            document.getElementById(tabName).style.display = 'block';
+        }
+
+        // Default tab
+        openTab('pending');
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const tabs = document.querySelectorAll('.tab-btn');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', function () {
+            tabs.forEach(t => t.classList.remove('active'));  // Remove active class from all tabs
+            contents.forEach(c => c.style.display = 'none');  // Hide all content
+
+            tab.classList.add('active');  // Add active class to clicked tab
+            contents[index].style.display = 'block';  // Show corresponding content
+            });
         });
-        });
+
+    // Initialize the first tab as active
+    tabs[0].classList.add('active');
+    contents[0].style.display = 'block';
+    });
 
         function toggleSewingQuestions(value) {
             const sewingQuestions = document.querySelector('.sewing-questions');
