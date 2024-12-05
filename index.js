@@ -976,17 +976,4 @@ app.post('/adminvest-receiver', isAuthenticated, isAdmin, async (req, res) => {
                 .select('*')
                 .whereRaw('EXTRACT(YEAR FROM date) = ?', [currentYear]);
         } catch (fetchError) {
-            console.error('Error fetching receivers:', fetchError);
-        }
-
-        res.render('vestReceiverForm', { 
-            title: "Add Vest Receiver - Admin",
-            error: error.message || "Failed to add vest receiver. Please try again.",
-            success: null,
-            receivers: receivers // Pass receivers to the template to show in case of error
-        });
-    }
-});
-
-// ===== Start the Server =====
-app.listen(port, () => console.log(`Express App has started and server is listening on port ${port}!`));
+            console.error('Error fetching receivers:', fetchEr
