@@ -110,7 +110,6 @@
 .form-container input[type="text"],
 .form-container input[type="number"],
 .form-container input[type="datetime-local"],
-.form-container select,
 .form-container input[type="tel"],
 .form-container input[type="email"],
 .form-container textarea {
@@ -118,8 +117,6 @@
     width: 100%;
     border-radius: 5px;
     border: 1px solid #ddd;
-    font-size: 1em;
-    margin-bottom: 25px; /* Increased space between rows */
 }
 
 .form-container input[type="radio"] {
@@ -160,8 +157,9 @@ function toggleSewingQuestions(value) {
 </head>
 <body>
         <!-- Nav Bar -->
-        <%- include("partials/navbar") %>
-        <!-- Main Content -->
+        
+        <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
+  <!-- Main Content -->
   <div class="main-content" style="font-family: 'Lora', serif">
       <h1>Volunteer Your Time with the Turtle Shelter Project</h1>
       <p style="text-align: center; width: 75%; margin: 0 auto;">
@@ -180,6 +178,7 @@ function toggleSewingQuestions(value) {
       <!-- create account tab -->
       <div id="volunteer" class="tab-content">
         <h2 style="text-align: center;">Become a Volunteer</h2>
+
       <!-- Text before form -->
       <p>Volunteers are at the heart of the Turtle Shelter Project, making a profound difference in the lives of the homeless by helping create quality vests for those in need. Whether you’re comfortable leading events or prefer supporting behind the scenes, your involvement is crucial.</p>
       <p>No experience, including sewing, is necessary—just a willingness to serve. You can choose the hours you’re available to help each month, as well as the days that work best for you.</p>
@@ -249,7 +248,7 @@ function toggleSewingQuestions(value) {
             <label>Location of Event:</label>
             <input type="text" id="eventaddress" name="eventaddress" placeholder="Street Address" style="width: 25%" required>
             <input type="text" id="eventcity" name="eventcity" placeholder="City" style="width: 15%" required>
-            <select id="statecode" name="statecode" style="width: 20%" class="dropdown" required>
+            <select id="statecode" name="statecode" style="width: 20%" required>
                 <option value="" disabled selected>State</option>
                 <option value="1">Alabama</option>
                 <option value="2">Alaska</option>

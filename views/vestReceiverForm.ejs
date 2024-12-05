@@ -146,7 +146,7 @@
 </head>
 <body>
     <!-- Include Admin Navigation Bar -->
-    <%- include("partials/adminnavbar") %>
+    <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
 
     <div class="main-content">
         <!-- Form to Add Vest Receiver -->
