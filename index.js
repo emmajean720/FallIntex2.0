@@ -274,7 +274,7 @@ app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
 // Admin Management Page
 app.get('/adminmanage', isAuthenticated, isAdmin, (req, res) => {
     const { search } = req.query;
-    let query = knex('users').select('*'); // Initialize the query
+    let query = knex('users').select('*'); // Initialize the query to fetch all users
 
     // If search query is provided, filter by first name or last name
     if (search) {
@@ -313,7 +313,6 @@ app.get('/adminmanage', isAuthenticated, isAdmin, (req, res) => {
             });
         });
 });
-
 
 // Update Admin Status
 app.post('/update-admin-status/:usercode', isAuthenticated, isAdmin, (req, res) => {

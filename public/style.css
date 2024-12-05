@@ -558,6 +558,255 @@ h1 {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Custom styles for the Create Admin Page */
+/* Admin Table Styling */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    text-align: left;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.admin-table th, .admin-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.admin-table th {
+    background-color: #008080;
+    color: white;
+}
+
+.admin-table tr:nth-child(even) {
+    background-color: #f4f4f9;
+}
+
+.admin-table tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Admin Table Select Input for Admin Status */
+.admin-table select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Delete Button Styling */
+.delete-btn {
+    background-color: #FF4C4C;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.delete-btn:hover {
+    background-color: #FF1C1C;
+}
+
+/* Error Message Styling */
+.error-message {
+    background-color: #FFDDDD;
+    color: #FF0000;
+    padding: 10px;
+    border: 1px solid #FF4C4C;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+/* Header Styling for Admin Management */
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin: 20px 0;
+}
+
+/* Table Container Styling */
+.table-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom styles for the Create Admin Page */
+.create-admin-container {
+    margin-top: 30px;
+    padding: 30px;  /* Increased padding */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.create-admin-button {
+    background-color: #008080;
+    color: white;
+    padding: 12px 20px;  /* Increased padding */
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+    font-size: 16px;  /* Adjust font size */
+}
+
+.create-admin-button:hover {
+    background-color: #005F5F;
+}
+
+.create-admin-form {
+    display: none;
+    margin-top: 20px;
+}
+
+.create-admin-form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+    font-size: 14px;  /* Adjust font size */
+}
+
+.create-admin-form input,
+.create-admin-form select {
+    width: 100%;
+    padding: 12px;  /* Increased padding */
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;  /* Adjust font size */
+    margin-bottom: 15px;  /* Added space between inputs */
+}
+
+.create-admin-form select {
+    background-color: #fff; /* Light background for dropdown */
+    border: 1px solid #ccc; /* Subtle border */
+    transition: border 0.3s ease;
+}
+
+.create-admin-form select:focus {
+    border-color: #008080; /* Change border color on focus */
+    outline: none;  /* Remove default outline */
+}
+
+.create-admin-form button {
+    background-color: #008080;
+    color: white;
+    padding: 12px 20px;  /* Increased padding */
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;  /* Adjust font size */
+}
+
+.create-admin-form button:hover {
+    background-color: #005F5F;
+}
+
+/* Styling for the Reset button */
+.reset-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 6px 12px;  /* Reduced padding */
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px; /* Space between search button and reset button */
+    transition: background-color 0.3s ease;
+}
+
+.reset-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Style for the dropdown */
+select {
+    cursor: pointer;
+    font-size: 14px;
+    padding: 12px; /* Padding for the dropdown */
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+select:focus {
+    outline: none;
+    border-color: #008080;
+}
+
+/* Search Bar Styling */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.search-container form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 500px;
+}
+
+.search-container input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    margin-right: 10px;
+    transition: border 0.3s ease;
+}
+
+.search-container input[type="text"]:focus {
+    outline: none;
+    border-color: #008080; /* Change border color on focus */
+}
+
+.search-container button[type="submit"] {
+    background-color: #008080;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.search-container button[type="submit"]:hover {
+    background-color: #005F5F;
+}
+
+/* Reset button container */
+.search-container .reset-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+}
+
+
 /* Edit Event Form Styling */
 .edit-event-form {
     padding: 15px;
