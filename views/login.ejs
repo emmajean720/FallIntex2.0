@@ -197,28 +197,36 @@
 
             <!-- What hours are you available -->
             <div class="radio-button-form">
-                <label>Please check the times you are usually available to help
+                <label>Please check the times you are usually available to help</label>
                     
-                    <!-- Monday -->
-                    <div class="day-label">
-                        <label>Monday</label>
-                    </div>
-                    <div class="day-checkbox">
-                        <input type="checkbox" name="mm" value="m"> Morning
-                        <input type="checkbox" name="ma" value="a"> Afternoon
-                        <input type="checkbox" name="me" value="e"> Evening
-                        <input type="checkbox" name="mn" value="n"> None
-                    </div>
+                <!-- Monday -->
+                <div class="day-label">
+                    <label for="mm">Monday</label>
+                </div>
+                <div class="day-checkbox">
+                    <input type="checkbox" id="mm" name="mm" value="m">
+                    <label for="mm">Morning</label>
+                    <input type="checkbox" id="ma" name="ma" value="a">
+                    <label for="ma">Afternoon</label>
+                    <input type="checkbox" id="me" name="me" value="e">
+                    <label for="me">Evening</label>
+                    <input type="checkbox" id="mn" name="mn" value="n">
+                    <label for="mn">None</label>
+                </div>
 
                     <!-- Tuesday -->
                     <div class="day-label">
                         <label>Tuesday</label>
                     </div>
                     <div class="day-checkbox">
-                        <input type="checkbox" name="tm" value="m"> Morning
-                        <input type="checkbox" name="ta" value="a"> Afternoon
-                        <input type="checkbox" name="te" value="e"> Evening
-                        <input type="checkbox" name="tn" value="n"> None
+                        <input type="checkbox" id="tm" name="tm" value="m"> 
+                        <label for="tm">Morning</label>
+                        <input type="checkbox" id="ta" name="ta" value="a"> 
+                        <label for="ta">Afternoon</label>
+                        <input type="checkbox" id="te" name="te" value="e"> 
+                        <label for="te">Evening</label>
+                        <input type="checkbox" id="tn" name="tn" value="n"> 
+                        <label for="tn">None</label>
                     </div>
 
                     <!-- Wednesday -->
@@ -226,10 +234,14 @@
                         <label>Wednesday</label>
                     </div>
                     <div class="day-checkbox">
-                        <input type="checkbox" name="wm" value="m"> Morning
-                        <input type="checkbox" name="wa" value="a"> Afternoon
-                        <input type="checkbox" name="we" value="e"> Evening
-                        <input type="checkbox" name="wn" value="n"> None
+                        <input type="checkbox" id="wm" name="wm" value="m"> 
+                        <label for="wm">Morning</label> 
+                        <input type="checkbox" id="wa" name="wa" value="a"> 
+                        <label for="wa">Afternoon</label> 
+                        <input type="checkbox" id="we" name="we" value="e">
+                        <label for="we">Evening</label> 
+                        <input type="checkbox" id="wn" name="wn" value="n"> 
+                        <label for="wn">None</label>
                     </div>
 
                     <!-- Thursday -->
@@ -237,10 +249,14 @@
                         <label>Thursday</label>
                     </div>
                     <div class="day-checkbox">
-                        <input type="checkbox" name="thm" value="m"> Morning
-                        <input type="checkbox" name="tha" value="a"> Afternoon
-                        <input type="checkbox" name="the" value="e"> Evening
-                        <input type="checkbox" name="thn" value="n"> None
+                        <input type="checkbox" id="thm" name="thm" value="m"> 
+                        <label for="thm">Morning</label>
+                        <input type="checkbox" id="tha" name="tha" value="a"> 
+                        <label for="tha">Afternoon</label> 
+                        <input type="checkbox" id="the" name="the" value="e"> 
+                        <label for="the">Evening</label>
+                        <input type="checkbox" id="thn" name="thn" value="n"> 
+                        <label for="thn">None</label> 
                     </div>
 
                     <!-- Friday -->
@@ -248,10 +264,14 @@
                         <label>Friday</label>
                     </div>
                     <div class="day-checkbox">
-                        <input type="checkbox" name="fm" value="m"> Morning
-                        <input type="checkbox" name="fa" value="a"> Afternoon
-                        <input type="checkbox" name="fe" value="e"> Evening
-                        <input type="checkbox" name="fn" value="n"> None
+                        <input type="checkbox" id="fm" name="fm" value="m"> 
+                        <label for="fm">Morning</label>
+                        <input type="checkbox" id="fa" name="fa" value="a"> 
+                        <label for="fa">Afternoon</label>
+                        <input type="checkbox" id="fe" name="fe" value="e"> 
+                        <label for="fe">Evening</label>
+                        <input type="checkbox" id="fn" name="fn" value="n">
+                        <label for="fn">None</label>
                     </div>
 
                     <!-- Saturday -->
@@ -259,12 +279,15 @@
                         <label>Saturday</label>
                     </div>
                     <div class="day-checkbox">
-                        <input type="checkbox" name="sm" value="m"> Morning
-                        <input type="checkbox" name="sa" value="a"> Afternoon
-                        <input type="checkbox" name="se" value="e"> Evening
-                        <input type="checkbox" name="sn" value="n"> None
+                        <input type="checkbox" id="sm" name="sm" value="m"> 
+                        <label for="sm">Morning</label>
+                        <input type="checkbox" id="sa" name="sa" value="a"> 
+                        <label for="sa">Afternoon</label>
+                        <input type="checkbox" id="se" name="se" value="e">
+                        <label for="se">Evening</label>
+                        <input type="checkbox" id="sn" name="sn" value="n"> 
+                        <label for="sn">None</label>
                     </div>
-                </label>
             </div>
             
             <!-- Username/Login -->
@@ -343,6 +366,181 @@
 
             e.target.value = value; // Update the input value with the formatted string
         });
+
+    // monday event handler
+    document.addEventListener("DOMContentLoaded", () => {
+    // Get references to all the checkboxes
+    const morningCheckbox = document.getElementById("mm");
+    const afternoonCheckbox = document.getElementById("ma");
+    const eveningCheckbox = document.getElementById("me");
+    const noneCheckbox = document.getElementById("mn");
+
+    // Add event listener to the "None" checkbox
+    noneCheckbox.addEventListener("change", () => {
+        if (noneCheckbox.checked) {
+            // Uncheck all other checkboxes
+            morningCheckbox.checked = false;
+            afternoonCheckbox.checked = false;
+            eveningCheckbox.checked = false;
+        }
+    });
+
+    // Add event listeners to the other checkboxes
+    [morningCheckbox, afternoonCheckbox, eveningCheckbox].forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+                // Uncheck the "None" checkbox
+                noneCheckbox.checked = false;
+            }
+        });
+    });
+});
+
+// tuesday event handler
+document.addEventListener("DOMContentLoaded", () => {
+    // Get references to all the checkboxes
+    const morningCheckbox = document.getElementById("tm");
+    const afternoonCheckbox = document.getElementById("ta");
+    const eveningCheckbox = document.getElementById("te");
+    const noneCheckbox = document.getElementById("tn");
+
+    // Add event listener to the "None" checkbox
+    noneCheckbox.addEventListener("change", () => {
+        if (noneCheckbox.checked) {
+            // Uncheck all other checkboxes
+            morningCheckbox.checked = false;
+            afternoonCheckbox.checked = false;
+            eveningCheckbox.checked = false;
+        }
+    });
+
+    // Add event listeners to the other checkboxes
+    [morningCheckbox, afternoonCheckbox, eveningCheckbox].forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+                // Uncheck the "None" checkbox
+                noneCheckbox.checked = false;
+            }
+        });
+    });
+});
+
+// wednesday event handler
+document.addEventListener("DOMContentLoaded", () => {
+    // Get references to all the checkboxes
+    const morningCheckbox = document.getElementById("wm");
+    const afternoonCheckbox = document.getElementById("wa");
+    const eveningCheckbox = document.getElementById("we");
+    const noneCheckbox = document.getElementById("wn");
+
+    // Add event listener to the "None" checkbox
+    noneCheckbox.addEventListener("change", () => {
+        if (noneCheckbox.checked) {
+            // Uncheck all other checkboxes
+            morningCheckbox.checked = false;
+            afternoonCheckbox.checked = false;
+            eveningCheckbox.checked = false;
+        }
+    });
+
+    // Add event listeners to the other checkboxes
+    [morningCheckbox, afternoonCheckbox, eveningCheckbox].forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+                // Uncheck the "None" checkbox
+                noneCheckbox.checked = false;
+            }
+        });
+    });
+});
+
+// thursday event handler
+document.addEventListener("DOMContentLoaded", () => {
+    // Get references to all the checkboxes
+    const morningCheckbox = document.getElementById("thm");
+    const afternoonCheckbox = document.getElementById("tha");
+    const eveningCheckbox = document.getElementById("the");
+    const noneCheckbox = document.getElementById("thn");
+
+    // Add event listener to the "None" checkbox
+    noneCheckbox.addEventListener("change", () => {
+        if (noneCheckbox.checked) {
+            // Uncheck all other checkboxes
+            morningCheckbox.checked = false;
+            afternoonCheckbox.checked = false;
+            eveningCheckbox.checked = false;
+        }
+    });
+
+    // Add event listeners to the other checkboxes
+    [morningCheckbox, afternoonCheckbox, eveningCheckbox].forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+                // Uncheck the "None" checkbox
+                noneCheckbox.checked = false;
+            }
+        });
+    });
+});
+
+    //friday event handler
+    document.addEventListener("DOMContentLoaded", () => {
+    // Get references to all the checkboxes
+    const morningCheckbox = document.getElementById("fm");
+    const afternoonCheckbox = document.getElementById("fa");
+    const eveningCheckbox = document.getElementById("fe");
+    const noneCheckbox = document.getElementById("fn");
+
+    // Add event listener to the "None" checkbox
+    noneCheckbox.addEventListener("change", () => {
+        if (noneCheckbox.checked) {
+            // Uncheck all other checkboxes
+            morningCheckbox.checked = false;
+            afternoonCheckbox.checked = false;
+            eveningCheckbox.checked = false;
+        }
+    });
+
+    // Add event listeners to the other checkboxes
+    [morningCheckbox, afternoonCheckbox, eveningCheckbox].forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+                // Uncheck the "None" checkbox
+                noneCheckbox.checked = false;
+            }
+        });
+    });
+});
+
+// Saturday event handler
+document.addEventListener("DOMContentLoaded", () => {
+    // Get references to all the checkboxes
+    const morningCheckbox = document.getElementById("sm");
+    const afternoonCheckbox = document.getElementById("sa");
+    const eveningCheckbox = document.getElementById("se");
+    const noneCheckbox = document.getElementById("sn");
+
+    // Add event listener to the "None" checkbox
+    noneCheckbox.addEventListener("change", () => {
+        if (noneCheckbox.checked) {
+            // Uncheck all other checkboxes
+            morningCheckbox.checked = false;
+            afternoonCheckbox.checked = false;
+            eveningCheckbox.checked = false;
+        }
+    });
+
+    // Add event listeners to the other checkboxes
+    [morningCheckbox, afternoonCheckbox, eveningCheckbox].forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+                // Uncheck the "None" checkbox
+                noneCheckbox.checked = false;
+            }
+        });
+    });
+});
+
 
     </script>
 </body>

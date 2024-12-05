@@ -532,45 +532,40 @@ app.post('/create-account', (req, res) => {
 
         //debugging
         console.log(morning, afternoon, evening, none)
-        console.log(`${dayKey}: ${availability[dayKey]}`);
-
-        // Log the values to verify they're being captured correctly
-        console.log(morning, afternoon, evening, none);
 
         // Check for combinations of availability and log accordingly
         if (morning === 'm' && afternoon === 'a' && evening === 'e') {
-            console.log("All is working!");
-            availability[dayKey] = 1 + iCount;
+            availability[dayKey] = 7 + iCount;
             console.log(`${dayKey}: ${availability[dayKey]}`);
 
         } else if (morning === 'm' && afternoon === 'a') {
             console.log("M + A is working!");
-            availability[dayKey] = 2 + iCount;
+            availability[dayKey] = 4 + iCount;
             console.log(`${dayKey}: ${availability[dayKey]}`);
 
         } else if (morning === 'm' && evening === 'e') {
             console.log("M + E is working!");
-            availability[dayKey] = 3 + iCount;
+            availability[dayKey] = 5 + iCount;
             console.log(`${dayKey}: ${availability[dayKey]}`);
 
         } else if (morning === 'm') {
             console.log("Morning is working!");
-            availability[dayKey] = 4 + iCount;
+            availability[dayKey] = 1 + iCount;
             console.log(`${dayKey}: ${availability[dayKey]}`);
 
         } else if (afternoon === 'a' && evening === 'e') {
             console.log("A + E is working!");
-            availability[dayKey] = 5 + iCount;
+            availability[dayKey] = 6 + iCount;
             console.log(`${dayKey}: ${availability[dayKey]}`);
 
         } else if (evening === 'e') {
             console.log("Evening is working!");
-            availability[dayKey] = 6 + iCount;
+            availability[dayKey] = 3 + iCount;
             console.log(`${dayKey}: ${availability[dayKey]}`);
 
         } else if (afternoon === 'a') {
             console.log("Afternoon is working!");
-            availability[dayKey] = 7 + iCount;
+            availability[dayKey] = 2 + iCount;
             console.log(`${dayKey}: ${availability[dayKey]}`);
 
         } else if (none === 'n') {
@@ -609,6 +604,14 @@ app.post('/create-account', (req, res) => {
             password: password, // Store plaintext password (Note: NOT SECURE)
             startdate: startdate,
             is_admin: admin // Default role for new users
+
+        })
+        .then(() => {
+            return knex('volunteeravailability').insert({
+                volunteercode: usercode,
+                availabilitycode: mavailability
+            })
+
         })
         .then(() => {
             res.redirect("/admin");
