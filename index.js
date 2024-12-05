@@ -890,7 +890,6 @@ app.post('/eventrequestadmin', (req, res) => {
 
 //vest receiver form (luke)
 // Display the form for vest receivers and the current year's records
-// Display the form for vest receivers and the current year's records
 app.get('/adminvest-receiver', isAuthenticated, isAdmin, async (req, res) => {
     const currentYear = new Date().getFullYear();
     const { search } = req.query;
