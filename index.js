@@ -276,15 +276,28 @@ app.get('/adminmanage', isAuthenticated, isAdmin, (req, res) => {
     knex('users')
         .select('*')
         .then(users => {
+            // Map statecode to state_abbr for display in the table
             users = users.map(user => ({
                 ...user,
-                state_abbr: stateAbbreviations[user.statecode] || 'N/A'
+                state_abbr: stateAbbreviations[user.statecode] || 'N/A' // Display state abbreviation
             }));
-            res.render("adminmanage", { error: null, title: "Admin Management - Turtle Shelter Project", users });
+
+            // Pass users and stateAbbreviations to EJS
+            res.render("adminmanage", {
+                error: null,
+                title: "Admin Management - Turtle Shelter Project",
+                users,
+                stateAbbreviations // Make stateAbbreviations available for the select dropdown
+            });
         })
         .catch(err => {
             console.error("Error fetching users:", err);
-            res.render("adminmanage", { error: "An error occurred fetching users", title: "Admin Management - Turtle Shelter Project", users: [] });
+            res.render("adminmanage", {
+                error: "An error occurred fetching users",
+                title: "Admin Management - Turtle Shelter Project",
+                users: [],
+                stateAbbreviations // Ensure this is passed even in the error case
+            });
         });
 });
 
@@ -321,7 +334,19 @@ app.post('/delete-user/:usercode', isAuthenticated, isAdmin, (req, res) => {
 app.post('/create-admin', isAuthenticated, isAdmin, (req, res) => {
     const { firstname, lastname, email, phone, city, state_abbr, login, password } = req.body;
 
-    // Insert new admin user into the 'users' table
+    // Find the statecode based on the abbreviation selected
+    const statecode = Object.keys(stateAbbreviations).find(key => stateAbbreviations[key] === state_abbr);
+
+    // If the state_abbr is not valid, return an error
+    if (!statecode) {
+        return res.render("adminmanage", {
+            error: "Invalid state abbreviation",
+            title: "Admin Management - Turtle Shelter Project",
+            users: []
+        });
+    }
+
+    // Insert new admin user into the 'users' table (no password hashing)
     knex('users')
         .insert({
             firstname,
@@ -329,9 +354,9 @@ app.post('/create-admin', isAuthenticated, isAdmin, (req, res) => {
             email,
             phone,
             city,
-            statecode: state_abbr, // Assuming the state_abbr is used to map to the statecode in your database
+            statecode: parseInt(statecode), // Save the numeric state code
             login,
-            password, // Note: You should hash the password before storing it in production for security
+            password,  // Store the password as is (not hashed)
             is_admin: true
         })
         .then(() => {
@@ -342,11 +367,10 @@ app.post('/create-admin', isAuthenticated, isAdmin, (req, res) => {
             res.render("adminmanage", {
                 error: "An error occurred while creating the admin account. Please try again.",
                 title: "Admin Management - Turtle Shelter Project",
-                users: [] // You could also re-query the users to provide more context
+                users: []
             });
         });
 });
-
 
 // Event Management Page - McKenna
 app.get('/eventmanage', isAuthenticated, isAdmin, (req, res) => {
