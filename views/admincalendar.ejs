@@ -29,27 +29,40 @@
             margin-bottom: 20px;
         }
 
-        .event-list {
-            width: 100%;
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-        }
-
-        .event-item {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
-
-        .event-item:last-child {
-            border-bottom: none;
-        }
-
         .calendar-embed {
             width: 100%;
             height: 800px;
             border: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+                /* Content section for each tab */
+        .tab-content {
+            padding: 25px;
+            padding-bottom: 40px; /* Added bottom padding for buffer */
+            background-color: #ffffff;
+            border: 2px solid #006666;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            margin: 0 auto;
+            margin-top: -2px;
         }
     </style>
 </head>
@@ -62,33 +75,46 @@
         <div class="calendar-container">
             <div class="calendar-header">Admin Event Calendar</div>
             
-            <!-- Display Events List -->
-            <% if (events && events.length > 0) { %>
-                <div class="event-list">
-                    <h3>Events for the Next Week:</h3>
-                    <% events.forEach(function(event) { %>
-                        <div class="event-item">
-                            <strong>Organization:</strong> <%= event.organization %><br>
-                            <strong>Event Date:</strong> <%= new Date(event.eventstarttime).toLocaleDateString() %><br>
-                            <strong>Event Time:</strong> <%= new Date(event.eventstarttime).toLocaleTimeString() %> - <%= new Date(event.eventstoptime).toLocaleTimeString() %><br>
-                            <strong>Organizer:</strong> <%= event.orgfirstname %> <%= event.orglastname %><br>
-                            <strong>Email:</strong> <a href="mailto:<%= event.orgemail %>"><%= event.orgemail %></a><br>
-                            <strong>Phone:</strong> <a href="tel:<%= event.orgphone %>"><%= event.orgphone %></a>
-                        </div>
-                    <% }); %>
-                </div>
-            <% } else { %>
-                <div class="event-list">
-                    <p>No events scheduled for the next week.</p>
-                </div>
-            <% } %>
-            
             <!-- Embed Google Calendar -->
             <iframe 
                 class="calendar-embed"
                 src="https://calendar.google.com/calendar/embed?src=your_calendar_id&ctz=your_timezone"
-                style="border: 0">
+                style="background-color: #ffffff; border: 2px solid #006666; border-radius: 10px;">
             </iframe>
+
+    <div class="tab-content">
+        <h3 style="text-align: center;">Events for the Next Week:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Organization</th>
+                        <th>Event Date</th>
+                        <th>Event Time</th>
+                        <th>Organizer</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <!-- Display Events List -->
+                <tbody>
+                    <% if (events && events.length > 0) { %>
+                            <% events.forEach(function(event) { %>
+                                <tr>
+                                    <td><%= event.organization %></td>
+                                    <td><%= new Date(event.eventstarttime).toLocaleDateString() %></td>
+                                    <td><%= new Date(event.eventstarttime).toLocaleTimeString() %> - <%= new Date(event.eventstoptime).toLocaleTimeString() %></td>
+                                    <td><%= event.orgfirstname %> <%= event.orglastname %></td>
+                                    <td><a href="mailto:<%= event.orgemail %>"><%= event.orgemail %></a></td>
+                                    <td><a href="tel:<%= event.orgphone %>"><%= event.orgphone %></a></td>
+                                </tr>
+                            <% }); %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="6">No Events Scheduled for the Next Week.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
         </div>
     </div>
 

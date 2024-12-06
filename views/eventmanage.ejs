@@ -278,7 +278,11 @@
     <!-- Nav Bar -->
     <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
     <div class="main-content">
-
+        <h1>Event Management</h1>
+        <p style="text-align: center; width: 75%; margin: 0 auto;">
+            All admin team members have access here to creating, editing, approving, completing, and deleting all events.     
+        </p>
+        <br>
     <br>
     <div class="tabs">
         <button class="tab-btn" onclick="openTab('pending')">Pending Events</button>
@@ -807,7 +811,7 @@
                     <textarea id="comments" name="comments" placeholder="Enter comments here" rows="2" style="resize: both; width: 400px; font-family: Arial, sans-serif "></textarea>
                 </div>
 
-                <button type="submit" class="form-button">Create Event</button>
+                <button type="submit" class="form-button" >Create Event</button>
             </form>
         </div> 
     </div>
@@ -846,10 +850,10 @@
             });
         });
 
-    // Initialize the first tab as active
-    tabs[0].classList.add('active');
-    contents[0].style.display = 'block';
-    });
+        // Initialize the first tab as active
+        tabs[0].classList.add('active');
+        contents[0].style.display = 'block';
+        });
 
         function toggleSewingQuestions(value) {
             const sewingQuestions = document.querySelector('.sewing-questions');

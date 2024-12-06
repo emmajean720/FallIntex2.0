@@ -8,115 +8,703 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" href="/images/BetterQualityLogo.png" type="image/png">
-    <script>
-        function toggleAdminForm() {
-            const form = document.getElementById('create-admin-form');
-            form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
+    <style>
+                table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
-    </script>
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+            /* Container for the tabs */
+        .tabs {
+        display: flex;
+        justify-content: center;
+        width: 70%; /* Adjust this to control the overall width */
+        margin: 0 auto; /* Centers the tabs horizontally */
+        }
+
+        /* Style for each tab button */
+        .tab-btn {
+        padding: 12px 0; /* Adjust padding to make tabs more compact */
+        margin: 0 5px; /* Reduce space between tabs */
+        flex: 1; /* Make each tab take equal width */
+        background-color: #f1f3f5;
+        color: #006666;
+        border: 2px solid #006666;
+        border-radius: 25px 25px 0 0;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-btn:hover {
+        background-color: #006666;
+        color: white;
+        transform: scale(1.05);
+        }
+
+        .tab-btn:focus {
+        outline: none;
+        }
+
+        /* Active tab style */
+        .tab-btn.active {
+        background-color: #008080;
+        color: white;
+        border-color: #006666;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Content section for each tab */
+        .tab-content {
+        display: none;
+        padding: 25px;
+        padding-bottom: 40px; /* Added bottom padding for buffer */
+        background-color: #ffffff;
+        border: 2px solid #006666;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        max-width: 75%;
+        margin: 0 auto;
+        margin-top: -2px;
+        }
+
+
+        /* Optional: Style for tab content text */
+        .tab-content p {
+        font-size: 16px;
+        color: #555;
+        line-height: 1.6;
+        }
+
+        .form-container {
+            width: 70%;
+            max-width: 1210px;
+            margin: 30px auto; /* Increased margin to create better spacing between cards */
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px; /* Slightly increased border-radius for a more modern look */
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* Smooth transition for hover effects */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .form-container h1 {
+            text-align: center;
+            color: #444;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-container input[type="text"]{
+            padding: 10px;
+            width: 95%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+       
+        .form-container input[type="number"]{
+            padding: 10px;
+            width: 15%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+
+        .form-container input[type="datetime-local"]{
+            padding: 10px;
+            width: 40%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+    
+        .form-container select {
+            padding: 10px;
+            width: 30%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+        .form-container textarea {
+            padding: 10px;
+            width: 30%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+
+        .form-container input[type="tel"] {
+            padding: 10px;
+            width: 90%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+        .form-container input[type="email"] {
+            padding: 10px;
+            width: 95%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+
+        .radio-group {
+            display: flex;
+            align-items: center; /* Align items vertically */
+            gap: 20px; /* Space between groups */
+        }
+
+        .day-checkbox label, 
+        .day-checkbox input {
+            display: inline; /* Ensure labels and inputs are inline */
+            margin-right: 10px; /* Space between label and checkbox */
+        }
+
+        .day-label {
+            margin-right: 20px; /* Space between day label and checkboxes */
+        }
+
+        .form-container input[type="radio"] {
+            padding: 10px;
+            width: 5%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+            margin:0;
+        }
+        .form-container input[type="checkbox"]{
+            padding: 10px;
+            width: 15%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+        /* Buttons for Forms */
+        .form-button {
+            background-color: #008080;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+        }
+        .form-btn:hover {
+            background-color: #005F5F;
+        }
+        
+    </style>
 </head>
 <body>
     <!-- Nav Bar -->
     <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
-
+    
+    
     <div class="main-content">
-        <div class="container">
-            <h1>Admin Management - User List</h1>
-            <div class="search-container">
-                <form method="GET" action="/adminmanage">
-                    <input type="text" name="search" placeholder="Search User" value="<%= typeof search !== 'undefined' ? search : '' %>">
-                    <button type="submit">Search</button>
+        <h1>Team Member Management</h1>
+        <p style="text-align: center; width: 75%; margin: 0 auto;">
+            All admin team members have access here to creating, searching, and deleting all other team members, including both admins and volunteers.     
+        </p>
+        <br>
+        <div class="tabs">
+            <button class="tab-btn" onclick="openTab('admin')">Admin Management</button>
+            <button class="tab-btn" onclick="openTab('volunteers')">Volunteer Management</button>
+            <button class="tab-btn" onclick="openTab('create')">Create New User</button>
+        </div>
+        <div id="admin" class="tab-content">
+            <div class="container">
+                <h1>Admin Management</h1>
+                <div class="search-container">
                     <form method="GET" action="/adminmanage">
-                        <button type="submit" class="reset-btn">Reset</button>
+                        <input type="text" name="search" placeholder="Search User" value="<%= typeof search !== 'undefined' ? search : '' %>">
+                        <button type="submit">Search</button>
+                        <form method="GET" action="/adminmanage">
+                            <button type="submit" class="reset-btn">Reset</button>
+                        </form>
                     </form>
-                </form>
-
-            </div>
-            <% if (error) { %>
-                <div class="error-message">
-                    <%= error %>
                 </div>
-            <% } %>
-
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>Admin Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% users.forEach(user => { %>
+                <% if (error) { %>
+                    <div class="error-message">
+                        <%= error %>
+                    </div>
+                <% } %>
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td><%= user.firstname %></td>
-                            <td><%= user.lastname %></td>
-                            <td><%= user.email %></td>
-                            <td><%= user.phone %></td>
-                            <td><%= user.city %></td>
-                            <td><%= user.state_abbr %></td> <!-- Using state_abbr here -->
-                            <td>
-                                <form action="/update-admin-status/<%= user.usercode %>" method="POST">
-                                    <select name="is_admin" onchange="this.form.submit()">
-                                        <option value="false" <%= user.is_admin ? '' : 'selected' %>>Not Admin</option>
-                                        <option value="true" <%= user.is_admin ? 'selected' : '' %>>Admin</option>
-                                    </select>
-                                </form>
-                            </td>
-                            <td>
-                                <form action="/delete-user/<%= user.usercode %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');">
-                                    <button type="submit" class="btn delete-btn">Delete</button>
-                                </form>
-                            </td>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Admin Status</th>
+                            <th>Actions</th>
                         </tr>
-                    <% }) %>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <% users.forEach(user => { %>
+                            <% if (user.is_admin) { %>
+                            <tr>
+                                <td><%= user.firstname %></td>
+                                <td><%= user.lastname %></td>
+                                <td><%= user.email %></td>
+                                <td><%= user.phone %></td>
+                                <td><%= user.city %></td>
+                                <td><%= user.state_abbr %></td> <!-- Using state_abbr here -->
+                                <td>
+                                    <form action="/update-admin-status/<%= user.usercode %>" method="POST">
+                                        <select name="is_admin" onchange="this.form.submit()">
+                                            <option value="false" <%= user.is_admin ? '' : 'selected' %>>Not Admin</option>
+                                            <option value="true" <%= user.is_admin ? 'selected' : '' %>>Admin</option>
+                                        </select>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="/delete-user/<%= user.usercode %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                        <button type="submit" class="btn delete-btn">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% } 
+                        }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-            <!-- Create Admin Section -->
-            <div class="create-admin-container">
-                <button class="create-admin-button" onclick="toggleAdminForm()">Create New Admin</button>
-                <form id="create-admin-form" class="create-admin-form" action="/create-admin" method="POST">
-                    <label for="firstname">First Name:</label>
-                    <input type="text" id="firstname" name="firstname" required>
+        <div id="volunteers" class="tab-content">
+            <div class="container">
+                <h1>Volunteer Management</h1>
+                <div class="search-container">
+                    <form method="GET" action="/adminmanage">
+                        <input type="text" name="search" placeholder="Search User" value="<%= typeof search !== 'undefined' ? search : '' %>">
+                        <button type="submit">Search</button>
+                        <form method="GET" action="/adminmanage">
+                            <button type="submit" class="reset-btn">Reset</button>
+                        </form>
+                    </form>
 
-                    <label for="lastname">Last Name:</label>
-                    <input type="text" id="lastname" name="lastname" required>
+                </div>
+                <% if (error) { %>
+                    <div class="error-message">
+                        <%= error %>
+                    </div>
+                <% } %>
 
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Admin Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach(user => { %>
+                            <% if (!user.is_admin) { %>
+                            <tr>
+                                <td><%= user.firstname %></td>
+                                <td><%= user.lastname %></td>
+                                <td><%= user.email %></td>
+                                <td><%= user.phone %></td>
+                                <td><%= user.city %></td>
+                                <td><%= user.state_abbr %></td><!--use state abreviation-->
+                                <td>
+                                    <form action="/update-admin-status/<%= user.usercode %>" method="POST">
+                                        <select name="is_admin" onchange="this.form.submit()">
+                                            <option value="false" <%= user.is_admin ? '' : 'selected' %>>Not Admin</option>
+                                            <option value="true" <%= user.is_admin ? 'selected' : '' %>>Admin</option>
+                                        </select>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="/delete-user/<%= user.usercode %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                        <button type="submit" class="btn delete-btn">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% } 
+                        }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-                    <label for="phone">Phone:</label>
-                    <input type="tel" id="phone" name="phone" required>
+    <!-- Create Admin Section -->
+    <div id="create" class="tab-content" >
+        <h1>Create New User</h1>
+    <div class="form-container">
+        <form id="create-admin-form" class="create-admin-form" action="/create-admin" method="POST">
+            <div class="form-group">
+            <!-- First Name -->
+                <label for="firstname">First Name:</label>
+                <input type="text" id="firstname" name="firstname" required>
+            </div>
 
-                    <label for="city">City:</label>
-                    <input type="text" id="city" name="city" required>
+            <!-- Last Name -->
+            <div class="form-group">
+                <label for="lastname">Last Name:</label>
+                <input type="text" id="lastname" name="lastname" required>
+            </div>
 
-                    <label for="state_abbr">State:</label>
-                    <select id="state_abbr" name="state_abbr" required>
-                        <% for (let key in stateAbbreviations) { %>
-                            <option value="<%= stateAbbreviations[key] %>"><%= stateAbbreviations[key] %></option>
-                        <% } %>
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" maxlength="14" placeholder="(123) 456-7890" required>
+            </div>
+
+            <!-- City -->
+            <div class="form-group">
+                <label for="city">Home City:</label>
+                <input type="text" id="city" name="city">
+            </div>
+
+            <!-- State -->
+            <div class="form-group">
+                <label for="statecode">Home State:</label>
+                <select id="statecode" name="statecode" required>
+                    <option value="" disabled selected>-- Select State --</option>
+                    <option value="1">Alabama</option>
+                    <option value="2">Alaska</option>
+                    <option value="3">Arizona</option>
+                    <option value="4">Arkansas</option>
+                    <option value="5">California</option>
+                    <option value="6">Colorado</option>
+                    <option value="7">Connecticut</option>
+                    <option value="8">Delaware</option>
+                    <option value="9">Florida</option>
+                    <option value="10">Georgia</option>
+                    <option value="11">Hawaii</option>
+                    <option value="12">Idaho</option>
+                    <option value="13">Illinois</option>
+                    <option value="14">Indiana</option>
+                    <option value="15">Iowa</option>
+                    <option value="16">Kansas</option>
+                    <option value="17">Kentucky</option>
+                    <option value="18">Louisiana</option>
+                    <option value="19">Maine</option>
+                    <option value="20">Maryland</option>
+                    <option value="21">Massachusetts</option>
+                    <option value="22">Michigan</option>
+                    <option value="23">Minnesota</option>
+                    <option value="24">Mississippi</option>
+                    <option value="25">Missouri</option>
+                    <option value="26">Montana</option>
+                    <option value="27">Nebraska</option>
+                    <option value="28">Nevada</option>
+                    <option value="29">New Hampshire</option>
+                    <option value="30">New Jersey</option>
+                    <option value="31">New Mexico</option>
+                    <option value="32">New York</option>
+                    <option value="33">North Carolina</option>
+                    <option value="34">North Dakota</option>
+                    <option value="35">Ohio</option>
+                    <option value="36">Oklahoma</option>
+                    <option value="37">Oregon</option>
+                    <option value="38">Pennsylvania</option>
+                    <option value="39">Rhode Island</option>
+                    <option value="40">South Carolina</option>
+                    <option value="41">South Dakota</option>
+                    <option value="42">Tennessee</option>
+                    <option value="43">Texas</option>
+                    <option value="44">Utah</option>
+                    <option value="45">Vermont</option>
+                    <option value="46">Virginia</option>
+                    <option value="47">Washington</option>
+                    <option value="48">West Virginia</option>
+                    <option value="49">Wisconsin</option>
+                    <option value="50">Wyoming</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="discoveredcode">How did you find out about us?</label>
+                <select id="discoveredcode" name="discoveredcode" required>
+                    <option value="" disabled selected>-- Select --</option>
+                    <option value="1">Our Facebook</option>
+                    <option value="6">Other Social Media</option>
+                    <option value="2">Podcasts</option>
+                    <option value="3">Events</option>
+                    <option value="4">Word of Mouth</option>
+                    <option value="5">Our Website</option>
+                    <option value="7">Other</option>
+                </select>
+            </div>
+
+            <!-- Skill Level -->
+            <div class="form-group">
+                <label for="skilllevelcode">How skilled are you at sewing?</label>
+                <select id="skilllevelcode" name="skilllevelcode" required>
+                    <option value="" disabled selected>-- Select --</option>
+                    <option value="1">Basic</option>
+                    <option value="2">Intermediate</option>
+                    <option value="3">Advanced</option>
+                </select>
+            </div>
+
+            <!-- Hours They can Committ -->
+            <div class="form-group">
+                <label for="commithours">Estimated hours you are able to volunteer per month:</label>
+                <select id="commithours" name="commithours" required>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                  <option value="30">30</option>
+                  <option value="35">35</option>
+                  <option value="40">40</option>
+                  <option value="45">45</option>
+                  <option value="50">50+</option>
+                </select>
+            </div>
+
+            <!-- Distance they can travel -->
+            <div class="form-group">
+                <label for="traveldistance">How far are you willing to travel for events? (miles)</label>
+                <select id="traveldistance" name="traveldistance" required>
+                  <option value="1">1</option>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50+</option>
+                </select>
+            </div>
+
+            <!-- Can they lead an event -->
+            <div class="radio-button-form">
+                <label>Would you be comfortable leading an event?
+                    <br>
+                <input type="radio" name="leading" value="true"> Yes
+                </label>
+                <label>
+                <input type="radio" name="leading" value="false"> No
+                </label>
+                <br>
+            </div>
+            
+            <!-- Newsletter Sign Up -->
+            <div class="radio-button-form">
+                <label>Do you want receive updates about the Turtle Shelter Project?
+                    <br>
+                <input type="radio" name="newsletter" value="true"> Yes
+                </label>
+                <label>
+                <input type="radio" name="newsletter" value="false"> No
+                </label>
+                <br>
+            </div>
+
+            <!-- What hours are you available -->
+            <div class="radio-button-form">
+                <label>Please check the times you are usually available to help</label>
+                    
+                <!-- Monday -->
+                <div class="radio-group">
+                    <div class="day-label">
+                        <label>Monday</label>
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="mm">Morning</label>
+                        <input type="checkbox" id="mm" name="mm" value="m">
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="ma">Afternoon</label>
+                        <input type="checkbox" id="ma" name="ma" value="a">
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="me">Evening</label>
+                        <input type="checkbox" id="me" name="me" value="e">
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="mn">None</label>
+                        <input type="checkbox" id="mn" name="mn" value="n">
+                    </div>
+                </div>
+
+                    <!-- Tuesday -->
+                <div class="radio-group">
+                    <div class="day-label">
+                        <label>Tuesday</label>
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="tm">Morning</label>
+                        <input type="checkbox" id="tm" name="tm" value="m"> 
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="ta">Afternoon</label>
+                        <input type="checkbox" id="ta" name="ta" value="a"> 
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="te">Evening</label>
+                        <input type="checkbox" id="te" name="te" value="e"> 
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="tn">None</label>
+                        <input type="checkbox" id="tn" name="tn" value="n"> 
+                    </div>
+                </div>
+
+                    <!-- Wednesday -->
+                <div class="radio-group">
+                    <div class="day-label">
+                        <label>Wednesday</label>
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="wm">Morning</label> 
+                        <input type="checkbox" id="wm" name="wm" value="m">
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="wa">Afternoon</label>
+                        <input type="checkbox" id="wa" name="wa" value="a"> 
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="we">Evening</label>
+                        <input type="checkbox" id="we" name="we" value="e">
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="wn">None</label>
+                        <input type="checkbox" id="wn" name="wn" value="n"> 
+                    </div>
+                </div>
+
+                    <!-- Thursday -->
+                <div class="radio-group">
+                    <div class="day-label">
+                        <label>Thursday</label>
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="thm">Morning</label>
+                        <input type="checkbox" id="thm" name="thm" value="m"> 
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="tha">Afternoon</label> 
+                        <input type="checkbox" id="tha" name="tha" value="a"> 
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="the">Evening</label>
+                        <input type="checkbox" id="the" name="the" value="e"> 
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="thn">None</label> 
+                        <input type="checkbox" id="thn" name="thn" value="n"> 
+                    </div>
+                </div>
+
+                    <!-- Friday -->
+                <div class="radio-group">
+                    <div class="day-label">
+                        <label>Friday</label>
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="fm">Morning</label>
+                        <input type="checkbox" id="fm" name="fm" value="m"> 
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="fa">Afternoon</label>
+                        <input type="checkbox" id="fa" name="fa" value="a"> 
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="fe">Evening</label>
+                        <input type="checkbox" id="fe" name="fe" value="e"> 
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="fn">None</label>
+                        <input type="checkbox" id="fn" name="fn" value="n">
+                    </div>
+                </div>
+
+                    <!-- Saturday -->
+                <div class="radio-group">
+                    <div class="day-label">
+                        <label>Saturday</label>
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="sm">Morning</label>
+                        <input type="checkbox" id="sm" name="sm" value="m"> 
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="sa">Afternoon</label>
+                        <input type="checkbox" id="sa" name="sa" value="a"> 
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="se">Evening</label>
+                        <input type="checkbox" id="se" name="se" value="e">
+                    </div>
+                    <div class="day-checkbox">
+                        <label for="sn">None</label>
+                        <input type="checkbox" id="sn" name="sn" value="n"> 
+                    </div>
+                </div>
+                </div>
+                <div class="form-group">
+                    <label>Will this user have admin privileges?</label>
+                    <select id="is_admin" name="is_admin" required>
+                        <option value="false">Not Admin</option>
+                        <option value="true">Admin</option>
                     </select>
-
+                <!-- Username/Login -->
                     <label for="login">Username:</label>
                     <input type="text" id="login" name="login" required>
 
+                <!-- Password -->
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
 
-                    <button type="submit">Create Admin</button>
-                </form>
-            </div>
+                <!-- Confirm Password -->
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirmpassword" required>
+                <br>
+                <input type="hidden" id="startdate" name="startdate" value="">
+                <button type="submit">Create New Account</button>
+                </div>
+                
+            </form>
         </div>
     </div>
+    </div>
 
-    <!-- Footer -->
     <%- include("partials/footer") %>
 
     <script>
@@ -137,6 +725,34 @@
             }
 
             e.target.value = value; // Update the input value with the formatted string
+        });
+
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.style.display = 'none');
+            document.getElementById(tabName).style.display = 'block';
+        }
+
+        // Default tab
+        openTab('admin');
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const tabs = document.querySelectorAll('.tab-btn');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', function () {
+            tabs.forEach(t => t.classList.remove('active'));  // Remove active class from all tabs
+            contents.forEach(c => c.style.display = 'none');  // Hide all content
+
+            tab.classList.add('active');  // Add active class to clicked tab
+            contents[index].style.display = 'block';  // Show corresponding content
+            });
+        });
+
+        // Initialize the first tab as active
+        tabs[0].classList.add('active');
+        contents[0].style.display = 'block';
         });
     </script>
 </body>
