@@ -26,7 +26,7 @@ header .container {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    max-width: 1200px; /* Limits width for readability */
+    max-width: none; /* Limits width for readability */
     margin: 0 auto;
 }
 /* Logo and Title Styles */
