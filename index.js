@@ -485,65 +485,6 @@ app.post('/delete-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
         });
 });
 
-// Edit Event OG
-// app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
-//     const { eventcode } = req.params;
-//     const organization = req.body.organization;
-//     const eventstarttime = req.body.eventstarttime;
-//     const eventstoptime = req.body.eventstoptime;
-//     const orgfirstname = req.body.orgfirstname;
-//     const orglastname = req.body.orglastname;
-//     const status = req.body.status;
-//     const orgemail = req.body.orgemail;
-//     const orgphone = req.body.phone;
-//     const discoveredcode = req.body.discoveredcode;
-//     const servicetypecode = req.body.servicetypecode;
-//     const basicskills = req.body.basicskills;
-//     const advanced = req.body.advanced;
-//     const sewingmachines = req.body.sewingmachines;
-//     const sergers = req.body.sergers;
-//     const comments = req.body.comments;
-//     const expectedparticipants = req.body.expectedparticipants;
-//     const storyshared = req.body.storyshared;
-//     const newsletter = req.body.newsletter;
-//     const eventcity = req.body.city;
-//     const statecode = req.body.statecode;
-//     const eventaddress = req.body.eventaddress;
-//     const payfor = req.body.payfor;
-
-//     knex('event')
-//         .where('eventcode', eventcode)
-//         .update({ 
-//             organization: organization.toLowerCase(),
-//             orgfirstname: orgfirstname.toLowerCase(),
-//             orglastname: orglastname.toLowerCase(),
-//             orgemail: orgemail.toLowerCase(),
-//             orgphone: orgphone,
-//             eventstarttime: eventstarttime,
-//             eventstoptime: eventstoptime,
-//             eventaddress: eventaddress.toLowerCase(),
-//             eventcity: eventcity.toLowerCase(),
-//             statecode: parseInt(statecode),
-//             discoveredcode: parseInt(discoveredcode),
-//             expectedparticipants: parseInt(expectedparticipants),
-//             servicetypecode: parseInt(servicetypecode),
-//             basicskills: parseInt(basicskills),
-//             advancedskills: parseInt(advanced),
-//             sewingmachines: parseInt(sewingmachines),
-//             sergers: parseInt(sergers),
-//             payfor: payfor,
-//             storyshared: storyshared,
-//             orgnewsletter: newsletter,
-//             comments: comments,
-//             status: status.toLowerCase()
-//         })
-//         .then(() => res.redirect('/eventmanage'))
-//         .catch(err => {
-//             console.error("Error updating event:", err);
-//             res.redirect('/eventmanage');
-//         });
-// });
-
 app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
     const { eventcode } = req.params;
 
@@ -577,8 +518,8 @@ app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
             discoveredcode: discoveredcode ? parseInt(discoveredcode) : null,
             expectedparticipants: expectedparticipants ? parseInt(expectedparticipants) : null,
             servicetypecode: servicetypecode ? parseInt(servicetypecode) : null,
-            basicskills: basicskills ? parseInt(basicskills) : null,
-            advancedskills: advanced ? parseInt(advanced) : null,
+            basicskills: basicskills || null,
+            advancedskills: advanced || null,
             sewingmachines: sewingmachines ? parseInt(sewingmachines) : null,
             sergers: sergers ? parseInt(sergers) : null,
             payfor: payfor || null,
@@ -920,8 +861,8 @@ app.post('/eventrequestadmin', (req, res) => {
         discoveredcode: parseInt(discoveredcode),
         expectedparticipants: parseInt(expectedparticipants),
         servicetypecode: parseInt(servicetypecode),
-        basicskills: parseInt(basicskills),
-        advancedskills: parseInt(advanced),
+        basicskills: basicskills,
+        advancedskills: advanced,
         sewingmachines: parseInt(sewingmachines),
         sergers: parseInt(sergers),
         payfor: payfor,
