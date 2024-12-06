@@ -288,7 +288,7 @@ footer .contact-info a:hover {
 }
   
 /* Form Containers */
-.login-container, .create-account-container {
+.login-container{
     max-width: 400px;
     margin: 50px auto;
     padding: 20px;
@@ -297,6 +297,17 @@ footer .contact-info a:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Black color with 30% opacity */
     text-align: center;
 }
+/* Form Containers */
+.create-account-container {
+    max-width: 50%;
+    margin: 50px auto;
+    padding: 20px;
+    background: #F9F9F9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Black color with 30% opacity */
+    text-align: center;
+}
+
 .login-container h1, .create-account-container h1 {
     margin-bottom: 20px;
     color: #333;
@@ -313,7 +324,7 @@ footer .contact-info a:hover {
     color: #333;
 }
 .form-group input {
-    width: 90%;
+    width: 98%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -670,7 +681,6 @@ h1 {
 }
 
 .create-admin-form {
-    display: none;
     margin-top: 20px;
 }
 

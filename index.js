@@ -144,7 +144,7 @@ app.post('/login', (req, res) => {
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) console.error("Error during logout:", err);
-        res.redirect('/login');
+        res.redirect('/');
     });
 });
 
@@ -367,39 +367,121 @@ app.post('/delete-user/:usercode', isAuthenticated, isAdmin, (req, res) => {
 
 // Create Admin Account
 app.post('/create-admin', isAuthenticated, isAdmin, (req, res) => {
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
-    const email = req.body.email;
-    const phone = req.body.phone;
+    let dayofWeek = ["m", "t", "w", "th", "f", "s"];
+    
+    // Extract form data
+    const firstname = req.body.firstname || ' ';
+    const lastname = req.body.lastname || ' '; 
+    const email = req.body.email || ' '; 
+    const phone = req.body.phone; 
     const city = req.body.city;
-    const state_abbr = req.body.state_abbr;
+    const startdate = req.body.startdate || new Date().toISOString().split('T')[0];
+    const statecode = parseInt(req.body.statecode, 10); 
+    const discoveredcode = parseInt(req.body.discoveredcode, 10); 
+    const skilllevelcode = parseInt(req.body.skilllevelcode, 10);
+    const commithours = parseInt(req.body.commithours, 10);
+    const traveldistance = parseInt(req.body.traveldistance, 10);
+    const is_leading = req.body.leading;
+    const newsletter = req.body.newsletter;
     const login = req.body.login;
     const password = req.body.password;
+    const confirmpassword = req.body.confirmpassword;
+    const admin = req.body.is_admin;
 
-    // Find the statecode based on the abbreviation selected
-    const statecode = Object.keys(stateAbbreviations).find(key => stateAbbreviations[key] === state_abbr);
+    // Starting point for availability codes
+    let availabilityBase = {
+        "m": 1,  // Monday starts at 1
+        "t": 9,  // Tuesday starts at 9 (multiples of 8)
+        "w": 17, // Wednesday starts at 17
+        "th": 25, // Thursday starts at 25
+        "f": 33, // Friday starts at 33
+        "s": 41  // Saturday starts at 41
+    };
 
-    // If the state_abbr is not valid, return an error
-    if (!statecode) {
-        return res.render("adminmanage", {
-            error: "Invalid state abbreviation",
-            title: "Admin Management - Turtle Shelter Project",
-            users: []
-        });
+    // Loop through days of the week to capture availability
+    for (let i = 0; i < dayofWeek.length; i++) {
+        let dayKey = dayofWeek[i] + "availability";
+        let morning = req.body[dayofWeek[i] + "m"];
+        let afternoon = req.body[dayofWeek[i] + "a"];
+        let evening = req.body[dayofWeek[i] + "e"];
+        let none = req.body[dayofWeek[i] + "n"];
+
+        // Assign availability codes based on checked boxes for each day
+        let availabilityCode = availabilityBase[dayofWeek[i]];  // Starting point for that day
+
+        if (morning === 'm' && afternoon === 'a' && evening === 'e') {
+            availabilityCode += 6; // Morning, Afternoon, Evening
+        } else if (morning === 'm' && afternoon === 'a') {
+            availabilityCode += 3; // Morning and Afternoon
+        } else if (morning === 'm' && evening === 'e') {
+            availabilityCode += 4; // Morning and Evening
+        } else if (morning === 'm') {
+            availabilityCode += 0; // Morning only
+        } else if (afternoon === 'a' && evening === 'e') {
+            availabilityCode += 5; // Afternoon and Evening
+        } else if (evening === 'e') {
+            availabilityCode += 2; // Evening only
+        } else if (afternoon === 'a') {
+            availabilityCode += 1; // Afternoon only
+        } else if (none === 'n') {
+            availabilityCode += 7; // None
+        }
+
+        // Assign these calculated values to the corresponding availability variables
+        switch(dayofWeek[i]) {
+            case "m": mavailability = availabilityCode; break;
+            case "t": tavailability = availabilityCode; break;
+            case "w": wavailability = availabilityCode; break;
+            case "th": thavailability = availabilityCode; break;
+            case "f": favailability = availabilityCode; break;
+            case "s": savailability = availabilityCode; break;
+        }
     }
 
-// Insert new admin user into the 'users' table (no password hashing)
+    // Check if passwords match
+    if (password !== confirmpassword) {
+        return res.render("login", { error: "Passwords do not match", title: "Create Account - Turtle Shelter Project" });
+    }
+
+    // Insert new admin user into the 'users' table (no password hashing)
     knex('users')
         .insert({
             firstname: firstname.toLowerCase(),
             lastname: lastname.toLowerCase(),
             email: email,
             phone: phone,
-            city: city,
-            statecode: parseInt(statecode), // Save the numeric state code
+            city: city.toLowerCase(),
+            statecode: parseInt(statecode),
+            discoveredcode: parseInt(discoveredcode), 
+            skilllevelcode: parseInt(skilllevelcode), 
+            commithours: parseInt(commithours), 
+            traveldistance: parseInt(traveldistance), 
+            is_leading: is_leading, 
+            newsletter: newsletter, 
             login: login,
-            password: password,  // Store the password as is (not hashed)
-            is_admin: true
+            password: password, // Store plaintext password (Note: NOT SECURE)
+            startdate: startdate,
+            is_admin: admin // Default role for new users
+        })
+        .returning('usercode')
+        .then((result) => {
+            // Access the first element of the result array, which contains the usercode
+            const usercode = result[0].usercode;
+            
+            console.log("Availability codes being inserted:", mavailability, tavailability, wavailability, thavailability, favailability, savailability);
+    
+            // Now insert the availability data using the correct usercode
+            return knex('volunteeravailability')
+                .insert([
+                    { volunteercode: usercode, availabilitycode: mavailability },
+                    { volunteercode: usercode, availabilitycode: tavailability },
+                    { volunteercode: usercode, availabilitycode: wavailability },
+                    { volunteercode: usercode, availabilitycode: thavailability },
+                    { volunteercode: usercode, availabilitycode: favailability },
+                    { volunteercode: usercode, availabilitycode: savailability }
+                ])
+                .onConflict(['volunteercode', 'availabilitycode'])  // Check for conflict based on both columns
+                .ignore();  // Ignore the insert if a duplicate combination of volunteercode and availabilitycode exists
         })
         .then(() => {
             res.redirect('/adminmanage');

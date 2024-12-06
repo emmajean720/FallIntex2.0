@@ -46,9 +46,20 @@
             gap: 20px;
         }
 
+        .form-row {
+            display: flex;
+            justify-content: space-between; /* Adjust spacing between items */
+            margin-bottom: 5px; /* Space between rows */
+            width: 100%; /* Ensures the row spans the full width of the container */
+        }
+
         .form-group {
-            flex: 1 1 30%;
-            min-width: 200px;
+            flex: 1; /* Equal width for all inputs */
+            margin-right: 15px; /* Space between form groups */
+        }
+
+        .form-group:last-child {
+            margin-right: 0; /* Remove margin for the last item */
         }
 
         .form-container label {
@@ -163,6 +174,71 @@
             background-color: #d32f2f;
         }
 
+                    /* Container for the tabs */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      width: 70%; /* Adjust this to control the overall width */
+      margin: 0 auto; /* Centers the tabs horizontally */
+    }
+
+    /* Style for each tab button */
+    .tab-btn {
+      padding: 12px 0; /* Adjust padding to make tabs more compact */
+      margin: 0 5px; /* Reduce space between tabs */
+      flex: 1; /* Make each tab take equal width */
+      background-color: #f1f3f5;
+      color: #006666;
+      border: 2px solid #006666;
+      border-radius: 25px 25px 0 0;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .tab-btn:hover {
+      background-color: #006666;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .tab-btn:focus {
+      outline: none;
+    }
+
+    /* Active tab style */
+    .tab-btn.active {
+      background-color: #008080;
+      color: white;
+      border-color: #006666;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Content section for each tab */
+    .tab-content {
+      display: flex;
+      padding: 25px;
+      padding-bottom: 40px; /* Added bottom padding for buffer */
+      background-color: #ffffff;
+      border: 2px solid #006666;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      max-width: 75%;
+      margin: 0 auto;
+      margin-top: -2px;
+      justify-content: center; /* Centers children horizontally */
+    }
+
+
+    /* Optional: Style for tab content text */
+    .tab-content p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.6;
+    }
+
     </style>
 </head>
 <body>
@@ -170,8 +246,18 @@
     <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
 
     <div class="main-content">
+
+
+        <br>
+        <div class="tabs">
+            <button class="tab-btn" onclick="openTab('addvest')">Add a New Vest Receiver</button>
+            <button class="tab-btn" onclick="openTab('pastyear')">Vest Receivers for Current Year</button>
+        </div>
+
+
         <!-- Form to Add Vest Receiver -->
-        <div class="form-container">
+        <div id="addvest" class="tab-content" style="max-width: 75%">
+        <div class="form-container" style="max-width: 96%">
             <h1>Add Vest Receiver</h1>
 
             <% if (error) { %>
@@ -183,119 +269,126 @@
             <% } %>
 
             <form action="/adminvest-receiver" method="POST">
-                <div class="form-group">
-                    <label for="recfirstname">First Name:</label>
-                    <input type="text" id="recfirstname" name="recfirstname" required>
+                <div class="form-row">     
+                    <div class="form-group">
+                        <label for="recfirstname">First Name:</label>
+                        <input type="text" id="recfirstname" name="recfirstname" style="max-width: 90%"required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reclastname">Last Name:</label>
+                        <input type="text" id="reclastname" name="reclastname" style="max-width: 90%"required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" min="0" style="max-width: 90%"required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender" style="max-width: 90%"required>
+                            <option value="">Select</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                            <option value="O">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="size">Size:</label>
+                        <select id="size" name="size" style="max-width: 90%"required>
+                            <option value="">Select a Size</option>
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                            <option value="XXXL">XXXL</option>
+                            <option value="XXXXL">XXXXL</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="reclastname">Last Name:</label>
-                    <input type="text" id="reclastname" name="reclastname" required>
-                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Date Received:</label>
+                        <input type="date" id="date" name="date" style="max-width: 90%"required>
+                    </div>
 
-                <div class="form-group">
-                    <label for="date">Date Passed Out:</label>
-                    <input type="date" id="date" name="date" required>
-                </div>
+                    <div class="form-group">
+                        <label for="city">City:</label>
+                        <input type="text" id="city" name="city" style="max-width: 90%"required>
+                    </div>
 
-                <div class="form-group">
-                    <label for="age">Age:</label>
-                    <input type="number" id="age" name="age" min="0" required>
+                    <div>
+                        <label for="statecode">State:</label>
+                        <select id="statecode" name="statecode" style="max-width: 90%"required>
+                            <option value="">Select a State</option>
+                            <option value="1">Alabama</option>
+                            <option value="2">Alaska</option>
+                            <option value="3">Arizona</option>
+                            <option value="4">Arkansas</option>
+                            <option value="5">California</option>
+                            <option value="6">Colorado</option>
+                            <option value="7">Connecticut</option>
+                            <option value="8">Delaware</option>
+                            <option value="9">Florida</option>
+                            <option value="10">Georgia</option>
+                            <option value="11">Hawaii</option>
+                            <option value="12">Idaho</option>
+                            <option value="13">Illinois</option>
+                            <option value="14">Indiana</option>
+                            <option value="15">Iowa</option>
+                            <option value="16">Kansas</option>
+                            <option value="17">Kentucky</option>
+                            <option value="18">Louisiana</option>
+                            <option value="19">Maine</option>
+                            <option value="20">Maryland</option>
+                            <option value="21">Massachusetts</option>
+                            <option value="22">Michigan</option>
+                            <option value="23">Minnesota</option>
+                            <option value="24">Mississippi</option>
+                            <option value="25">Missouri</option>
+                            <option value="26">Montana</option>
+                            <option value="27">Nebraska</option>
+                            <option value="28">Nevada</option>
+                            <option value="29">New Hampshire</option>
+                            <option value="30">New Jersey</option>
+                            <option value="31">New Mexico</option>
+                            <option value="32">New York</option>
+                            <option value="33">North Carolina</option>
+                            <option value="34">North Dakota</option>
+                            <option value="35">Ohio</option>
+                            <option value="36">Oklahoma</option>
+                            <option value="37">Oregon</option>
+                            <option value="38">Pennsylvania</option>
+                            <option value="39">Rhode Island</option>
+                            <option value="40">South Carolina</option>
+                            <option value="41">South Dakota</option>
+                            <option value="42">Tennessee</option>
+                            <option value="43">Texas</option>
+                            <option value="44">Utah</option>
+                            <option value="45">Vermont</option>
+                            <option value="46">Virginia</option>
+                            <option value="47">Washington</option>
+                            <option value="48">West Virginia</option>
+                            <option value="49">Wisconsin</option>
+                            <option value="50">Wyoming</option>
+                        </select>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="gender">Gender:</label>
-                    <select id="gender" name="gender" required>
-                        <option value="">Select</option>
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
-                        <option value="O">Other</option>
-                    </select>
+                <div class="form-button" style="justify-content: center;">
+                    <button type="submit" >Submit</button>
                 </div>
-
-                <div class="form-group">
-                    <label for="size">Size:</label>
-                    <select id="size" name="size" required>
-                        <option value="">Select a Size</option>
-                        <option value="XS">XS</option>
-                        <option value="S">S</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                        <option value="XXL">XXL</option>
-                        <option value="XXXL">XXXL</option>
-                        <option value="XXXXL">XXXXL</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="city">City:</label>
-                    <input type="text" id="city" name="city" required>
-                </div>
-
-                <div>
-                    <label for="statecode">State:</label>
-                    <select id="statecode" name="statecode" required>
-                        <option value="">Select a State</option>
-                        <option value="1">Alabama</option>
-                        <option value="2">Alaska</option>
-                        <option value="3">Arizona</option>
-                        <option value="4">Arkansas</option>
-                        <option value="5">California</option>
-                        <option value="6">Colorado</option>
-                        <option value="7">Connecticut</option>
-                        <option value="8">Delaware</option>
-                        <option value="9">Florida</option>
-                        <option value="10">Georgia</option>
-                        <option value="11">Hawaii</option>
-                        <option value="12">Idaho</option>
-                        <option value="13">Illinois</option>
-                        <option value="14">Indiana</option>
-                        <option value="15">Iowa</option>
-                        <option value="16">Kansas</option>
-                        <option value="17">Kentucky</option>
-                        <option value="18">Louisiana</option>
-                        <option value="19">Maine</option>
-                        <option value="20">Maryland</option>
-                        <option value="21">Massachusetts</option>
-                        <option value="22">Michigan</option>
-                        <option value="23">Minnesota</option>
-                        <option value="24">Mississippi</option>
-                        <option value="25">Missouri</option>
-                        <option value="26">Montana</option>
-                        <option value="27">Nebraska</option>
-                        <option value="28">Nevada</option>
-                        <option value="29">New Hampshire</option>
-                        <option value="30">New Jersey</option>
-                        <option value="31">New Mexico</option>
-                        <option value="32">New York</option>
-                        <option value="33">North Carolina</option>
-                        <option value="34">North Dakota</option>
-                        <option value="35">Ohio</option>
-                        <option value="36">Oklahoma</option>
-                        <option value="37">Oregon</option>
-                        <option value="38">Pennsylvania</option>
-                        <option value="39">Rhode Island</option>
-                        <option value="40">South Carolina</option>
-                        <option value="41">South Dakota</option>
-                        <option value="42">Tennessee</option>
-                        <option value="43">Texas</option>
-                        <option value="44">Utah</option>
-                        <option value="45">Vermont</option>
-                        <option value="46">Virginia</option>
-                        <option value="47">Washington</option>
-                        <option value="48">West Virginia</option>
-                        <option value="49">Wisconsin</option>
-                        <option value="50">Wyoming</option>
-                    </select>
-                </div>
-
-                <button type="submit">Submit</button>
             </form>
         </div>
+        </div>
 
+        <div id="pastyear" class="tab-content" style="width: 75%; ">
         <!-- Search and Records Table to View Vest Receivers in the Current Year -->
-        <div class="records-container">
-            <h2>Vest Receivers for the Current Year</h2>
+        <div class="container">
+            <h1>Vest Receivers for the Current Year</h1>
             
             <!-- Search Form -->
             <div class="search-container">
@@ -303,13 +396,12 @@
                     <input type="text" name="search" placeholder="Search by name" value="<%= typeof search !== 'undefined' ? search : '' %>">
                     <button type="submit">Search</button>
                 </form>
-            </div>
-
-            <!-- Reset Button -->
-            <div class="search-container">
-                <form method="GET" action="/adminvest-receiver">
-                    <button type="submit" class="reset-btn">Reset</button>
-                </form>
+                            <!-- Reset Button -->
+                <div class="search-container">
+                    <form method="GET" action="/adminvest-receiver">
+                        <button type="submit" class="reset-btn">Reset</button>
+                    </form>
+                </div>
             </div>
 
             <table>
@@ -321,7 +413,7 @@
                         <th>Gender</th>
                         <th>City</th>
                         <th>State</th>
-                        <th>Date Passed Out</th>
+                        <th>Date Received</th>
                         <th>Size</th>
                     </tr>
                 </thead>
@@ -348,7 +440,36 @@
             </table>
         </div>
     </div>
+    </div>
+    <script>
+                function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.style.display = 'none');
+            document.getElementById(tabName).style.display = 'block';
+        }
 
+        // Default tab
+        openTab('addvest');
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const tabs = document.querySelectorAll('.tab-btn');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', function () {
+            tabs.forEach(t => t.classList.remove('active'));  // Remove active class from all tabs
+            contents.forEach(c => c.style.display = 'none');  // Hide all content
+
+            tab.classList.add('active');  // Add active class to clicked tab
+            contents[index].style.display = 'block';  // Show corresponding content
+            });
+        });
+
+        // Initialize the first tab as active
+        tabs[0].classList.add('active');
+        contents[0].style.display = 'block';
+        });
+    </script>
     <!-- Include Footer -->
     <%- include("partials/footer") %>
 </body>

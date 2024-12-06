@@ -95,9 +95,10 @@
 <body>
     <!-- Nav Bar -->
     <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
-
+    <br><br><br><br>
     <!-- Main Content -->
     <div class="main-content">
+        
         <h2>Welcome! Thanks for volunteering your time and talents! <br> We can't wait to save lives with you!</h2>
 
         <% if (success) { %>

@@ -34,11 +34,10 @@
                     </li>
                     <!-- Link to the calendar page -->
                     <li><a href="/admincalendar">Calendar</a></li>
-                    <li><a href="/volunteerhome">See Events</a></li>
 
                     <% if (user) { %> <!-- Check if user is logged in -->
                         <li>
-                            <a href="/volunteerhome" class="btn my-page-btn">Hello, <%= user.firstname %></a>
+                            <a href="/volunteerhome" class="btn my-page-btn"><%= user.firstname %>'s Events</a>
                         </li>
                         <li><a href="/logout" class="btn logout-btn">Logout</a></li>
                     <% } else { %>
