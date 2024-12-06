@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
+  <link rel="icon" href="/images/BetterQualityLogo.png" type="image/png">
   <style>
     /* Container for the tabs */
     .tabs {
@@ -157,8 +158,10 @@ function toggleSewingQuestions(value) {
 </head>
 <body>
         <!-- Nav Bar -->
-        
+  
+
         <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
+
   <!-- Main Content -->
   <div class="main-content" style="font-family: 'Lora', serif">
       <h1>Volunteer Your Time with the Turtle Shelter Project</h1>
@@ -167,6 +170,13 @@ function toggleSewingQuestions(value) {
         Whether you're providing financial support, helping spread awareness, or assisting in building the evests themseleves, your involvement is crucial. 
         Explore the ways you can help below and find a path that resonates with you. Together, we can create lasting change and bring hope to those who need it most!</p>
 
+
+        <nav>
+          <a href="#volunteer"></a>
+          <a href="#event">event</a>
+          <a href="#home">home tab</a>
+      </nav>
+      
         <br>
         <div class="tabs">
           <button class="tab-btn" onclick="openTab('volunteer')">Become a Volunteer</button>
@@ -216,10 +226,27 @@ function toggleSewingQuestions(value) {
         After your group has completed their tasks, simply send the partially completed vests back to us for expert sewing,
         and then we will send them back to you or to a location you specify.</p>
         <p>Please fill out the form below and tell us about your event idea so that we can provide options for you and your group.</p>
+      <td>
 
-      <h3>Event Request Form</h3>
+        <div class="image-row">
+          <div class="image-container">
+            <img src="/images/SewingAgain.jpg" alt="Happy People Wearing Vests">
+          </div>
+          <div class="image-container">
+            <img src="/images/Sewing.jpg" alt="Pinning Vests">
+          </div>
+          <div class="image-container">
+            <img src="/images/CuttingVests.jpg" alt="Happy People Serving">
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+          <div class="button" onclick="toggleForm()">Event Request Form</div>
+      </div>
+      </td>
+
       <!-- Event Request Form -->
-       <div class="form-container">
+       <div class="form-container" style="display: none;">
       <form action="/eventrequest" method="POST">    
         <div style="margin-bottom: 5px;">  
             <label for="organization">Organization/Group Name:</label>
@@ -392,9 +419,12 @@ function toggleSewingQuestions(value) {
             <textarea id="comments" name="comments" placeholder="Please include: participant age range, flexibility on event dates, and any other specific concerns, questions, and information would be helpful for us to know." rows="2" style="resize: both; width: 800px; font-family: 'Lora', serif"></textarea>
         </div>
 
+        <input type="hidden" id="status" name="status" value="pending">
+
         <div style="text-align: center; margin-top: 20px;">
           <button type="submit" class="button">Create Event</button>
       </div>
+
     </form>
   </div>
 </div>
@@ -436,6 +466,27 @@ function toggleSewingQuestions(value) {
   
   <script>
 
+        // format phone number when its entered - Kylee Brown
+        const phoneInput = document.getElementById('orgphone');
+
+        phoneInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, ''); // Remove all non-numeric characters
+            if (value.length > 10) value = value.slice(0, 10); // Limit to 10 digits
+
+            // Format the value as (123) 456-7890
+            if (value.length > 6) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6)}`;
+            } else if (value.length > 3) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+            } else if (value.length > 0) {
+                value = `(${value}`;
+            }
+
+            e.target.value = value; // Update the input value with the formatted string
+        });
+
+
+
 function openTab(tabName) {
     const contents = document.querySelectorAll('.tab-content');
     contents.forEach(content => content.style.display = 'none');
@@ -443,7 +494,7 @@ function openTab(tabName) {
   }
 
   // Default tab
-  openTab('volunteer');
+  openTab(tabID);
 
   document.addEventListener('DOMContentLoaded', function () {
   const tabs = document.querySelectorAll('.tab-btn');
@@ -472,6 +523,11 @@ function openTab(tabName) {
         alert('Passwords do not match!');
       }
     });
+
+    function toggleForm() {
+    const formContainer = document.querySelector('.form-container');
+    formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
+  }
   </script>
   <br><br>
       <!-- Footer -->

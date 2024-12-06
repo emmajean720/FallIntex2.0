@@ -97,10 +97,11 @@ app.get('/about', (req, res) => {
     res.render("about", { error: null, title: "About Us - Turtle Shelter Project" });
 });
 
-// Volunteer Page
+// Volunteer Page with a route parameter
 app.get('/volunteer', (req, res) => {
-    res.render("volunteer", { error: null, title: "Volunteer - Turtle Shelter Project" });
+    res.render("volunteer", { error: null, title: `Volunteer - Turtle Shelter Project` });
 });
+
 
 // Donate Page
 app.get('/donate', (req, res) => {
@@ -767,63 +768,66 @@ app.post('/create-account', (req, res) => {
 
 // Handle Event Request Form - Kylee
 app.post('/eventrequest', (req, res) => {
-    const organization = req.body.organization || ' ';
-    const orgfirstname = req.body.orgfirstname || ' ';
-    const orglastname = req.body.orglastname || ' ';
-    const orgemail = req.body.orgemail || ' ';
-    const orgphone = req.body.orgphone;
-    const eventstarttime = req.body.eventstarttime;
-    const eventstoptime = req.body.eventstoptime;
-    const eventaddress = req.body.eventaddress;
-    const eventcity = req.body.eventcity
-    const statecode = req.body.statecode
-    const discoveredcode = req.body.discoveredcode
-    const expectedparticipants = req.body.expectedparticipants
-    const servicetypecode = req.body.servicetypecode
-    const basicskills = req.body.basicskills || null;
-    const advanced = req.body.advanced || null;
-    const sewingmachines = req.body.sewingmachines || null;
-    const sergers = req.body.sergers || null;
-    const payfor = req.body.payfor === 'true' ? true : false;
-    const storyshared = req.body.storyshared === 'true' ? true : false;
-    const newsletter = req.body.newsletter=== 'true' ? true : false;
-    const comments = req.body.comments;
-    const status = req.body.status;
+    const organization = (req.body.organization || '').toLowerCase();
+    const orgfirstname = (req.body.orgfirstname || '').toLowerCase();
+    const orglastname = (req.body.orglastname || '').toLowerCase();
+    const orgemail = (req.body.orgemail || '').toLowerCase();
+    const orgphone = req.body.orgphone || null;
+    const eventstarttime = req.body.eventstarttime || null;
+    const eventstoptime = req.body.eventstoptime || null;
+    const eventaddress = (req.body.eventaddress || '').toLowerCase();
+    const eventcity = (req.body.eventcity || '').toLowerCase();
+    const statecode = parseInt(req.body.statecode) || null;
+    const discoveredcode = parseInt(req.body.discoveredcode) || null;
+    const expectedparticipants = parseInt(req.body.expectedparticipants) || null;
+    const servicetypecode = parseInt(req.body.servicetypecode) || null;
+    const basicskills = parseInt(req.body.basicskills) || null;
+    const advancedskills = parseInt(req.body.advanced) || null;
+    const sewingmachines = parseInt(req.body.sewingmachines) || null;
+    const sergers = parseInt(req.body.sergers) || null;
+    const payfor = req.body.payfor === 'true';
+    const storyshared = req.body.storyshared === 'true';
+    const newsletter = req.body.newsletter === 'true';
+    const comments = req.body.comments || '';
+    const status = "pending";
 
     knex('event')
-    .insert({
-        organization: organization.toLowerCase(),
-        orgfirstname: orgfirstname.toLowerCase(),
-        orglastname: orglastname.toLowerCase(),
-        orgemail: orgemail.toLowerCase(),
-        orgphone: orgphone,
-        eventstarttime: eventstarttime,
-        eventstoptime: eventstoptime,
-        eventaddress: eventaddress.toLowerCase(),
-        eventcity: eventcity.toLowerCase(),
-        statecode: parseInt(statecod),
-        discoveredcode: parseInt(discoveredcode),
-        expectedparticipants: parseInt(expectedparticipants),
-        servicetypecode: parseInt(servicetypecode),
-        basicskills: parseInt(basicskills),
-        advancedskills: parseInt(advanced),
-        sewingmachines: parseInt(sewingmachines),
-        sergers: parseInt(sergers),
-        payfor: payfor,
-        storyshared: storyshared,
-        orgnewsletter: newsletter,
-        comments: comments,
-        status: status.toLowerCase()
+        .insert({
+            organization,
+            orgfirstname,
+            orglastname,
+            orgemail,
+            orgphone,
+            eventstarttime,
+            eventstoptime,
+            eventaddress,
+            eventcity,
+            statecode,
+            discoveredcode,
+            expectedparticipants,
+            servicetypecode,
+            basicskills,
+            advancedskills,
+            sewingmachines,
+            sergers,
+            payfor,
+            storyshared,
+            orgnewsletter: newsletter,
+            comments,
+            status
+        })
+        .then(() => {
+            res.redirect('/');
+        })
+        .catch(err => {
+            console.error("Error creating event:", err);
+            res.render("homepage", {
+                error: "An unexpected error occurred while trying to create the event. Please try again.",
+                title: "Turtle Shelter Project"
+            });
+        });
+});
 
-    })
-    .then(() => {
-        res.redirect('/');
-    })
-    .catch(err => {
-        console.error("Error creating account:", err);
-        res.render("homepage", { error: "An unexpected error when trying to create the event. Please try again.", title: "Turtle Shelter Project" });
-    });
-})
 
 // Handle Event Request Form from admin- McKenna (using Kylee's)
 app.post('/eventrequestadmin', (req, res) => {
@@ -848,7 +852,7 @@ app.post('/eventrequestadmin', (req, res) => {
     const storyshared = req.body.storyshared === 'true' ? true : false;
     const newsletter = req.body.newsletter=== 'true' ? true : false;
     const comments = req.body.comments;
-    const status = req.body.status;
+    const status = "pending";
 
     knex('event')
     .insert({
