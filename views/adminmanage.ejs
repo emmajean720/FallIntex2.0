@@ -118,5 +118,26 @@
 
     <!-- Footer -->
     <%- include("partials/footer") %>
+
+    <script>
+        // format phone number when its entered - Kylee Brown
+        const phoneInput = document.getElementById('phone');
+
+        phoneInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, ''); // Remove all non-numeric characters
+            if (value.length > 10) value = value.slice(0, 10); // Limit to 10 digits
+
+            // Format the value as (123) 456-7890
+            if (value.length > 6) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6)}`;
+            } else if (value.length > 3) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+            } else if (value.length > 0) {
+                value = `(${value}`;
+            }
+
+            e.target.value = value; // Update the input value with the formatted string
+        });
+    </script>
 </body>
 </html>
