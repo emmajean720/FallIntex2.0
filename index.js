@@ -97,10 +97,11 @@ app.get('/about', (req, res) => {
     res.render("about", { error: null, title: "About Us - Turtle Shelter Project" });
 });
 
-// Volunteer Page
+// Volunteer Page with a route parameter
 app.get('/volunteer', (req, res) => {
-    res.render("volunteer", { error: null, title: "Volunteer - Turtle Shelter Project" });
+    res.render("volunteer", { error: null, title: `Volunteer - Turtle Shelter Project` });
 });
+
 
 // Donate Page
 app.get('/donate', (req, res) => {

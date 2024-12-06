@@ -158,8 +158,10 @@ function toggleSewingQuestions(value) {
 </head>
 <body>
         <!-- Nav Bar -->
-        
+  
+
         <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
+
   <!-- Main Content -->
   <div class="main-content" style="font-family: 'Lora', serif">
       <h1>Volunteer Your Time with the Turtle Shelter Project</h1>
@@ -168,6 +170,13 @@ function toggleSewingQuestions(value) {
         Whether you're providing financial support, helping spread awareness, or assisting in building the evests themseleves, your involvement is crucial. 
         Explore the ways you can help below and find a path that resonates with you. Together, we can create lasting change and bring hope to those who need it most!</p>
 
+
+        <nav>
+          <a href="#volunteer"></a>
+          <a href="#event">event</a>
+          <a href="#home">home tab</a>
+      </nav>
+      
         <br>
         <div class="tabs">
           <button class="tab-btn" onclick="openTab('volunteer')">Become a Volunteer</button>
@@ -464,7 +473,7 @@ function openTab(tabName) {
   }
 
   // Default tab
-  openTab('volunteer');
+  openTab(tabID);
 
   document.addEventListener('DOMContentLoaded', function () {
   const tabs = document.querySelectorAll('.tab-btn');
