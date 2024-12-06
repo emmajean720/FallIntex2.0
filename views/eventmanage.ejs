@@ -278,7 +278,11 @@
     <!-- Nav Bar -->
     <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
     <div class="main-content">
-
+        <h1>Event Management</h1>
+        <p style="text-align: center; width: 75%; margin: 0 auto;">
+            All admin team members have access here to creating, editing, approving, completing, and deleting all events.     
+        </p>
+        <br>
     <br>
     <div class="tabs">
         <button class="tab-btn" onclick="openTab('pending')">Pending Events</button>

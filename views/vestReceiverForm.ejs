@@ -246,6 +246,11 @@
     <%- include(user && user.is_admin ? "partials/adminnavbar" : (user ? "partials/volunteernavbar" : "partials/navbar")) %>
 
     <div class="main-content">
+        <h1>Vest Management</h1>
+        <p style="text-align: center; width: 75%; margin: 0 auto;">
+            All admin team members have access here to documenting individuals who receieve a vest, as well as searching for individuals to check information and make sure we can stay within our "one vest per person per year" limit.     
+        </p>
+        <br>
 
 
         <br>
@@ -426,7 +431,7 @@
                                 <td><%= receiver.age %></td>
                                 <td><%= receiver.gender %></td>
                                 <td><%= receiver.city %></td>
-                                <td><%= receiver.statecode %></td>
+                                <td><%= receiver.state_description %></td>
                                 <td><%= new Date(receiver.date).toLocaleDateString() %></td>
                                 <td><%= receiver.size %></td>
                             </tr>

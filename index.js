@@ -979,7 +979,8 @@ app.get('/adminvest-receiver', isAuthenticated, isAdmin, async (req, res) => {
 
     try {
         let query = knex('receivers')
-            .select('*')
+            .leftJoin('state', 'receivers.statecode', 'state.statecode')
+            .select('*', 'state.description as state_description')
             .whereRaw('EXTRACT(YEAR FROM date) = ?', [currentYear]);
 
         // If search query is provided, filter by name
