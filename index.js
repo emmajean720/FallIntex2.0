@@ -486,56 +486,106 @@ app.post('/delete-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
 });
 
 // Edit Event OG
+// app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
+//     const { eventcode } = req.params;
+//     const organization = req.body.organization;
+//     const eventstarttime = req.body.eventstarttime;
+//     const eventstoptime = req.body.eventstoptime;
+//     const orgfirstname = req.body.orgfirstname;
+//     const orglastname = req.body.orglastname;
+//     const status = req.body.status;
+//     const orgemail = req.body.orgemail;
+//     const orgphone = req.body.phone;
+//     const discoveredcode = req.body.discoveredcode;
+//     const servicetypecode = req.body.servicetypecode;
+//     const basicskills = req.body.basicskills;
+//     const advanced = req.body.advanced;
+//     const sewingmachines = req.body.sewingmachines;
+//     const sergers = req.body.sergers;
+//     const comments = req.body.comments;
+//     const expectedparticipants = req.body.expectedparticipants;
+//     const storyshared = req.body.storyshared;
+//     const newsletter = req.body.newsletter;
+//     const eventcity = req.body.city;
+//     const statecode = req.body.statecode;
+//     const eventaddress = req.body.eventaddress;
+//     const payfor = req.body.payfor;
+
+//     knex('event')
+//         .where('eventcode', eventcode)
+//         .update({ 
+//             organization: organization.toLowerCase(),
+//             orgfirstname: orgfirstname.toLowerCase(),
+//             orglastname: orglastname.toLowerCase(),
+//             orgemail: orgemail.toLowerCase(),
+//             orgphone: orgphone,
+//             eventstarttime: eventstarttime,
+//             eventstoptime: eventstoptime,
+//             eventaddress: eventaddress.toLowerCase(),
+//             eventcity: eventcity.toLowerCase(),
+//             statecode: parseInt(statecode),
+//             discoveredcode: parseInt(discoveredcode),
+//             expectedparticipants: parseInt(expectedparticipants),
+//             servicetypecode: parseInt(servicetypecode),
+//             basicskills: parseInt(basicskills),
+//             advancedskills: parseInt(advanced),
+//             sewingmachines: parseInt(sewingmachines),
+//             sergers: parseInt(sergers),
+//             payfor: payfor,
+//             storyshared: storyshared,
+//             orgnewsletter: newsletter,
+//             comments: comments,
+//             status: status.toLowerCase()
+//         })
+//         .then(() => res.redirect('/eventmanage'))
+//         .catch(err => {
+//             console.error("Error updating event:", err);
+//             res.redirect('/eventmanage');
+//         });
+// });
+
 app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
     const { eventcode } = req.params;
-    const organization = req.body.organization;
-    const eventstarttime = req.body.eventstarttime;
-    const eventstoptime = req.body.eventstoptime;
-    const orgfirstname = req.body.orgfirstname;
-    const orglastname = req.body.orglastname;
-    const status = req.body.status;
-    const orgemail = req.body.orgemail;
-    const orgphone = req.body.phone;
-    const discoveredcode = req.body.discoveredcode;
-    const servicetypecode = req.body.servicetypecode;
-    const basicskills = req.body.basicskills;
-    const advanced = req.body.advanced;
-    const sewingmachines = req.body.sewingmachines;
-    const sergers = req.body.sergers;
-    const comments = req.body.comments;
-    const expectedparticipants = req.body.expectedparticipants;
-    const storyshared = req.body.storyshared;
-    const newsletter = req.body.newsletter;
-    const eventcity = req.body.city;
-    const statecode = req.body.statecode;
-    const eventaddress = req.body.eventaddress;
-    const payfor = req.body.payfor;
+
+    // Extract and validate request body
+    const {
+        organization, eventstarttime, eventstoptime, orgfirstname, orglastname,
+        status, orgemail, phone, discoveredcode, servicetypecode, basicskills,
+        advanced, sewingmachines, sergers, comments, expectedparticipants,
+        storyshared, newsletter, city, statecode, eventaddress, payfor
+    } = req.body;
+
+    // Check for required fields
+    if (!eventcode || !organization) {
+        console.error('Missing required fields');
+        return res.redirect('/eventmanage');
+    }
 
     knex('event')
         .where('eventcode', eventcode)
         .update({ 
             organization: organization.toLowerCase(),
-            orgfirstname: orgfirstname.toLowerCase(),
-            orglastname: orglastname.toLowerCase(),
-            orgemail: orgemail.toLowerCase(),
-            orgphone: orgphone,
-            eventstarttime: eventstarttime,
-            eventstoptime: eventstoptime,
-            eventaddress: eventaddress.toLowerCase(),
-            eventcity: eventcity.toLowerCase(),
-            statecode: parseInt(statecode),
-            discoveredcode: parseInt(discoveredcode),
-            expectedparticipants: parseInt(expectedparticipants),
-            servicetypecode: parseInt(servicetypecode),
-            basicskills: parseInt(basicskills),
-            advancedskills: parseInt(advanced),
-            sewingmachines: parseInt(sewingmachines),
-            sergers: parseInt(sergers),
-            payfor: payfor,
-            storyshared: storyshared,
-            orgnewsletter: newsletter,
-            comments: comments,
-            status: status.toLowerCase()
+            orgfirstname: orgfirstname ? orgfirstname.toLowerCase() : null,
+            orglastname: orglastname ? orglastname.toLowerCase() : null,
+            orgemail: orgemail ? orgemail.toLowerCase() : null,
+            orgphone: phone || null,
+            eventstarttime: eventstarttime || null,
+            eventstoptime: eventstoptime || null,
+            eventaddress: eventaddress ? eventaddress.toLowerCase() : null,
+            eventcity: city ? city.toLowerCase() : null,
+            statecode: statecode ? parseInt(statecode) : null,
+            discoveredcode: discoveredcode ? parseInt(discoveredcode) : null,
+            expectedparticipants: expectedparticipants ? parseInt(expectedparticipants) : null,
+            servicetypecode: servicetypecode ? parseInt(servicetypecode) : null,
+            basicskills: basicskills ? parseInt(basicskills) : null,
+            advancedskills: advanced ? parseInt(advanced) : null,
+            sewingmachines: sewingmachines ? parseInt(sewingmachines) : null,
+            sergers: sergers ? parseInt(sergers) : null,
+            payfor: payfor || null,
+            storyshared: storyshared || null,
+            orgnewsletter: newsletter || null,
+            comments: comments || null,
+            status: status ? status.toLowerCase() : null
         })
         .then(() => res.redirect('/eventmanage'))
         .catch(err => {
@@ -543,6 +593,7 @@ app.post('/edit-event/:eventcode', isAuthenticated, isAdmin, (req, res) => {
             res.redirect('/eventmanage');
         });
 });
+
 
 
 // Add event summary details - McKenna OG
