@@ -170,12 +170,6 @@ function toggleSewingQuestions(value) {
         Whether you're providing financial support, helping spread awareness, or assisting in building the evests themseleves, your involvement is crucial. 
         Explore the ways you can help below and find a path that resonates with you. Together, we can create lasting change and bring hope to those who need it most!</p>
 
-
-        <nav>
-          <a href="#volunteer"></a>
-          <a href="#event">event</a>
-          <a href="#home">home tab</a>
-      </nav>
       
         <br>
         <div class="tabs">
@@ -464,71 +458,42 @@ function toggleSewingQuestions(value) {
   </div>
 </div>
   
-  <script>
-
-        // format phone number when its entered - Kylee Brown
-        const phoneInput = document.getElementById('orgphone');
-
-        phoneInput.addEventListener('input', (e) => {
-            let value = e.target.value.replace(/\D/g, ''); // Remove all non-numeric characters
-            if (value.length > 10) value = value.slice(0, 10); // Limit to 10 digits
-
-            // Format the value as (123) 456-7890
-            if (value.length > 6) {
-                value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6)}`;
-            } else if (value.length > 3) {
-                value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-            } else if (value.length > 0) {
-                value = `(${value}`;
-            }
-
-            e.target.value = value; // Update the input value with the formatted string
-        });
-
-
-
-function openTab(tabName) {
+<script>
+  function openTab(tabName) {
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(content => content.style.display = 'none');
+      document.getElementById(tabName).style.display = 'block';
+    }
+    // Default tab
+    openTab('volunteer');
+    document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('.tab-btn');
     const contents = document.querySelectorAll('.tab-content');
-    contents.forEach(content => content.style.display = 'none');
-    document.getElementById(tabName).style.display = 'block';
-  }
-
-  // Default tab
-  openTab(tabID);
-
-  document.addEventListener('DOMContentLoaded', function () {
-  const tabs = document.querySelectorAll('.tab-btn');
-  const contents = document.querySelectorAll('.tab-content');
-
-  tabs.forEach((tab, index) => {
-    tab.addEventListener('click', function () {
-      tabs.forEach(t => t.classList.remove('active'));  // Remove active class from all tabs
-      contents.forEach(c => c.style.display = 'none');  // Hide all content
-
-      tab.classList.add('active');  // Add active class to clicked tab
-      contents[index].style.display = 'block';  // Show corresponding content
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', function () {
+        tabs.forEach(t => t.classList.remove('active'));  // Remove active class from all tabs
+        contents.forEach(c => c.style.display = 'none');  // Hide all content
+        tab.classList.add('active');  // Add active class to clicked tab
+        contents[index].style.display = 'block';  // Show corresponding content
+      });
     });
+    // Initialize the first tab as active
+    tabs[0].classList.add('active');
+    contents[0].style.display = 'block';
   });
-
-  // Initialize the first tab as active
-  tabs[0].classList.add('active');
-  contents[0].style.display = 'block';
-});
-
-    document.querySelector('form').addEventListener('submit', function(e) {
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirm-password').value;
-      if (password !== confirmPassword) {
-        e.preventDefault(); // Prevent form submission
-        alert('Passwords do not match!');
-      }
-    });
-
-    function toggleForm() {
-    const formContainer = document.querySelector('.form-container');
-    formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
-  }
-  </script>
+      document.querySelector('form').addEventListener('submit', function(e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        if (password !== confirmPassword) {
+          e.preventDefault(); // Prevent form submission
+          alert('Passwords do not match!');
+        }
+      });
+      function toggleForm() {
+      const formContainer = document.querySelector('.form-container');
+      formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
+    }
+    </script>
   <br><br>
       <!-- Footer -->
       <%- include("partials/footer") %>
