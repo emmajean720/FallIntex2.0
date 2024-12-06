@@ -294,7 +294,7 @@ footer .contact-info a:hover {
     padding: 20px;
     background: #F9F9F9;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Black color with 30% opacity */
     text-align: center;
 }
 .login-container h1, .create-account-container h1 {
@@ -313,11 +313,12 @@ footer .contact-info a:hover {
     color: #333;
 }
 .form-group input {
-    width: 100%;
+    width: 90%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
+    margin: 0 auto; /* Center align */
 }
 /* Buttons for Forms */
 .form-btn {
@@ -329,7 +330,7 @@ footer .contact-info a:hover {
     font-size: 1.2rem;
     cursor: pointer;
     display: block;
-    width: 100%;
+    width: 95%;
 }
 .form-btn:hover {
     background-color: #005F5F;
@@ -374,7 +375,7 @@ footer .contact-info a:hover {
 .stat-number {
     font-size: 3rem;
     font-weight: bold;
-    color: #4A4A8A; /* Customize to match your theme */
+    color: #008080; /* Customize to match your theme */
     margin-bottom: 1rem;
 }
 .stat-box p {
