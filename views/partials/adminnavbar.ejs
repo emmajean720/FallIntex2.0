@@ -37,11 +37,15 @@
                     <li><a href="/volunteerhome">See Events</a></li>
 
                     <% if (user) { %> <!-- Check if user is logged in -->
-                        <!-- Display 'Hello, Firstname' button that routes to the admin page -->
-                        <li><a href="/admin" class="btn hello-btn">Hello, <%= user.firstname %></a></li>
-                        <!-- Logout link -->
+                        <li>
+                            <a href="/volunteerhome" class="btn my-page-btn">Hello, <%= user.firstname %></a>
+                            <p class="sub-line">View your events</p> <!-- Add the subline here -->
+                        </li>
                         <li><a href="/logout" class="btn logout-btn">Logout</a></li>
+                    <% } else { %>
+                        <li><a href="/login" class="btn login-btn">Login</a></li>
                     <% } %>
+            
                 </ul>
             </nav>
         </div>

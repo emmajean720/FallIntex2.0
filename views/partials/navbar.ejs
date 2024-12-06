@@ -21,14 +21,16 @@
                     <li><a href="/about">About</a></li>
 
 
-                    <!-- Conditional rendering for user authentication -->
-                    <% if (user) { %>
-                        <!-- Display Logout button if the user is logged in -->
+                    <% if (user) { %> <!-- Check if user is logged in -->
+                        <li>
+                            <a href="/volunteerhome" class="btn my-page-btn">Hello, <%= user.firstname %></a>
+                            <p class="sub-line">View your events</p> <!-- Add the subline here -->
+                        </li>
                         <li><a href="/logout" class="btn logout-btn">Logout</a></li>
                     <% } else { %>
-                        <!-- Display Login button if the user is not logged in -->
                         <li><a href="/login" class="btn login-btn">Login</a></li>
                     <% } %>
+                    
                 </ul>
             </nav>
         </div>
