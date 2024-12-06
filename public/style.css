@@ -936,3 +936,10 @@ select:focus {
 .my-page-btn:hover {
     background-color: #005F5F;
 }
+
+.sub-line {
+    font-size: 0.9em;  /* Smaller font size */
+    color: white;  /* Soft gray color for the text */
+    margin-top: 5px;  /* Adds space between the username and sub-line */
+    margin-bottom: 10px;  /* Adds space below the sub-line */
+}
